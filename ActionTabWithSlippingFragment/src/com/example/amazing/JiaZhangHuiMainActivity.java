@@ -51,12 +51,11 @@ public class JiaZhangHuiMainActivity extends FragmentActivity
     	actionBar.setHomeButtonEnabled(false);
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     	actionBar.setDisplayShowTitleEnabled(true);
-    	actionBar.setDisplayShowHomeEnabled(true);
-    	actionBar.setDisplayOptions(7);
-    	//设置ActionBar左边默认的图标是否可用  
-        actionBar.setDisplayUseLogoEnabled(true); 
-        
-        actionBar.setDisplayShowCustomEnabled(true);
+    	actionBar.setDisplayShowHomeEnabled(true);   
+    	
+    	//设置actionBar的title bar ， 自定义样式
+    	actionBar.setDisplayShowCustomEnabled(true); 
+    	actionBar.setCustomView(R.layout.title_bar);
     }
     
     private void setUpViewPager() {
@@ -94,6 +93,7 @@ public class JiaZhangHuiMainActivity extends FragmentActivity
     	});
     }
     
+    //设置tabs
     private void setUpTabs() {
     	final ActionBar actionBar = getActionBar();
     	for (int i = 0; i < mViewPagerAdapter.getCount(); ++i) {
