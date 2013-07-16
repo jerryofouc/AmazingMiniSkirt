@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 用户管理类
+ * 用户服务类
  * @author zhangxiaojie
  *
  */
