@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.amazing</groupId>
+	<groupId>com.netease.amazing</groupId>
 	<artifactId>server</artifactId>
-	<version>1.0.0-SNAP-Short</version>
+	<version>1.0.0-SnapShot</version>
 	<packaging>war</packaging>
 	<name>MiniSkirt-Server</name>
 
@@ -46,8 +46,6 @@
 	</properties>
 	
 	<repositories>
-		
-	
 		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<repository>
 			<id>nexus</id>

@@ -1,4 +1,4 @@
-package com.amazing.server.functional;
+package com.netease.amazing.server.functional;
 
 
 import org.eclipse.jetty.server.Server;

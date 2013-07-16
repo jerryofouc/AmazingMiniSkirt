@@ -1,4 +1,4 @@
-package com.amazing.server.web;
+package com.amazing.netease.server.web;
 
 
 import org.springframework.http.MediaType;
