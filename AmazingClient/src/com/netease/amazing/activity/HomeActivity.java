@@ -1,6 +1,5 @@
-package com.example.amazing;
+package com.netease.amazing.activity;
 
-import com.android.example.uis.R;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -11,17 +10,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.Window;
-import android.view.WindowManager;
-//import android.support.v4.app.FragmentPagerAdapter;
 
-public class JiaZhangHuiMainActivity extends FragmentActivity 
+import com.example.amazing.R;
+//import android.support.v4.app.FragmentPagerAdapter;
+import com.netease.amazing.component.NoticeFragment;
+import com.netease.amazing.component.NewsFragment;
+import com.netease.amazing.component.ContactFragment;
+
+public class HomeActivity extends FragmentActivity 
 				implements ActionBar.TabListener{
     
-	private Fragment1 mFragment1 = new Fragment1();
-	private Fragment2 mFragment2 = new Fragment2();
-	private Fragment3 mFragment3 = new Fragment3();
+	private NoticeFragment mFragment1 = new NoticeFragment();
+	private NewsFragment mFragment2 = new NewsFragment();
+	private ContactFragment mFragment3 = new ContactFragment();
 	
 	private static final int TAB_INDEX_COUNT = 3;
 	
@@ -38,8 +39,6 @@ public class JiaZhangHuiMainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
-        
-        
         setUpActionBar();
         setUpViewPager();
         setUpTabs();
@@ -76,13 +75,10 @@ public class JiaZhangHuiMainActivity extends FragmentActivity
     		public void onPageScrollStateChanged(int state) {
     			switch(state) {
     				case ViewPager.SCROLL_STATE_IDLE:
-    					//TODO
     					break;
     				case ViewPager.SCROLL_STATE_DRAGGING:
-    					//TODO
     					break;
     				case ViewPager.SCROLL_STATE_SETTLING:
-    					//TODO
     					break;
     				default:
     					//TODO
@@ -111,7 +107,6 @@ public class JiaZhangHuiMainActivity extends FragmentActivity
 
 		public ViewPagerAdapter(FragmentManager fm) {
 			super(fm);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
