@@ -9,16 +9,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User extends IdEntity {
-	private String username;
+	private String loginName;
+	private String name;
 	private String password;
 	private String salt;
 	private Date registerDate;
 	private String roles;
-	public String getUsername() {
-		return username;
+	public String getLoginName() {
+		return loginName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getPassword() {
 		return password;

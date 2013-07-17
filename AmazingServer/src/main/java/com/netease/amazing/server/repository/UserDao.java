@@ -1,5 +1,9 @@
 package com.netease.amazing.server.repository;
 
-public class UserDao {
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.netease.amazing.server.entity.User;
+
+public interface UserDao extends PagingAndSortingRepository<User, Long>{
 
 }
