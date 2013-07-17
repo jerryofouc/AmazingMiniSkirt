@@ -223,7 +223,7 @@ public class LoginActivity extends Activity {
 			proDialog = ProgressDialog.show(LoginActivity.this, "连接中..",
 					"连接中..请稍后....", true, true);
 			// 开一个线程进行登录验证,主要是用于失败,成功可以直接通过startAcitivity(Intent)转向
-			String baseURL = "http://10.0.2.2:8080/Simpleresponse/responseServlet";
+			String baseURL = "http://10.240.34.33:8080/Simpleresponse/responseServlet";
 			Thread loginThread = new Thread(new LoginFailureHandler(baseURL));
 			loginThread.start();
 		}
