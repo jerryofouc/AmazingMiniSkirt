@@ -1,4 +1,4 @@
-package com.netease.amazing.sdk;
+package com.netease.amazing.sdk.client;
 
 public abstract class AbstractClient {
 	public String baseUrl;
