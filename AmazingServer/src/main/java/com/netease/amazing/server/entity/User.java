@@ -1,9 +1,16 @@
 package com.netease.amazing.server.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.ImmutableList;
 
 
 @Entity
@@ -38,6 +45,12 @@ public class User extends IdEntity {
 	}
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	@Transient
+	@JsonIgnore
+	public List<String> getRoleList() {
+		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
+		return ImmutableList.copyOf(StringUtils.split(roles, ","));
 	}
 	public Date getRegisterDate() {
 		return registerDate;
