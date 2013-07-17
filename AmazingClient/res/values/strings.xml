@@ -60,6 +60,15 @@
     <string name="preference_file_key">com.example.myapp.PREFERENCE_FILE_KEY</string>
     <string name="saved_high_score">saved_high_score</string>
     
+    <!-- 上下拉刷新相關 -->
+    <string name="pullup_refresh">上拉刷新</string>
+    <string name="pulldown_refresh">下拉刷新</string>
+    <string name="last_modified">上次更新</string>
+    <string name="release_refresh">松开刷新</string>
+    <string name="refreshing">正在刷新&#8230;</string>
+    <string name="recently_modified">最近更新</string>
+    
+    
     
 	<string name="userName_label">用户名</string>
 	<string name="password_lable">密码</string>

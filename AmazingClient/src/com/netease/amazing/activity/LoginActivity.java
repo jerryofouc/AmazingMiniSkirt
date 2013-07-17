@@ -250,10 +250,10 @@ public class LoginActivity extends Activity {
 	private OnClickListener registerLstener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent();
-			intent.setClass(LoginActivity.this, RegisterActivity.class);
-			// 转向注册页面
-			startActivity(intent);
+//			Intent intent = new Intent();
+//			intent.setClass(LoginActivity.this, RegisterActivity.class);
+//			// 转向注册页面
+//			startActivity(intent);
 		}
 	};
 
