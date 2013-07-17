@@ -18,8 +18,7 @@ public class NoticeActivity extends Activity{
 		setContentView(R.layout.notice);
 		TextView noticeText = (TextView)findViewById(R.id.notice);
 		Intent intent = getIntent();
-		Notice notice = (Notice)(intent.getExtras().getSerializable("currentNotice"));
-		int id = intent.getExtras().getInt("noticeIdInList");
-		noticeText.setText("列表中的id为: " +id + "                  " +notice.getContent());
+		Notice notice = (Notice)(intent.getExtras().getSerializable("notice"));
+		noticeText.setText("notice的id为: " +notice.getId() + "                  " +notice.getContent());
 	}
 }

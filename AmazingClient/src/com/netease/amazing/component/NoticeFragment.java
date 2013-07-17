@@ -3,6 +3,7 @@ package com.netease.amazing.component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import android.content.Intent;
@@ -15,16 +16,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
 import com.netease.amazing.pojo.Notice;
+import com.netease.amazing.util.NoticeDBSimulateHandler;
 
 public class NoticeFragment extends Fragment {
 
+	//用于存储通知的列表 有fragment管理
+	ArrayList<Notice> notices = new ArrayList<Notice>();
 	
-	private TextView tv;
+	//notice的数据处理器
+	NoticeDBSimulateHandler noticeHandler = NoticeDBSimulateHandler.getInstance();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,13 +48,22 @@ public class NoticeFragment extends Fragment {
 		
 		View view = getView();
 		
-		int counts= 0;
-		Notice notice = new Notice();
+		
+		int lastReceivedNoticeId = -1;
+		if(notices.size() !=0) {
+			lastReceivedNoticeId = notices.get(notices.size()-1).getId();
+		}
+		
+		//lastReceivedNoticeId表示上次从服务器端获取的所有通知中，处于列表尾部的id，用于服务器端的判断
+		noticeHandler.getNotice(notices, 19, lastReceivedNoticeId);
+		
+		//用于存储listView项的map集合
 		ArrayList<Map<String,Object>> noticeList = new ArrayList<Map<String,Object>>();
-				//从服务器中动态地获取最新数据添加到notice中
-		while(counts++ <10) {
+		Iterator<Notice> it = notices.iterator();
+		
+		while(it.hasNext()) {
+			Notice notice = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
-			notice = new Notice(true);
 			map.put("image", R.drawable.download);
 			map.put("title", notice.cutTitle(30,"UTF-8"));
 			map.put("date", new SimpleDateFormat("yyyy-MM-dd").format(notice.getNoticeDate()));
@@ -70,11 +83,10 @@ public class NoticeFragment extends Fragment {
 		public void onItemClick(AdapterView<?> adapterView, View view, int id,
 				long position) {
 			Bundle bundle = new Bundle();
-			bundle.putInt("noticeIdInList", id);
-			ArrayList<Notice> myLists = new ArrayList<Notice>();
-			for(int i =0;i<10;i++)
-			myLists.add(new Notice(true));
-			bundle.putSerializable("currentNotice",myLists.get(id));
+			Notice notice = notices.get(id);
+			
+			//为下个activity传递所选中的notice
+			bundle.putSerializable("notice", notice);
 			Intent intent = new Intent(getActivity(),NoticeActivity.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
