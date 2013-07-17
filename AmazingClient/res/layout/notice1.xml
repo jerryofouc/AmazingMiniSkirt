@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="亲爱的家长：
+      您好！金秋时节，正是带领孩子们亲近自然的大好时机。为了开阔幼儿视野，增进亲子关系及家园交流，我园定于11月3日（星期六）开展“百万葵园、蒲州花园一天亲子游”活动。
+    【百万葵园】号称“鲜花海洋”是“全国规模最大的葵花园”，被列入“吉尼斯之最”记录，向日葵、时尚薰衣草园、神秘玫瑰园、奇趣小猪乐园、名犬苑、白鸽广场、蝴蝶乐园，让你流连忘返，让你尽情进入花的海洋！
+为了提前作好车辆安排、购买保险等准备工作，家长于下周三之前决定是否参加，并给予回馈。此次活动自愿参与，多谢支持！
+
+ 杭州英华幼儿园                                                                                                                                  
+2012年10月26日
+" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="参 加 （25）" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="不参加 （2）" />
+
+    </LinearLayout>
+
+</LinearLayout>
