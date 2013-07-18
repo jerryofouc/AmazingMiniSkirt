@@ -72,6 +72,8 @@ public class ContactsService {
 				childDTO.setBirthday(dateFormat.format(child.getBirthday()));
 			}
 			childDTO.setName(child.getName());
+			childDTO.setFromClass(child.getKlass().getName());
+			childDTO.setFromSchool(child.getKlass().getKindergarden().getName());
 			List<Parent> parents = child.getParents();
 			for(Parent p : parents){
 				if(p.getGender() == Gender.MALE){
@@ -90,6 +92,8 @@ public class ContactsService {
 		for(ChildRelationship friendship : friendships){
 			Child childFriend = friendship.getChildTo();
 			ChildDTO childDTO = new ChildDTO();
+			childDTO.setFromClass(childFriend.getKlass().getName());
+			childDTO.setFromSchool(childFriend.getKlass().getKindergarden().getName());
 			if(childFriend.getBirthday()!=null){
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				childDTO.setBirthday(dateFormat.format(childFriend.getBirthday()));
