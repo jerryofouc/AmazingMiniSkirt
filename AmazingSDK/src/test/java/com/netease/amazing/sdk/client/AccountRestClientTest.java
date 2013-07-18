@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class AccountRestClientTest {
-	private static final String BASE_URL = "http://localhost:8080/MiniSkirtServer";
+	private static final String BASE_URL = "http://10.240.34.42:8080/MiniSkirtServer";
 	private static final String USER_NAME = "zhangxiaojie";
 	private static final String PASSWORD = "123456";
 	@Test
