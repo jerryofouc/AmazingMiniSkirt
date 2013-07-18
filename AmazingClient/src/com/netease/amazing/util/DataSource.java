@@ -12,8 +12,8 @@ import java.util.Map;
  */
 public abstract class DataSource {
 	protected List<Map<String, Object>> mDataSource = new ArrayList<Map<String, Object>>();
-	protected final static int PAGE_START = 1;
-	protected final static int PAGE_END = 10;
+	public final static int PAGE_START = 1;
+	public final static int PAGE_END = 10;
 
 	public abstract List<Map<String, Object>> updateValue(int pageStart, int pageSize);	
 	

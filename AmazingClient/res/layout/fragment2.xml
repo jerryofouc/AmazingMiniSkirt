@@ -22,5 +22,22 @@ limitations under the License.
     android:padding="8dip"
     >
    
+    
+    <ImageView android:id="@+id/news_index_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+    <com.netease.amazing.util.RefreshableListView 
+        android:id="@+id/mineList" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#000000"
+        android:dividerHeight="1dip"
+        android:drawSelectorOnTop="false"
+        android:fadingEdgeLength="0.0sp"
+        android:scrollbars="none">
+        
+    </com.netease.amazing.util.RefreshableListView>
+    
 </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.netease.amazing.activity;
 
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -10,12 +11,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.amazing.R;
-//import android.support.v4.app.FragmentPagerAdapter;
-import com.netease.amazing.component.NoticeFragment;
-import com.netease.amazing.component.NewsFragment;
 import com.netease.amazing.component.ContactFragment;
+import com.netease.amazing.component.NewsFragment;
+import com.netease.amazing.component.NoticeFragment;
+import com.netease.amazing.component.OldNoticeFragment;
+import com.netease.amazing.util.NewsDataSource;
+//import android.support.v4.app.FragmentPagerAdapter;
 
 public class HomeActivity extends FragmentActivity 
 				implements ActionBar.TabListener{
@@ -32,16 +38,34 @@ public class HomeActivity extends FragmentActivity
 	
 	private ViewPager mViewPager;
 	private ViewPagerAdapter mViewPagerAdapter;
-	
 	/** Called when the activity is first created. */
+	
+	
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
+        //mFragment2.set(R.layout.fragment2, R.id.mineList, new NewsDataSource(), "com.netease.amazing.util.NewsListAdapter", myItemClickListener);
+        
         setUpActionBar();
         setUpViewPager();
         setUpTabs();
+    }
+    
+    /**/
+    
+    /**/
+    class MyOnItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			
+		}
+    	
     }
     
     private void setUpActionBar() {

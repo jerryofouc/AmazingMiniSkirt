@@ -44,7 +44,7 @@ public final class R {
         public static final int upload=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f09004f;
+        public static final int action_settings=0x7f09005c;
         public static final int button1=0x7f09000d;
         public static final int button2=0x7f09000e;
         public static final int button3=0x7f09000f;
@@ -85,31 +85,44 @@ public final class R {
         public static final int contact_teacher_class_index=0x7f090038;
         public static final int contact_teacher_img=0x7f090031;
         public static final int contact_teacher_name=0x7f090032;
-        public static final int contentText =0x7f09003d;
-        public static final int dateText=0x7f09003c;
-        public static final int foot_arrowImageView=0x7f09003f;
-        public static final int foot_contentLayout=0x7f09003e;
-        public static final int foot_lastUpdatedTextView=0x7f090042;
-        public static final int foot_progressBar=0x7f090040;
-        public static final int foot_tipsTextView=0x7f090041;
+        public static final int contentText =0x7f09003f;
+        public static final int dateText=0x7f09003e;
+        public static final int foot_arrowImageView=0x7f090041;
+        public static final int foot_contentLayout=0x7f090040;
+        public static final int foot_lastUpdatedTextView=0x7f090044;
+        public static final int foot_progressBar=0x7f090042;
+        public static final int foot_tipsTextView=0x7f090043;
         public static final int fragment_liner_layout=0x7f09002c;
         public static final int friend=0x7f090030;
-        public static final int head_arrowImageView=0x7f090044;
-        public static final int head_contentLayout=0x7f090043;
-        public static final int head_lastUpdatedTextView=0x7f090047;
-        public static final int head_progressBar=0x7f090045;
-        public static final int head_tipsTextView=0x7f090046;
+        public static final int head_arrowImageView=0x7f090046;
+        public static final int head_contentLayout=0x7f090045;
+        public static final int head_lastUpdatedTextView=0x7f090049;
+        public static final int head_progressBar=0x7f090047;
+        public static final int head_tipsTextView=0x7f090048;
         public static final int imageView1=0x7f090000;
         public static final int imageView2=0x7f090002;
-        public static final int itemImage=0x7f09003a;
-        public static final int loginPasswordEdit=0x7f090049;
-        public static final int loginRegister=0x7f09004c;
-        public static final int loginRememberMeCheckBox=0x7f09004b;
-        public static final int loginSubmit=0x7f09004a;
-        public static final int loginUserNameEdit=0x7f090048;
+        public static final int itemImage=0x7f09003c;
+        public static final int loginPasswordEdit=0x7f09004b;
+        public static final int loginRegister=0x7f09004e;
+        public static final int loginRememberMeCheckBox=0x7f09004d;
+        public static final int loginSubmit=0x7f09004c;
+        public static final int loginUserNameEdit=0x7f09004a;
+        public static final int mineList=0x7f09003b;
         public static final int myListView=0x7f090039;
-        public static final int notice=0x7f09004e;
-        public static final int pager=0x7f09004d;
+        public static final int news_index_image=0x7f09003a;
+        public static final int news_item_content=0x7f090054;
+        public static final int news_item_content_layout=0x7f090052;
+        public static final int news_item_from=0x7f090056;
+        public static final int news_item_icon=0x7f090051;
+        public static final int news_item_icon_layout=0x7f090050;
+        public static final int news_item_image=0x7f090055;
+        public static final int news_item_sender=0x7f090053;
+        public static final int notice=0x7f090057;
+        public static final int notice_item_content =0x7f09005b;
+        public static final int notice_item_date=0x7f09005a;
+        public static final int notice_item_title=0x7f090059;
+        public static final int notice_item_updown_image=0x7f090058;
+        public static final int pager=0x7f09004f;
         public static final int search_friend=0x7f09002d;
         public static final int teacher=0x7f09002e;
         public static final int textView1=0x7f090001;
@@ -123,7 +136,7 @@ public final class R {
         public static final int textView7=0x7f090008;
         public static final int textView8=0x7f090009;
         public static final int textView9=0x7f09000a;
-        public static final int titleText=0x7f09003b;
+        public static final int titleText=0x7f09003d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -143,10 +156,12 @@ public final class R {
         public static final int list_view_head=0x7f03000e;
         public static final int login=0x7f03000f;
         public static final int main=0x7f030010;
-        public static final int notice=0x7f030011;
-        public static final int notice1=0x7f030012;
-        public static final int report_error=0x7f030013;
-        public static final int title_bar=0x7f030014;
+        public static final int newsitem=0x7f030011;
+        public static final int notice=0x7f030012;
+        public static final int notice1=0x7f030013;
+        public static final int noticeitem=0x7f030014;
+        public static final int report_error=0x7f030015;
+        public static final int title_bar=0x7f030016;
     }
     public static final class menu {
         public static final int main=0x7f080000;

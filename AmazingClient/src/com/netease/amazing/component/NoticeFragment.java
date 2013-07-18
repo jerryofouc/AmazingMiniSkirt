@@ -1,98 +1,172 @@
 package com.netease.amazing.component;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.LinearLayout;
 
 import com.example.amazing.R;
-import com.netease.amazing.activity.NoticeActivity;
-import com.netease.amazing.pojo.Notice;
-import com.netease.amazing.util.NoticeDBSimulateHandler;
+import com.netease.amazing.util.DataSource1;
+import com.netease.amazing.util.ListViewBasedAdapter;
+import com.netease.amazing.util.ListViewBasedAdapter1;
+import com.netease.amazing.util.NoticeDataSource;
+import com.netease.amazing.util.NoticeListAdapter;
+import com.netease.amazing.util.RefreshableListView;
+import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 
-public class NoticeFragment extends Fragment {
-
-	//用于存储通知的列表 有fragment管理
-	ArrayList<Notice> notices = new ArrayList<Notice>();
+/**
+ * 
+ * @author Huang Xiao Jun
+ * Class Desciption:
+ *   ListViewFragment用於列表顯示，并且包括上拉和下拉刷新功能，響應item點擊事件
+ *
+ */
+public class NoticeFragment extends Fragment implements OnRefreshListener {
 	
-	//notice的数据处理器
-	NoticeDBSimulateHandler noticeHandler = NoticeDBSimulateHandler.getInstance();
+	private RefreshableListView mRefreshListView;
+	private DataSource1 mDataSource = new NoticeDataSource();
+	private ListViewBasedAdapter1 listAdapter;
+	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflateAndSetupView(inflater, container, savedInstanceState, R.layout.fragment1);
+	private int fragmentLayout = R.layout.fragment2;   //fragment的布局
+	private int viewListLayout = R.id.mineList;   //viewList的布局
+	
+	private OnItemClickListener itemClickListener; //itemClick响应事件
+	private MyListViewFragmentHandler fragmentHandler = new MyListViewFragmentHandler();
+	private ProgressDialog proDialog;
+	/**
+	 * 
+	 * @param fragmentLayout fragment布局
+	 * @param viewListLayout viewList布局
+	 * @param dataSource 數據源
+	 * @param adapter 適配器類型
+	 * @param itemClickListener 響應的item事件
+	 */
+	public void set(int fragmentLayout, 
+			int viewListLayout, 
+			DataSource1 dataSource,
+			OnItemClickListener itemClickListener){
+		this.fragmentLayout = fragmentLayout;
+		this.viewListLayout = viewListLayout;
+		this.mDataSource = dataSource;
+		this.itemClickListener = itemClickListener;
 	}
 	
-	private View inflateAndSetupView(LayoutInflater inflater, ViewGroup container, 
-			Bundle savedInstanceState, int layoutResourceId) {
-		View layout = inflater.inflate(layoutResourceId, container, false);
-		
-		return layout;
+	public void set(ListViewBasedAdapter1 listAdapter,OnItemClickListener itemClickLister) {
+		this.listAdapter = listAdapter;
+		this.itemClickListener = itemClickListener;
 	}
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	/**/
+	class GetInitDataThread extends Thread {
 		
-		View view = getView();
+		MyListViewFragmentHandler handler;
 		
-		
-		int lastReceivedNoticeId = -1;
-		if(notices.size() !=0) {
-			lastReceivedNoticeId = notices.get(notices.size()-1).getId();
+		GetInitDataThread(MyListViewFragmentHandler handler) {
+			this.handler = handler;
 		}
 		
-		//lastReceivedNoticeId表示上次从服务器端获取的所有通知中，处于列表尾部的id，用于服务器端的判断
-		noticeHandler.getNotice(notices, 19, lastReceivedNoticeId);
-		
-		//用于存储listView项的map集合
-		ArrayList<Map<String,Object>> noticeList = new ArrayList<Map<String,Object>>();
-		Iterator<Notice> it = notices.iterator();
-		
-		while(it.hasNext()) {
-			Notice notice = it.next();
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("image", R.drawable.download);
-			map.put("title", notice.cutTitle(30,"UTF-8"));
-			map.put("date", new SimpleDateFormat("yyyy-MM-dd").format(notice.getNoticeDate()));
-			map.put("content", notice.cutContent(10,"UTF-8"));
-			noticeList.add(map);
+		@Override 
+		public void run() {
+			mDataSource.updateValue(0);
+			//mDataSource.toMapList();
+			listAdapter = new NoticeListAdapter(getActivity(), mDataSource);
+			set(listAdapter,itemClickListener);
+			mRefreshListView.setAdapter(listAdapter);
+			handler.sendEmptyMessage(1);
 		}
-		ListView lv = (ListView)view.findViewById(R.id.myListView);
-		lv.setAdapter(new SimpleAdapter(getActivity(),noticeList,R.layout.item,
-				      new String[]{"image","title","date","content"},
-					  new int[]{R.id.itemImage,R.id.titleText,R.id.dateText,R.id.contentText}));
-		lv.setOnItemClickListener(new MyOnItemClickListener());	
 	}
 	
-	private class MyOnItemClickListener implements OnItemClickListener {
+	class MyListViewFragmentHandler extends Handler {
 
 		@Override
-		public void onItemClick(AdapterView<?> adapterView, View view, int id,
-				long position) {
-			Bundle bundle = new Bundle();
-			Notice notice = notices.get(id);
-			
-			//为下个activity传递所选中的notice
-			bundle.putSerializable("notice", notice);
-			Intent intent = new Intent(getActivity(),NoticeActivity.class);
-			intent.putExtras(bundle);
-			startActivity(intent);
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			//如果连接中。。对话框还在 dismiss它
+			if(proDialog != null) {
+				proDialog.dismiss();
+			}
 		}
 		
 	}
+	/**/
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState){
+		if (container == null) {
+			return null;
+		}
+		LinearLayout view = (LinearLayout) inflateAndSetupView(inflater,
+				container, savedInstanceState, fragmentLayout);
+		mRefreshListView = (RefreshableListView) view
+				.findViewById(viewListLayout);
+		
+		new GetInitDataThread(fragmentHandler).start();
+//		proDialog = ProgressDialog.show(getActivity(), "连接中..",
+//				"连接中..请稍后....", true, true);
+		
+		
+		//添加ItemClick响应事件
+		mRefreshListView.setOnItemClickListener(itemClickListener);
+		mRefreshListView.setonRefreshListener(this);
+		return view;
+	}
+
+	protected void changeListView(int type){
+		mDataSource.updateValue(type);
+	}
+
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			listAdapter.setCount();
+			listAdapter.notifyDataSetChanged();
+			mRefreshListView.onRefreshComplete();
+			super.handleMessage(msg);
+		}
+	};
+
+	@Override
+	public void onPullUpRefresh() {
+		new Thread() {
+			public void run() {
+				try {
+					//模拟网络请求时间
+					Thread.sleep(3 * 1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				changeListView(1);
+				handler.sendEmptyMessage(0);
+			}
+		}.start();
+	}
+
+	@Override
+	public void onPullDownRefresh() {
+		new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(3 * 1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				changeListView(2);
+				handler.sendEmptyMessage(0);
+			}
+		}.start();
+	}
 
 
+	private View inflateAndSetupView(LayoutInflater inflater,
+			ViewGroup container, Bundle savedInstanceState, int layoutResourceId) {
+		return inflater.inflate(layoutResourceId, container, false);
+	}
 }

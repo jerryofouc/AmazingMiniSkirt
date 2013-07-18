@@ -19,10 +19,11 @@ public class NoticeDBSimulateHandler {
 		return handler;
 	}
 	
-	public boolean getNotice(ArrayList<Notice> noticeList, int size,int lastReceivedNoticeId) {
+	public ArrayList<Notice> getNotice(int size) {
+		ArrayList<Notice> notices = new ArrayList<Notice>();
 		for(int i =0;i<size;i++) {
-			noticeList.add(new Notice(true));
+			notices.add(new Notice(true));
 		}
-		return true;
+		return notices;
 	}
 }

@@ -28,7 +28,6 @@ import android.widget.TextView;
  */
 public class RefreshableListView extends ListView implements OnScrollListener {
 
-
 	/** 上拉刷新，下拉刷新控制变量 */
 	private final static int RELEASE_TO_REFRESH = 0;
 	private final static int PULL_TO_REFRESH = 1;

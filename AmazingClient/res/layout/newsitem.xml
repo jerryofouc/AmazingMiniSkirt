@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="fill_parent"
+        		  android:id="@+id/news_item_icon_layout" android:orientation="vertical" android:layout_weight="1" android:background="#FF0000">
+        <ImageView android:id="@+id/news_item_icon" android:layout_width="wrap_content"
+            	  android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="fill_parent"
+        		  android:id="@+id/news_item_content_layout" android:orientation="vertical" android:layout_weight="2">
+        <TextView android:id="@+id/news_item_sender" android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" android:text="抱抱熊"/>
+        <TextView android:id="@+id/news_item_content" android:layout_width="wrap_content"
+            	  android:layout_height="wrap_content" android:text="林天羽今天讲的故事很有趣，小朋友们都很喜欢，大家觉得呢"/>
+        <ImageView android:id="@+id/news_item_image" android:layout_width="wrap_content"
+            	  android:layout_height="wrap_content" android:src="@drawable/ic_launcher"/>
+        <TextView android:id="@+id/news_item_from" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="杭州英华幼儿园"/>"
+    </LinearLayout>
+
+</LinearLayout>
