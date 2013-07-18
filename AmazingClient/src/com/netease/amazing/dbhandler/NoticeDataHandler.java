@@ -7,7 +7,6 @@ import com.netease.amazing.util.NoticeDBSimulateHandler;
 
 public class NoticeDataHandler {
 	
-	
 	public ArrayList<Notice> getInitNotice(int noticeCount) {
 		return NoticeDBSimulateHandler.getInstance().getNotice(noticeCount);
 	}
