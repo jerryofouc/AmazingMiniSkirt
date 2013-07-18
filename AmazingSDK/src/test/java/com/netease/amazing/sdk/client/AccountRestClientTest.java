@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class AccountRestClientTest {
 	private static final String BASE_URL = "http://localhost:8080/MiniSkirtServer";
-	private static final String USER_NAME = "zhanxiaojie";
+	private static final String USER_NAME = "zhangxiaojie";
 	private static final String PASSWORD = "123456";
 	@Test
 	public void loginTest(){
