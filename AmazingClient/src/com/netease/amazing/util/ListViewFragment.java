@@ -85,14 +85,35 @@ public class ListViewFragment extends Fragment implements OnRefreshListener {
 		mRefreshListView.setonRefreshListener(this);
 		return view;
 	}
-
-	protected void changeListView(int pageStart, int pageSize){
+	
+	/**
+	 * State： should be updated
+	 * 上拉 刷新展示内容方式
+	 * @param pageStart
+	 * @param pageSize
+	 */
+	private void changeListViewByUpRefresh(int pageStart, int pageSize){
 		List<Map<String, Object>> data = mDataSource.updateValue(pageStart, pageSize);
 		for (Map<String, Object> map : data) {
 			this.mDataSource.getmDataSource().add(map);
 		}
 		data = null;
 	}
+	
+	/**
+	 * State: should be updated
+	 * 下拉刷新展示内容方式
+	 * @param pageStart
+	 * @param pageSize
+	 */
+	private void changeListViewByDownRefresh(int pageStart, int pageSize){
+		List<Map<String, Object>> data = mDataSource.updateValue(pageStart, pageSize);
+		for (Map<String, Object> map : data) {
+			this.mDataSource.getmDataSource().add(map);
+		}
+		data = null;
+	}
+	
 
 	private Handler handler = new Handler(){
 		@Override
@@ -114,7 +135,7 @@ public class ListViewFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
+				changeListViewByUpRefresh(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -129,7 +150,7 @@ public class ListViewFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
+				changeListViewByDownRefresh(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
