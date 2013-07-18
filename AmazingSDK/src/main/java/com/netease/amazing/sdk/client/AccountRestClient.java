@@ -12,7 +12,6 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 public class AccountRestClient extends AbstractBaseClient {
-	private static Client client = Client.create();
 	public AccountRestClient(String baseUrl, String loginName, String password) {
 		super(baseUrl, loginName, password);
 	}

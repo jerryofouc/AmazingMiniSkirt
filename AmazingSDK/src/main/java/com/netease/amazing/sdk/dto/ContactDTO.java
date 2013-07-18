@@ -11,7 +11,6 @@ public class ContactDTO {
 	private String fromSchool;//来自学校
 	private String fromClass;//来自班级
 	List<TeacherDTO> teachers;//老师
-	List<ParentDTO> parents;//家长
 	List<ChildDTO> friends;//朋友
 	List<ChildDTO> classMates;//班级同学
 	
@@ -57,12 +56,6 @@ public class ContactDTO {
 	}
 	public void setTeachers(List<TeacherDTO> teachers) {
 		this.teachers = teachers;
-	}
-	public List<ParentDTO> getParents() {
-		return parents;
-	}
-	public void setParents(List<ParentDTO> parents) {
-		this.parents = parents;
 	}
 	public List<ChildDTO> getFriends() {
 		return friends;
