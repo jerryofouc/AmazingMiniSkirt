@@ -7,6 +7,8 @@ public class ChildDTO {
 	private String fatherTelephone;
 	private String motherName;
 	private String motherTelephone;
+	private String fromSchool;//来自学校
+	private String fromClass;//来自班级
 	public String getName() {
 		return name;
 	}
@@ -43,5 +45,18 @@ public class ChildDTO {
 	public void setMotherTelephone(String motherTelephone) {
 		this.motherTelephone = motherTelephone;
 	}
+	public String getFromSchool() {
+		return fromSchool;
+	}
+	public void setFromSchool(String fromSchool) {
+		this.fromSchool = fromSchool;
+	}
+	public String getFromClass() {
+		return fromClass;
+	}
+	public void setFromClass(String fromClass) {
+		this.fromClass = fromClass;
+	}
+	
 	
 }
