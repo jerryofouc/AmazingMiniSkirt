@@ -8,10 +8,14 @@ public class ContactDTO {
 	private String nickName;  //昵称
 	private String birthday;  //生日
 	private String gender;  //性别
-	private String fromSchool;
-	private String fromClass;
-	List<TeacherDTO> teachers;
-	List<ParentDTO> parents;
+	private String fromSchool;//来自学校
+	private String fromClass;//来自班级
+	List<TeacherDTO> teachers;//老师
+	List<ParentDTO> parents;//家长
+	List<ChildDTO> friends;//朋友
+	List<ChildDTO> classMates;//班级同学
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -59,6 +63,18 @@ public class ContactDTO {
 	}
 	public void setParents(List<ParentDTO> parents) {
 		this.parents = parents;
+	}
+	public List<ChildDTO> getFriends() {
+		return friends;
+	}
+	public void setFriends(List<ChildDTO> friends) {
+		this.friends = friends;
+	}
+	public List<ChildDTO> getClassMates() {
+		return classMates;
+	}
+	public void setClassMates(List<ChildDTO> classMates) {
+		this.classMates = classMates;
 	}
 	
 }
