@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -22,6 +24,7 @@ public class User extends IdEntity {
 	private String salt;
 	private Date registerDate;
 	private String roles;
+	private Parent parent;
 	public String getLoginName() {
 		return loginName;
 	}
@@ -64,4 +67,14 @@ public class User extends IdEntity {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	
+	@OneToOne
+    @JoinColumn(name="parent_id")
+	public Parent getParent() {
+		return parent;
+	}
+	public void setParent(Parent parent) {
+		this.parent = parent;
+	}
+	
 }

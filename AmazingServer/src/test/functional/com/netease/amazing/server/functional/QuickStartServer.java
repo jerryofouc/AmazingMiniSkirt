@@ -10,9 +10,9 @@ import org.springside.modules.test.jetty.JettyFactory;
  */
 public class QuickStartServer {
 
-	public static final int PORT = 8080;
+	public static final int PORT = 8090;
 	public static final String CONTEXT = "/MiniSkirtServer";
-	public static final String BASE_URL = "http://localhost:8080/MiniSkirtServer";
+	public static final String BASE_URL = "http://localhost:8090/MiniSkirtServer";
 	public static final String[] TLD_JAR_NAMES = new String[] { "sitemesh", "spring-webmvc", "shiro-web",
 			"springside-core" };
 
