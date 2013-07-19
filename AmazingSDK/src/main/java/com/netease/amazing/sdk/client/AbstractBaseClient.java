@@ -1,9 +1,7 @@
 package com.netease.amazing.sdk.client;
 
-import com.sun.jersey.api.client.Client;
 
 public abstract class AbstractBaseClient {
-	protected static Client client = Client.create();
 	public String baseUrl;
 	protected String loginName;
 	protected String password;
