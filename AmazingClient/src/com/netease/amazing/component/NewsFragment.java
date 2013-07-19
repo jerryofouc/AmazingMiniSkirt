@@ -1,8 +1,5 @@
 package com.netease.amazing.component;
 
-import java.util.List;
-import java.util.Map;
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
