@@ -4,6 +4,7 @@ public class ChildDTO {
 	private String name;
 	private String fatherName;
 	private String birthday;
+	private String nickName;  //Í«≥∆
 	private String fatherTelephone;
 	private String motherName;
 	private String motherTelephone;
@@ -57,6 +58,10 @@ public class ChildDTO {
 	public void setFromClass(String fromClass) {
 		this.fromClass = fromClass;
 	}
-	
-	
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 }
