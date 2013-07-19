@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 	<LinearLayout
-	    android:id="@+id/fragment_liner_layout"
+	    android:id="@+id/contact_fragment_liner_layout"
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
 		    android:orientation="vertical"
 		    >
 		   <EditText
-		       android:id="@+id/search_friend"
+		       android:id="@+id/contact_search_friend"
 		       android:layout_width="match_parent"
 		       android:layout_height="wrap_content"
 		       android:background="@drawable/shape"
@@ -49,7 +49,7 @@
 	    <TextView
 	        android:text="班主任"
 	        style="@style/textviews"/>
-	    <LinearLayout android:id="@+id/teacher"
+	    <LinearLayout android:id="@+id/contact_teacher"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
@@ -60,7 +60,7 @@
 	    <TextView
 	        android:text="同学"
 	        style="@style/textviews"/>
-	    <LinearLayout android:id="@+id/classmate"
+	    <LinearLayout android:id="@+id/contact_classmate"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
@@ -71,7 +71,7 @@
 	     <TextView
 	        android:text="好友"
 	        style="@style/textviews"/>
-	     <LinearLayout android:id="@+id/friend"
+	     <LinearLayout android:id="@+id/contact_friend"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"

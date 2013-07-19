@@ -94,6 +94,14 @@
             android:text="13333333333"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        
+        <TextView
+            android:id="@+id/contact_friend_father_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hehe"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
     </LinearLayout>
 
     <LinearLayout
@@ -109,12 +117,19 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/contact_friend_father_content"
+            android:id="@+id/contact_friend_mother_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="13569798946"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+         <TextView
+            android:id="@+id/contact_friend_mother_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="heihei"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
     </LinearLayout>
 
     <Button

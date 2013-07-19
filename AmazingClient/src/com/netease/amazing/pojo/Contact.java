@@ -37,6 +37,9 @@ public class Contact implements Serializable{
 	private String phoneOfTeacher; //当relationship为RELATIONSHIP_TEACHER时，设置教师的固定电话
 	private String mobileOfTeacher; //当relationship为RELATIONSHIP_TEACHER时，设置教师的手机号
 	
+	public Contact(){
+		super();
+	}
 	public Contact(String name, String nickName, String birthday,
 			String gender, String nameOfDad, String phoneOfDad,
 			String nameOfMum, String phoneOfMum, String fromSchool,
