@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,9 @@ import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 
 /**
- * 
  * @author Huang Xiao Jun
  * Class Desciption:
  *   ListViewFragment用於列表顯示，并且包括上拉和下拉刷新功能，響應item點擊事件
- *
  */
 public class NewsFragment extends Fragment implements OnRefreshListener {
 	
@@ -111,10 +110,11 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		mRefreshListView = (RefreshableListView) view
 				.findViewById(viewListLayout);
 		
-		GetInitDataTask task = new GetInitDataTask();  
-		task.execute("no");
 		proDialog = ProgressDialog.show(getActivity(), "连接中..",
 				"连接中..请稍后....", true, true);
+		GetInitDataTask task = new GetInitDataTask();  
+		task.execute("no");
+		Log.i("a","aaaaaa");
 		
 		
 		//添加ItemClick响应事件

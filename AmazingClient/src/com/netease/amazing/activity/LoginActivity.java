@@ -1,9 +1,5 @@
 package com.netease.amazing.activity;
 
-import java.io.DataInputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,14 +22,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-import com.netease.amazing.sdk.client.AccountRestClient;
+import com.netease.amazing.component.MyApplication;
 
 public class LoginActivity extends Activity {
 
 
 	private String userName;
 	private String password;
-
 
 	private EditText view_userName;
 	private EditText view_password;
@@ -124,16 +119,6 @@ public class LoginActivity extends Activity {
 		share = null;
 	}
 
-	/**
-	 * 如果连接服务器超过5秒,也算连接失败.
-	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            密码
-	 * @param validateUrl
-	 *            检查登陆的地址
-	 * */
 	private boolean validateLocalLogin(String userName, String password,
 			String validateUrl) {
 		// 用于标记登陆状态
@@ -201,7 +186,7 @@ public class LoginActivity extends Activity {
 			proDialog = ProgressDialog.show(LoginActivity.this, "连接中..",
 					"连接中..请稍后....", true, true);
 			// 开一个线程进行登录验证,主要是用于失败,成功可以直接通过startAcitivity(Intent)转向
-			String baseURL = "http://10.240.34.42:8080/MiniSkirtServer";
+			String baseURL = "http://10.240.34.42:8080/server";
 			Thread loginThread = new Thread(new LoginFailureHandler(baseURL));
 			loginThread.start();
 		}
@@ -302,6 +287,10 @@ public class LoginActivity extends Activity {
 			// 登陆成功
 			if (loginState) {
 				// 需要传输数据到登陆后的界面,
+				MyApplication myApp = (MyApplication)getApplication();
+				myApp.setUsername(userName);
+				myApp.setPassword(password);
+				
 				Intent intent = new Intent();
 				intent.setClass(LoginActivity.this, HomeActivity.class);
 				Bundle bundle = new Bundle();
