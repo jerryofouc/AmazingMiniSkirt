@@ -20,6 +20,7 @@ public class Child extends IdEntity{
 	private String name;
 	private Gender gender;
 	private String description;
+	private String nickname;
 	private Date birthday;
 	private Class klass;
 	private List<Parent> parents;
@@ -50,6 +51,13 @@ public class Child extends IdEntity{
 	}
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="child")
 	public List<Parent> getParents() {

@@ -52,7 +52,8 @@ public class ContactsService {
 				contactDTO.setFromSchool(kinderGarden.getName());
 			}
 		}
-		
+		contactDTO.setName(curChild.getName());
+		contactDTO.setNickName(curChild.getNickname());
 		List<Teacher> teachers = klass.getTeachers();
 		for(Teacher t : teachers){
 			TeacherDTO teacherDto = new TeacherDTO();
@@ -74,6 +75,7 @@ public class ContactsService {
 			childDTO.setName(child.getName());
 			childDTO.setFromClass(child.getKlass().getName());
 			childDTO.setFromSchool(child.getKlass().getKindergarden().getName());
+			childDTO.setNickName(child.getNickname());
 			List<Parent> parents = child.getParents();
 			for(Parent p : parents){
 				if(p.getGender() == Gender.MALE){
@@ -98,6 +100,7 @@ public class ContactsService {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				childDTO.setBirthday(dateFormat.format(childFriend.getBirthday()));
 			}
+			childDTO.setNickName(childFriend.getNickname());
 			childDTO.setName(childFriend.getName());
 			List<Parent> parents = childFriend.getParents();
 			for(Parent p : parents){
