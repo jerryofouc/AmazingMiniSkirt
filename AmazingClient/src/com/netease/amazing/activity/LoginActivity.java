@@ -26,11 +26,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.sdk.client.AccountRestClient;
 
 public class LoginActivity extends Activity {
 
 
-	private String userName; 
+	private String userName;
 	private String password;
 
 
@@ -137,34 +138,11 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
-		HttpURLConnection conn = null;
-		DataInputStream dis = null;
-		try {
-			URL url = new URL(validateUrl);
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setConnectTimeout(5000);
-			conn.setRequestMethod("GET");
-			conn.connect();
-			dis = new DataInputStream(conn.getInputStream());
-			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				Log.d(this.toString(),
-						"getResponseCode() not HttpURLConnection.HTTP_OK");
-				isNetError = true;
-				return false;
-			}
-			// 读取服务器的登录状态码
-			int loginStateInt = dis.readInt();
-			if (loginStateInt > 0) {
-				loginState = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			isNetError = true;
-			Log.d(this.toString(), e.getMessage() + "  127 line");
-		} finally {
-			if (conn != null) {
-				conn.disconnect();
-			}
+		if(true) {
+			loginState = true;
+		}
+		else {
+			isNetError = false;
 		}
 		// 登陆成功
 		if (loginState) {
@@ -223,7 +201,7 @@ public class LoginActivity extends Activity {
 			proDialog = ProgressDialog.show(LoginActivity.this, "连接中..",
 					"连接中..请稍后....", true, true);
 			// 开一个线程进行登录验证,主要是用于失败,成功可以直接通过startAcitivity(Intent)转向
-			String baseURL = "http://10.240.34.33:8080/Simpleresponse/responseServlet";
+			String baseURL = "http://10.240.34.42:8080/MiniSkirtServer";
 			Thread loginThread = new Thread(new LoginFailureHandler(baseURL));
 			loginThread.start();
 		}
@@ -316,8 +294,7 @@ public class LoginActivity extends Activity {
 		public void run() {
 			userName = view_userName.getText().toString();
 			password = view_password.getText().toString();
-			//这里换成你的验证地址
-			String validateURL= baseURL+ "?userName=" +userName + "&password=" + password;
+			String validateURL= baseURL;
 			boolean loginState = validateLocalLogin(userName, password,
 					validateURL);
 			Log.d(this.toString(), "validateLogin");

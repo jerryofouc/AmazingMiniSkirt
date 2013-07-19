@@ -54,7 +54,7 @@ public class OldNoticeFragment extends Fragment {
 		}
 		
 		//lastReceivedNoticeId表示上次从服务器端获取的所有通知中，处于列表尾部的id，用于服务器端的判断
-		notices = noticeHandler.getNotice(10);
+		notices = noticeHandler.getNotice(10,10);
 		
 		//用于存储listView项的map集合
 		ArrayList<Map<String,Object>> noticeList = new ArrayList<Map<String,Object>>();

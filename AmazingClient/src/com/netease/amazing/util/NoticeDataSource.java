@@ -11,7 +11,7 @@ import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NoticeDataHandler;
 import com.netease.amazing.pojo.Notice;
 
-public class NoticeDataSource extends DataSource1 {
+public class NoticeDataSource extends DataSource {
 
 	protected ArrayList<Notice> noticeList = new ArrayList<Notice>();
 	private int fetchSize = FETCH_SIZE;
@@ -66,7 +66,6 @@ public class NoticeDataSource extends DataSource1 {
 	
 	public void initFetchNotice() {
 		noticeList = ndh.getInitNotice(fetchSize);
-		
 	}
 	
 	public void fetchNoticeDown() {
@@ -78,8 +77,11 @@ public class NoticeDataSource extends DataSource1 {
 	public void fetchNoticeUp() {
 		Notice topNotice = noticeList.get(0);
 		ArrayList<Notice> result = ndh.getNotice(topNotice.getId());
+		if(result != null) {
 		result.addAll(noticeList);
 		noticeList = result;
+		}
+		
 	}
 }
 

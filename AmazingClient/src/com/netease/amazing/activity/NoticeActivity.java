@@ -18,7 +18,7 @@ public class NoticeActivity extends Activity{
 		setContentView(R.layout.notice);
 		TextView noticeText = (TextView)findViewById(R.id.notice);
 		Intent intent = getIntent();
-		Notice notice = (Notice)(intent.getExtras().getSerializable("notice"));
+		Notice notice = (Notice)(intent.getExtras().getSerializable("itemNotice"));
 		noticeText.setText("noticeµÄidÎª: " +notice.getId() + "                  " +notice.getContent());
 	}
 }

@@ -5,22 +5,27 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/reportError_desc_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:text="若您的孩子的信息有误（包括：姓名、性别、学校、班级、生日、入学时间），请及时与管理员取得联系，以便及时修正。" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/reportError_phone_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:text="0571-89546789"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/dark_red" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/reportError_phone_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:text="立即拨打" />
 
 </LinearLayout>

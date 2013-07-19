@@ -20,24 +20,24 @@ public abstract class ListViewBasedAdapter extends BaseAdapter{
 	
 	protected int count;//数据的个数
 	protected LayoutInflater inflater;//当前的Activity
-	protected List<Map<String, Object>> dataSource;//数据源
+	protected DataSource dataSource;//数据源
 	public ListViewBasedAdapter(Context context,
-			List<Map<String, Object>> dataSource) {
+			DataSource dataSource) {
 		this.inflater =LayoutInflater.from(context);
 		this.dataSource=dataSource;
-		this.count = dataSource.size();
+		this.count = dataSource.toMapList().size();
 	}
 
 	public int getCount() {
 		return count;
 	}
 	
-	public void setCount(int count) {
-		this.count = count;
+	public void setCount() {
+		this.count =dataSource.toMapList().size();
 	}
 	@Override
 	public Object getItem(int position) {
-		return dataSource.get(position);
+		return dataSource.toMapList().get(position);
 	}
 
 	@Override

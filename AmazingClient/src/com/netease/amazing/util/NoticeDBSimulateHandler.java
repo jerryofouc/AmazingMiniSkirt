@@ -19,10 +19,34 @@ public class NoticeDBSimulateHandler {
 		return handler;
 	}
 	
-	public ArrayList<Notice> getNotice(int size) {
+	public ArrayList<Notice> getNotice(int bottomNoticeId,int size) {
 		ArrayList<Notice> notices = new ArrayList<Notice>();
-		for(int i =0;i<size;i++) {
-			notices.add(new Notice(true));
+		for(int i =bottomNoticeId;i<size;i++) {
+			Notice notice = new Notice(true);
+			notice.setId(i);
+			notices.add(notice);
+		}
+		return notices;
+	}
+	
+	public ArrayList<Notice> getTopNotice(int topNoticeId) {
+		int i;
+		ArrayList<Notice> notices = new ArrayList<Notice>();
+		for(i=topNoticeId-10;i<topNoticeId;i++) {
+			Notice notice = new Notice(true);
+			notice.setId(i);
+			notices.add(notice);
+		}
+		return notices;
+	}
+
+	public ArrayList<Notice> getInitNotice(int noticeCount) {
+		int i =0;
+		ArrayList<Notice> notices = new ArrayList<Notice>();
+		for(i=0;i<noticeCount;i++) {
+			Notice notice = new Notice(true);
+			notice.setId(i);
+			notices.add(notice);
 		}
 		return notices;
 	}

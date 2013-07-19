@@ -1,6 +1,8 @@
 package com.netease.amazing.component;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,13 +10,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import com.example.amazing.R;
-import com.netease.amazing.util.DataSource1;
+import com.netease.amazing.activity.NoticeActivity;
+import com.netease.amazing.pojo.Notice;
 import com.netease.amazing.util.ListViewBasedAdapter;
-import com.netease.amazing.util.ListViewBasedAdapter1;
 import com.netease.amazing.util.NoticeDataSource;
 import com.netease.amazing.util.NoticeListAdapter;
 import com.netease.amazing.util.RefreshableListView;
@@ -30,14 +33,14 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 public class NoticeFragment extends Fragment implements OnRefreshListener {
 	
 	private RefreshableListView mRefreshListView;
-	private DataSource1 mDataSource = new NoticeDataSource();
-	private ListViewBasedAdapter1 listAdapter;
+	private NoticeDataSource mDataSource = new NoticeDataSource();
+	private ListViewBasedAdapter listAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
 	private int fragmentLayout = R.layout.fragment2;   //fragment的布局
 	private int viewListLayout = R.id.mineList;   //viewList的布局
 	
-	private OnItemClickListener itemClickListener; //itemClick响应事件
+	private OnItemClickListener itemClickListener = new MyOnItemClickListener(); //itemClick响应事件
 	private MyListViewFragmentHandler fragmentHandler = new MyListViewFragmentHandler();
 	private ProgressDialog proDialog;
 	/**
@@ -50,7 +53,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	 */
 	public void set(int fragmentLayout, 
 			int viewListLayout, 
-			DataSource1 dataSource,
+			NoticeDataSource dataSource,
 			OnItemClickListener itemClickListener){
 		this.fragmentLayout = fragmentLayout;
 		this.viewListLayout = viewListLayout;
@@ -58,33 +61,32 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 		this.itemClickListener = itemClickListener;
 	}
 	
-	public void set(ListViewBasedAdapter1 listAdapter,OnItemClickListener itemClickLister) {
+	public void set(ListViewBasedAdapter listAdapter) {
 		this.listAdapter = listAdapter;
-		this.itemClickListener = itemClickListener;
 	}
 	
-	/**/
-	class GetInitDataThread extends Thread {
-		
-		MyListViewFragmentHandler handler;
-		
-		GetInitDataThread(MyListViewFragmentHandler handler) {
-			this.handler = handler;
-		}
-		
-		@Override 
-		public void run() {
-			mDataSource.updateValue(0);
-			//mDataSource.toMapList();
-			listAdapter = new NoticeListAdapter(getActivity(), mDataSource);
-			set(listAdapter,itemClickListener);
-			mRefreshListView.setAdapter(listAdapter);
-			handler.sendEmptyMessage(1);
-		}
-	}
-	
-	class MyListViewFragmentHandler extends Handler {
+	class GetInitDataTask extends AsyncTask {
 
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			mDataSource.updateValue(0);
+			listAdapter = new NoticeListAdapter(getActivity(), mDataSource);
+			set(listAdapter);
+			return listAdapter;
+		}
+		
+		@Override
+		protected void onPostExecute(Object result) {
+			super.onPostExecute(result);
+			
+			result = (NoticeListAdapter)listAdapter;
+			mRefreshListView.setAdapter(listAdapter);
+			fragmentHandler.sendEmptyMessage(1);
+		}
+		
+	}
+	class MyListViewFragmentHandler extends Handler {
+		
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -92,8 +94,8 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 			if(proDialog != null) {
 				proDialog.dismiss();
 			}
+			
 		}
-		
 	}
 	/**/
 	
@@ -103,22 +105,37 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 		if (container == null) {
 			return null;
 		}
+		
 		LinearLayout view = (LinearLayout) inflateAndSetupView(inflater,
 				container, savedInstanceState, fragmentLayout);
 		mRefreshListView = (RefreshableListView) view
 				.findViewById(viewListLayout);
 		
-		new GetInitDataThread(fragmentHandler).start();
-//		proDialog = ProgressDialog.show(getActivity(), "连接中..",
-//				"连接中..请稍后....", true, true);
-		
-		
+		proDialog = ProgressDialog.show(getActivity(), "连接中..",
+				"连接中..请稍后....", true, true);
+		GetInitDataTask task = new GetInitDataTask(); 
+		task.execute("no");
 		//添加ItemClick响应事件
 		mRefreshListView.setOnItemClickListener(itemClickListener);
 		mRefreshListView.setonRefreshListener(this);
 		return view;
 	}
 
+	class MyOnItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+				long arg3) {
+			Notice itemNotice = mDataSource.getNoticeList().get(position);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("itemNotice", itemNotice);
+			Intent intent = new Intent(getActivity(),NoticeActivity.class);
+			intent.putExtras(bundle);
+			startActivity(intent);
+		}
+		
+	}
+	
 	protected void changeListView(int type){
 		mDataSource.updateValue(type);
 	}

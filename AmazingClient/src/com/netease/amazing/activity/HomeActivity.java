@@ -41,8 +41,6 @@ public class HomeActivity extends FragmentActivity
 	/** Called when the activity is first created. */
 	
 	
-	
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +71,7 @@ public class HomeActivity extends FragmentActivity
     	actionBar.setHomeButtonEnabled(false);
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     	actionBar.setDisplayShowTitleEnabled(true);
-    	actionBar.setDisplayShowHomeEnabled(true);   
+    	actionBar.setDisplayShowHomeEnabled(false);   
     	
     	//设置actionBar的title bar ， 自定义样式
     	actionBar.setDisplayShowCustomEnabled(true); 
