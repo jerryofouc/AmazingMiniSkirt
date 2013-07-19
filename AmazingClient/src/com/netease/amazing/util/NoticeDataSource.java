@@ -66,7 +66,6 @@ public class NoticeDataSource extends DataSource1 {
 	
 	public void initFetchNotice() {
 		noticeList = ndh.getInitNotice(fetchSize);
-		
 	}
 	
 	public void fetchNoticeDown() {
@@ -78,8 +77,11 @@ public class NoticeDataSource extends DataSource1 {
 	public void fetchNoticeUp() {
 		Notice topNotice = noticeList.get(0);
 		ArrayList<Notice> result = ndh.getNotice(topNotice.getId());
+		if(result != null) {
 		result.addAll(noticeList);
 		noticeList = result;
+		}
+		
 	}
 }
 

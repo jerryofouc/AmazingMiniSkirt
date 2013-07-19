@@ -1,17 +1,14 @@
 package com.netease.amazing.component;
 
-import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +16,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import com.example.amazing.R;
-import com.netease.amazing.util.DataSource;
+import com.netease.amazing.util.DataSource1;
 import com.netease.amazing.util.ListViewBasedAdapter;
+import com.netease.amazing.util.ListViewBasedAdapter1;
 import com.netease.amazing.util.NewsDataSource;
 import com.netease.amazing.util.NewsListAdapter;
 import com.netease.amazing.util.RefreshableListView;
@@ -36,8 +34,8 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 public class NewsFragment extends Fragment implements OnRefreshListener {
 	
 	private RefreshableListView mRefreshListView;
-	private DataSource mDataSource = new NewsDataSource();
-	private ListViewBasedAdapter listAdapter;
+	private DataSource1 mDataSource = new NewsDataSource();
+	private ListViewBasedAdapter1 listAdapter;
 	private String listViewAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
@@ -57,7 +55,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	 */
 	public void set(int fragmentLayout, 
 			int viewListLayout, 
-			DataSource dataSource,
+			DataSource1 dataSource,
 			String adapter,
 			OnItemClickListener itemClickListener){
 		this.fragmentLayout = fragmentLayout;
@@ -67,28 +65,30 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		this.listViewAdapter = adapter;
 	}
 	
-	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickLister) {
+	public void set(ListViewBasedAdapter1 listAdapter,OnItemClickListener itemClickLister) {
 		this.listAdapter = listAdapter;
 		this.itemClickListener = itemClickListener;
 	}
 	
-	/**/
-	private class GetInitDataThread extends Thread {
-		
-		MyListViewFragmentHandler handler;
-		
-		GetInitDataThread(MyListViewFragmentHandler handler) {
-			this.handler = handler;
-		}
-		
-		@Override 
-		public void run() {
-			mDataSource.setmDataSource(mDataSource.updateValue(DataSource.PAGE_START, DataSource.PAGE_END));
-			listAdapter = new NewsListAdapter(getActivity(), mDataSource.getmDataSource());
+	class GetInitDataTask extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			mDataSource.updateValue(0);
+			listAdapter = new NewsListAdapter(getActivity(), mDataSource);
 			set(listAdapter,itemClickListener);
-			mRefreshListView.setAdapter(listAdapter);
-			handler.sendEmptyMessage(1);
+			fragmentHandler.sendEmptyMessage(1);
+			return listAdapter;
 		}
+		
+		@Override
+		protected void onPostExecute(Object result) {
+			super.onPostExecute(result);
+			result = (NewsListAdapter)listAdapter;
+			mRefreshListView.setAdapter(listAdapter);
+			
+		}
+		
 	}
 	
 	private class MyListViewFragmentHandler extends Handler {
@@ -104,7 +104,6 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		
 	}
 	/**/
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
@@ -116,9 +115,10 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		mRefreshListView = (RefreshableListView) view
 				.findViewById(viewListLayout);
 		
-		new GetInitDataThread(fragmentHandler).start();
-//		proDialog = ProgressDialog.show(getActivity(), "连接中..",
-//				"连接中..请稍后....", true, true);
+		GetInitDataTask task = new GetInitDataTask();  
+		task.execute("no");
+		proDialog = ProgressDialog.show(getActivity(), "连接中..",
+				"连接中..请稍后....", true, true);
 		
 		
 		//添加ItemClick响应事件
@@ -127,18 +127,14 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		return view;
 	}
 
-	protected void changeListView(int pageStart, int pageSize){
-		List<Map<String, Object>> data = mDataSource.updateValue(pageStart, pageSize);
-		for (Map<String, Object> map : data) {
-			this.mDataSource.getmDataSource().add(map);
-		}
-		data = null;
+	protected void changeListView(int type){
+		mDataSource.updateValue(type);
 	}
 
 	private Handler handler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
-			listAdapter.setCount(listAdapter.getCount()+LIST_VIEW_PAGE_SIZE);
+			listAdapter.setCount();
 			listAdapter.notifyDataSetChanged();
 			mRefreshListView.onRefreshComplete();
 			super.handleMessage(msg);
@@ -155,7 +151,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
+				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -170,7 +166,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(mDataSource.getmDataSource().size() + 1, LIST_VIEW_PAGE_SIZE);
+				changeListView(2);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();

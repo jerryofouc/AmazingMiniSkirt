@@ -25,9 +25,8 @@ public class NoticeListAdapter extends ListViewBasedAdapter1 {
         
 		ImageView image1 = (ImageView)view.findViewById(R.id.notice_item_updown_image);
 		Map<String,Object> m = (Map<String,Object>)getItem(position);
-		Log.i("t6345y4rtr34t","  "+m);
+		
 		Integer i = (Integer)m.get("image");
-		Log.i("53543253535", "idfgagagagag    " + i);
 		image1.setImageResource(i);
 		
 		TextView titleView = (TextView)view.findViewById(R.id.notice_item_title);
