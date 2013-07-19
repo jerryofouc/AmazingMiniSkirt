@@ -40,16 +40,10 @@ public class AccountRestClient extends AbstractBaseClient {
 		/* byte[] encoding = Base64.encodeBase64("xukai:123456".getBytes());*/
 		 httpget.setHeader("Authorization", Utils.HttpBasicEncodeBase64(userName, password));
 		 HttpResponse response = httpclient.execute(httpget);
-		 System.out.println(response.getStatusLine());
 		 if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				return true;
 			}else{
 				return false;
-			}
-		/*String requestUrl = baseURL + RequestURLConstants.TEST_LOGIN_URL;
-		client.addFilter(new HTTPBasicAuthFilter(userName, password));
-		WebResource webResource = client.resource(requestUrl);
-		ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-		*/
+		}
 	}
 }
