@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class NoticeDTO {
 	private long id;
-	private String title;
+	private String tittle;
 	private boolean isUpload;
 	private Date noticeDate;
 	private String content;
@@ -16,11 +16,12 @@ public class NoticeDTO {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getTitle() {
-		return title;
+	
+	public String getTittle() {
+		return tittle;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTittle(String tittle) {
+		this.tittle = tittle;
 	}
 	public boolean isUpload() {
 		return isUpload;

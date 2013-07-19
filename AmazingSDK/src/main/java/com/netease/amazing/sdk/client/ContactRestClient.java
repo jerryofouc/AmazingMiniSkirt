@@ -22,7 +22,6 @@ public class ContactRestClient extends AbstractBaseClient {
 
 	public ContactDTO getAllContacts() throws ClientProtocolException,
 			IOException {
-		HttpClient httpclient = new DefaultHttpClient();
 		String requestUrl = baseUrl + RequestURLConstants.GET_ALL_CONTACTS;
 		HttpGet httpget = new HttpGet(requestUrl);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
