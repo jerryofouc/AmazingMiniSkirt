@@ -16,9 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import com.example.amazing.R;
-import com.netease.amazing.util.DataSource1;
+import com.netease.amazing.util.DataSource;
 import com.netease.amazing.util.ListViewBasedAdapter;
-import com.netease.amazing.util.ListViewBasedAdapter1;
 import com.netease.amazing.util.NewsDataSource;
 import com.netease.amazing.util.NewsListAdapter;
 import com.netease.amazing.util.RefreshableListView;
@@ -34,8 +33,8 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 public class NewsFragment extends Fragment implements OnRefreshListener {
 	
 	private RefreshableListView mRefreshListView;
-	private DataSource1 mDataSource = new NewsDataSource();
-	private ListViewBasedAdapter1 listAdapter;
+	private DataSource mDataSource = new NewsDataSource();
+	private ListViewBasedAdapter listAdapter;
 	private String listViewAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
@@ -55,7 +54,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	 */
 	public void set(int fragmentLayout, 
 			int viewListLayout, 
-			DataSource1 dataSource,
+			DataSource dataSource,
 			String adapter,
 			OnItemClickListener itemClickListener){
 		this.fragmentLayout = fragmentLayout;
@@ -65,7 +64,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		this.listViewAdapter = adapter;
 	}
 	
-	public void set(ListViewBasedAdapter1 listAdapter,OnItemClickListener itemClickLister) {
+	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickLister) {
 		this.listAdapter = listAdapter;
 		this.itemClickListener = itemClickListener;
 	}

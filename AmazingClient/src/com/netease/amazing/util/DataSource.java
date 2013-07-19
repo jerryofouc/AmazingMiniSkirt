@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.netease.amazing.pojo.Notice;
+
 /**
  * 
  * @author Huang Xiao Jun
@@ -11,16 +13,9 @@ import java.util.Map;
  *   ListViewîµì˛‘¥ª˘Óê
  */
 public abstract class DataSource {
-	protected List<Map<String, Object>> mDataSource = new ArrayList<Map<String, Object>>();
-	public final static int PAGE_START = 1;
-	public final static int PAGE_END = 10;
-
-	public abstract List<Map<String, Object>> updateValue(int pageStart, int pageSize);	
-	
-	public List<Map<String, Object>> getmDataSource() {
-		return mDataSource;
-	}
-	public void setmDataSource(List<Map<String, Object>> mDataSource) {
-		this.mDataSource = mDataSource;
-	}
+	public final static int FETCH_SIZE = 10;
+	public abstract boolean updateValue(int type);	
+	public abstract List<Map<String, Object>> toMapList();
 }
+
+

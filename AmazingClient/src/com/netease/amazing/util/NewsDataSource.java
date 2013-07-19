@@ -13,7 +13,7 @@ import com.netease.amazing.pojo.News;
 import com.netease.amazing.pojo.Notice;
 
 
-public class NewsDataSource extends DataSource1 {
+public class NewsDataSource extends DataSource {
 
 	protected ArrayList<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;

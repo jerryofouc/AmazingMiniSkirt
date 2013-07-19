@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
 import com.netease.amazing.pojo.Notice;
-import com.netease.amazing.util.ListViewBasedAdapter1;
+import com.netease.amazing.util.ListViewBasedAdapter;
 import com.netease.amazing.util.NoticeDataSource;
 import com.netease.amazing.util.NoticeListAdapter;
 import com.netease.amazing.util.RefreshableListView;
@@ -34,7 +34,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	
 	private RefreshableListView mRefreshListView;
 	private NoticeDataSource mDataSource = new NoticeDataSource();
-	private ListViewBasedAdapter1 listAdapter;
+	private ListViewBasedAdapter listAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
 	private int fragmentLayout = R.layout.fragment2;   //fragmentµÄ²¼¾Ö
@@ -61,7 +61,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 		this.itemClickListener = itemClickListener;
 	}
 	
-	public void set(ListViewBasedAdapter1 listAdapter) {
+	public void set(ListViewBasedAdapter listAdapter) {
 		this.listAdapter = listAdapter;
 	}
 	

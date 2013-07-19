@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.example.amazing.R;
 
-public class NewsListAdapter extends ListViewBasedAdapter1 {
+public class NewsListAdapter extends ListViewBasedAdapter {
 
-	public NewsListAdapter(Context context,DataSource1 dataSource) {
+	public NewsListAdapter(Context context,DataSource dataSource) {
 		super(context, dataSource);
 	}
 	
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
-		view = inflater.inflate(R.layout.newsitem,null);
+		view = inflater.inflate(R.layout.news_item,null);
 		Map<String,Object> m = (Map<String,Object>)getItem(position);
 		
 		ImageView image1 = (ImageView)view.findViewById(R.id.news_item_icon);

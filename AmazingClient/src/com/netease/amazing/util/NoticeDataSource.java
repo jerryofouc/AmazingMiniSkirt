@@ -11,7 +11,7 @@ import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NoticeDataHandler;
 import com.netease.amazing.pojo.Notice;
 
-public class NoticeDataSource extends DataSource1 {
+public class NoticeDataSource extends DataSource {
 
 	protected ArrayList<Notice> noticeList = new ArrayList<Notice>();
 	private int fetchSize = FETCH_SIZE;
