@@ -30,7 +30,7 @@ import com.example.amazing.R;
 public class LoginActivity extends Activity {
 
 
-	private String userName;
+	private String userName; 
 	private String password;
 
 
