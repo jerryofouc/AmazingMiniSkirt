@@ -36,6 +36,9 @@ public class ContactInfoActivity extends Activity {
 			TextView childName = (TextView)findViewById(R.id.contact_classmate_name);
 			childName.setText(contact.getName());
 			
+			TextView nickName = (TextView)findViewById(R.id.contact_classmate_nickname);
+			nickName.setText("("+contact.getNickName()+")");
+			
 			TextView childBirth = (TextView)findViewById(R.id.contact_classmate_birthday);
 			childBirth.setText(contact.getBirthday());
 			
@@ -43,10 +46,10 @@ public class ContactInfoActivity extends Activity {
 			childFatherMobile.setText(contact.getPhoneOfDad());
 			
 			TextView childFatherName = (TextView)findViewById(R.id.contact_classmate_father_name);
-			childFatherName.setText(contact.getNameOfDad());
+			childFatherName.setText("("+contact.getNameOfDad()+")");
 
 			TextView childMotherName = (TextView)findViewById(R.id.contact_classmate_mother_name);
-			childMotherName.setText(contact.getNameOfMum());
+			childMotherName.setText("("+contact.getNameOfMum()+")");
 
 			TextView childMotherMobile = (TextView)findViewById(R.id.contact_classmate_mother_content);
 			childMotherMobile.setText(contact.getPhoneOfMum());
@@ -56,6 +59,9 @@ public class ContactInfoActivity extends Activity {
 			
 			TextView childName = (TextView)findViewById(R.id.contact_friend_name);
 			childName.setText(contact.getName());
+			
+			TextView nickName = (TextView)findViewById(R.id.contact_friend_nickname);
+			nickName.setText("("+contact.getNickName()+")");
 			
 			TextView childSchool = (TextView)findViewById(R.id.contact_friend_from);
 			childSchool.setText(contact.getFromSchool()+contact.getFromClass());
@@ -67,10 +73,10 @@ public class ContactInfoActivity extends Activity {
 			childFatherMobile.setText(contact.getPhoneOfDad());
 			
 			TextView childFatherName = (TextView)findViewById(R.id.contact_friend_father_name);
-			childFatherName.setText(contact.getNameOfDad());
+			childFatherName.setText("("+contact.getNameOfDad()+")");
 
 			TextView childMotherName = (TextView)findViewById(R.id.contact_friend_mother_name);
-			childMotherName.setText(contact.getNameOfMum());
+			childMotherName.setText("("+contact.getNameOfMum()+")");
 
 			TextView childMotherMobile = (TextView)findViewById(R.id.contact_friend_mother_content);
 			childMotherMobile.setText(contact.getPhoneOfMum());

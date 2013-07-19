@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.ContactInfoActivity;
+import com.netease.amazing.dbhandler.ContactDataHandler;
 import com.netease.amazing.pojo.Contact;
 /**
  * 
@@ -155,33 +156,11 @@ public class ContactFragment extends Fragment {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			for(int i=0;i<25;++i){
-				Contact c = new Contact();
-				if(i%3 == 0){
-					c.setName("老师"+i);	
-					c.setPhoneOfTeacher("0571-888888"+i);
-					c.setMobileOfTeacher("1351233333"+i);
-					c.setRelationship(Contact.RELATIONSHIP_TEACHER);
-				}else if(i%3 == 1){
-					c.setName("同学"+i);
-					c.setBirthday("2006.05."+i);
-					c.setNameOfMum("classmateMum"+i);
-					c.setNameOfDad("classmateDad"+i);
-					c.setPhoneOfMum("133333333"+i);
-					c.setPhoneOfDad("1555555555"+i);
-					c.setRelationship(Contact.RELATIONSHIP_CLASSMATE);
-				}else{
-					c.setName("朋友"+i);
-					c.setBirthday("2006.05."+i);
-					c.setNameOfMum("classmateMum"+i);
-					c.setNameOfDad("classmateDad"+i);
-					c.setPhoneOfMum("1888888888"+i);
-					c.setPhoneOfDad("1666666666"+i);
-					c.setFromSchool("蓝天幼儿园"+i);
-					c.setFromClass("小"+i+"班");
-					c.setRelationship(Contact.RELATIONSHIP_FRIEND);
-				}
-				contactList.add(c);
+			try {
+				contactList = ContactDataHandler.getContactList();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
             handler.sendEmptyMessage(1);
 		}
