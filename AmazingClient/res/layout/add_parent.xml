@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/addParent_parent_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="您是孩子的…" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/addParent_name_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="您的姓名"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/addParent_phone_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="您的联系电话"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/addparent_ok_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="确定" />
+
+</LinearLayout>
