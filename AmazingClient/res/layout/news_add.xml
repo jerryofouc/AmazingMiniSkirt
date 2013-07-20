@@ -4,21 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/newsAdd_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布来自：" />
+
+        <TextView
+            android:id="@+id/newsAdd_addFrom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="妈妈" />
+
+    </LinearLayout>
+
 	   <EditText
 	       android:id="@+id/contact_search_friend"
 	       android:layout_width="match_parent"
-	       android:layout_height="20dip"
-	       android:layout_weight="0.62"
+	       android:layout_height="160dp"
 	       android:background="@drawable/shape"
 	       android:drawableLeft="@drawable/ic_launcher"
 	       android:ems="10"
-	       android:gravity="center_vertical"
 	       android:hint="我的孩子正在..." />
 
 	   <LinearLayout
 	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_weight="0.62" >
+	       android:layout_height="wrap_content" >
 
 	       <Button
 	           android:id="@+id/button1"
@@ -36,11 +51,51 @@
 	       
 	   </LinearLayout>
 
-	   <ImageView
-	       android:id="@+id/imageView1"
-	       android:layout_width="fill_parent"
-	       android:layout_height="wrap_content"
-	       android:visibility="gone"
-	       android:src="@drawable/download" />
+	   <LinearLayout
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content" >
+	   
+		   <LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent" >
+	
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="分享到：" />
+	
+	            <ImageView
+	                android:id="@+id/imageView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/share_weibo_no36x36" />
+	
+	            <ImageView
+	                android:id="@+id/imageView2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/share_weixin_no36x36" />
+	
+	            <ImageView
+	                android:id="@+id/imageView3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/share_renren_no36x36" />
+	        </LinearLayout>
+	
+	        <LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent" >
+	
+	            <ImageView
+	                android:id="@+id/imageView4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/secret_lock_normal36x36" />
+	
+	        </LinearLayout>
+	   
+	   </LinearLayout>
 
 </LinearLayout>
