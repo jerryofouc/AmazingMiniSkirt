@@ -35,6 +35,11 @@ public class NoticeRestClient extends AbstractBaseClient{
 		HttpGet httpget = new HttpGet(urlbuilder.toString());
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+
+	private List<NoticeDTO> DeserializeFromHttpReponse(HttpResponse response)
+			throws IOException {
 		// Creates the json object which will manage the information received 
 		GsonBuilder builder = new GsonBuilder(); 
 		// Register an adapter to manage the date types as long values 
@@ -47,5 +52,16 @@ public class NoticeRestClient extends AbstractBaseClient{
 		Gson gson = builder.create();
 		NoticeDTO[] retValue = gson.fromJson(EntityUtils.toString(response.getEntity()), NoticeDTO[].class);
 		return Arrays.asList(retValue);
+	}
+	
+	public List<NoticeDTO> getRangeNotice(int beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES;
+		URIBuilder urlbuilder = new URIBuilder(requestUrl);
+		urlbuilder.addParameter("count", ""+count);
+		urlbuilder.addParameter("beginId",""+ beginId);
+		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
 	}
 }

@@ -22,4 +22,16 @@ public class NoticeRestClientTest extends BaseTest{
 			System.out.println(df.format(n.getNoticeDate()));
 		}
 	}
+	
+	@Test
+	public void getRangeNoticeTest() throws ClientProtocolException, IOException, URISyntaxException{
+		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,USER_NAME, PASSWORD);
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(noticeRestClient.getRangeNotice(5, 5)));
+		for(NoticeDTO n :noticeRestClient.getLatestNotices(5)){
+			System.out.println(n.getId());
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(df.format(n.getNoticeDate()));
+		}
+	}
 }
