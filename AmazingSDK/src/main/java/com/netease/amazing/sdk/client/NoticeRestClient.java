@@ -28,10 +28,57 @@ public class NoticeRestClient extends AbstractBaseClient{
 		super(baseUrl, loginName, password);
 	}
 	
+	/**
+	 * 最新的通知消息
+	 * @param count
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	public List<NoticeDTO> getLatestNotices(int count) throws ClientProtocolException, IOException, URISyntaxException{
 		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES;
 		URIBuilder urlbuilder = new URIBuilder(requestUrl);
 		urlbuilder.addParameter("count", ""+count);
+		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	
+	/**
+	 * 当前notice_id之后的消息count的消息
+	 * @param beginId
+	 * @param count
+	 * @return
+	 * @throws URISyntaxException
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public List<NoticeDTO> getDownRangeNotice(int beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_DOWN_NOTICES;
+		URIBuilder urlbuilder = new URIBuilder(requestUrl);
+		urlbuilder.addParameter("count", ""+count);
+		urlbuilder.addParameter("beginId",""+ beginId);
+		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	/**
+	 * 得到当前beginId向上的所有消息
+	 * @param beginId
+	 * @return
+	 * @throws URISyntaxException
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public List<NoticeDTO> getUpRangeNotice(int beginId) throws URISyntaxException, ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_UP_NOTICES;
+		URIBuilder urlbuilder = new URIBuilder(requestUrl);
+		urlbuilder.addParameter("beginId",""+ beginId);
 		HttpGet httpget = new HttpGet(urlbuilder.toString());
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
@@ -54,14 +101,5 @@ public class NoticeRestClient extends AbstractBaseClient{
 		return Arrays.asList(retValue);
 	}
 	
-	public List<NoticeDTO> getRangeNotice(int beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
-		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES;
-		URIBuilder urlbuilder = new URIBuilder(requestUrl);
-		urlbuilder.addParameter("count", ""+count);
-		urlbuilder.addParameter("beginId",""+ beginId);
-		HttpGet httpget = new HttpGet(urlbuilder.toString());
-		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
-		HttpResponse response = httpclient.execute(httpget);
-		return DeserializeFromHttpReponse(response);
-	}
+	
 }
