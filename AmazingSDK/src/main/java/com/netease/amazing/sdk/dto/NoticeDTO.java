@@ -1,15 +1,17 @@
 package com.netease.amazing.sdk.dto;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class NoticeDTO {
 	private long id;
 	private String tittle;
-	private boolean isUpload;
 	private Date noticeDate;
 	private String content;
-	private boolean isNeedFeedBack;
+	private boolean needFeedBack;
+	private List<Long> recieveObjsIDs;//所有应受到这个消息的id
+	private String feedBack;
 	public long getId() {
 		return id;
 	}
@@ -23,12 +25,6 @@ public class NoticeDTO {
 	public void setTittle(String tittle) {
 		this.tittle = tittle;
 	}
-	public boolean isUpload() {
-		return isUpload;
-	}
-	public void setUpload(boolean isUpload) {
-		this.isUpload = isUpload;
-	}
 	public Date getNoticeDate() {
 		return noticeDate;
 	}
@@ -41,11 +37,23 @@ public class NoticeDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public boolean isNeedFeedBack() {
-		return isNeedFeedBack;
+	public List<Long> getRecieveObjsIDs() {
+		return recieveObjsIDs;
 	}
-	public void setNeedFeedBack(boolean isNeedFeedBack) {
-		this.isNeedFeedBack = isNeedFeedBack;
+	public void setRecieveObjsIDs(List<Long> recieveObjsIDs) {
+		this.recieveObjsIDs = recieveObjsIDs;
+	}
+	public String getFeedBack() {
+		return feedBack;
+	}
+	public void setFeedBack(String feedBack) {
+		this.feedBack = feedBack;
+	}
+	public boolean isNeedFeedBack() {
+		return needFeedBack;
+	}
+	public void setNeedFeedBack(boolean needFeedBack) {
+		this.needFeedBack = needFeedBack;
 	}
 	
 }

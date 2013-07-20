@@ -3,6 +3,8 @@ package com.netease.amazing.sdk.client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.junit.Test;
@@ -46,6 +48,44 @@ public class NoticeRestClientTest extends BaseTest{
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			System.out.println(df.format(n.getNoticeDate()));
 		}
+	}
+	
+	
+	@Test 
+	public void createParentToTeacherNoticeTest() throws ClientProtocolException, IOException{
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setTittle("照顾小孩");
+		noticeDTO.setContent("放暑假啦");
+		noticeDTO.setFeedBack("是");
+		Long r1 = new Long(2);
+		Long r2 = new Long(3);
+		List<Long> recievers = new ArrayList<Long>();
+		recievers.add(r1);
+		recievers.add(r2);
+		noticeDTO.setRecieveObjsIDs(recievers);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,USER_NAME, PASSWORD);
+		noticeRestClient.sendNewNotice(noticeDTO);
+	}
+	
+	@Test 
+	public void createTeacherToParentNoticeTest() throws ClientProtocolException, IOException{
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setTittle("南华幼儿园通知");
+		noticeDTO.setContent("放暑假啦");
+		noticeDTO.setFeedBack("是");
+		Long r1 = new Long(1);
+		List<Long> recievers = new ArrayList<Long>();
+		recievers.add(r1);
+		noticeDTO.setRecieveObjsIDs(recievers);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,"zhangxiaojie", "123456");
+		noticeRestClient.sendNewNotice(noticeDTO);
+	}
+	
+	@Test
+	public void deleteNotification() throws ClientProtocolException, IOException{
+		long id = 78;
+		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,"xukai", "123456");
+		noticeRestClient.deleteNotice(id);
 	}
 	
 }
