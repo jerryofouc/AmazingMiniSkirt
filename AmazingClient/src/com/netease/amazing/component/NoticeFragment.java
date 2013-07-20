@@ -1,22 +1,19 @@
 package com.netease.amazing.component;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
@@ -133,7 +130,9 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 				long arg3) {
-			Notice itemNotice = mDataSource.getNoticeList().get(position);
+			Log.i("position","1");
+			Log.i("the length", mDataSource.getNoticeList().size() +"");
+			Notice itemNotice = mDataSource.getNoticeList().get(position-1);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("itemNotice", itemNotice);
 			Intent intent = new Intent(getActivity(),NoticeActivity.class);
@@ -167,7 +166,8 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(1);
+				Log.i("aaaaaaa", "aaa");
+				changeListView(2);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -182,7 +182,8 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				changeListView(2);
+				Log.i("azbzbzb", "aaaa");
+				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();

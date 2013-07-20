@@ -21,7 +21,7 @@ public class NoticeDBSimulateHandler {
 	
 	public ArrayList<Notice> getNotice(int bottomNoticeId,int size) {
 		ArrayList<Notice> notices = new ArrayList<Notice>();
-		for(int i =bottomNoticeId;i<size;i++) {
+		for(int i =bottomNoticeId+1;i<bottomNoticeId+size+1;i++) {
 			Notice notice = new Notice(true);
 			notice.setId(i);
 			notices.add(notice);
@@ -49,5 +49,14 @@ public class NoticeDBSimulateHandler {
 			notices.add(notice);
 		}
 		return notices;
+	}
+	
+	
+	public boolean sendNotice(Notice notice,Object... receiver) {
+		return true;
+	}
+	
+	public boolean deleteNotice(Notice notice) {
+		return true;
 	}
 }

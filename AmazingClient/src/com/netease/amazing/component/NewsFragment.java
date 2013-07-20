@@ -147,6 +147,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				Log.i("up","baba");
 				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}
@@ -162,6 +163,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				Log.i("down","baba");
 				changeListView(2);
 				handler.sendEmptyMessage(0);
 			}

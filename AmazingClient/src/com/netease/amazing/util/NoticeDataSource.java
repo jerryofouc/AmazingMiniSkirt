@@ -1,11 +1,12 @@
 package com.netease.amazing.util;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import android.util.Log;
 
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NoticeDataHandler;
@@ -38,10 +39,10 @@ public class NoticeDataSource extends DataSource {
 			initFetchNotice();
 			break;
 		case 1:
-			fetchNoticeDown();
+			fetchNoticeUp();
 			break;
 		case 2:
-			fetchNoticeUp();
+			fetchNoticeDown();
 			break;
 		default:
 			break;
@@ -57,7 +58,7 @@ public class NoticeDataSource extends DataSource {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("image", R.drawable.download);
 			map.put("title", tempNotice.cutTitle(30,"UTF-8"));
-			map.put("date", new SimpleDateFormat("yyyy-MM-dd").format(tempNotice.getNoticeDate()));
+			map.put("date", tempNotice.getId());
 			map.put("content", tempNotice.cutContent(10,"UTF-8"));
 			list.add(map);
 		}
@@ -76,6 +77,7 @@ public class NoticeDataSource extends DataSource {
 	
 	public void fetchNoticeUp() {
 		Notice topNotice = noticeList.get(0);
+		Log.i("top id ",topNotice.getId() +"");
 		ArrayList<Notice> result = ndh.getNotice(topNotice.getId());
 		if(result != null) {
 		result.addAll(noticeList);

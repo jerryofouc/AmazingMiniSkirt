@@ -5,6 +5,7 @@ import com.example.amazing.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -566,7 +567,7 @@ public class RefreshableListView extends ListView implements OnScrollListener {
 	 */
 	private void onPullUpRefresh() {
 		if (refreshListener != null) {
-			refreshListener.onPullDownRefresh();
+			refreshListener.onPullUpRefresh();
 		}
 	}
 
