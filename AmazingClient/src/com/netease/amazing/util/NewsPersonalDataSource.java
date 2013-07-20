@@ -12,7 +12,7 @@ import com.netease.amazing.pojo.News;
 
 public class NewsPersonalDataSource extends DataSource {
 
-	protected ArrayList<News> newsList = new ArrayList<News>();
+	protected List<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;
 	
 	private NewsDataHandler ndh = new NewsDataHandler();
@@ -58,14 +58,14 @@ public class NewsPersonalDataSource extends DataSource {
 	}
 	
 	public void fetchNewsDown() {
-		News bottomNews = newsList.get(newsList.size()-1);
-		ArrayList<News> result = ndh.getNews(bottomNews.getId(), fetchSize);
+		News topNews = newsList.get(0);
+		List<News> result = ndh.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
 		newsList.addAll(result);
 	}
 	
 	public void fetchNewsUp() {
-		News topNews = newsList.get(0);
-		ArrayList<News> result = ndh.getNews(topNews.getId());
+		News bottomNews= newsList.get(newsList.size()-1);
+		List<News> result = ndh.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
 		result.addAll(newsList);
 		newsList = result;
 	}

@@ -13,7 +13,7 @@ import com.netease.amazing.pojo.News;
 
 public class NewsDataSource extends DataSource {
 
-	protected ArrayList<News> newsList = new ArrayList<News>();
+	protected List<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;
 	
 	private NewsDataHandler ndh = new NewsDataHandler();
@@ -55,28 +55,21 @@ public class NewsDataSource extends DataSource {
 		}
 		return list;
 	}
-//	Map<String,Object> map = new HashMap<String,Object>();
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, "38天");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_CONTENT, "今天表现不错");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_FROM, "杭州新华幼儿园");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_SAVER, "由妈妈收录自抱抱熊");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_PUBLISH_DATE, "2013.7.15");
-//	
+	
 	public void initFetchNews() {
 		newsList = ndh.getInitNews(fetchSize);
 		
 	}
 	
 	public void fetchNewsDown() {
-		News bottomNews = newsList.get(newsList.size()-1);
-		ArrayList<News> result = ndh.getNews(bottomNews.getId(), fetchSize);
+		News topNews = newsList.get(0);
+		List<News> result = ndh.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
 		newsList.addAll(result);
 	}
 	
 	public void fetchNewsUp() {
-		News topNews = newsList.get(0);
-		ArrayList<News> result = ndh.getNews(topNews.getId());
+		News bottomNews= newsList.get(newsList.size()-1);
+		List<News> result = ndh.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
 		result.addAll(newsList);
 		newsList = result;
 	}
