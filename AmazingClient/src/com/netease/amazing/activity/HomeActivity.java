@@ -59,14 +59,16 @@ public class HomeActivity extends FragmentActivity
     	final ActionBar actionBar = getActionBar();
     	actionBar.setIcon(R.drawable.download);
 //    	actionBar.setHomeButtonEnabled(false);
+    	actionBar.setDisplayUseLogoEnabled(true);
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-    	actionBar.setDisplayShowHomeEnabled(true);  
     	actionBar.setDisplayShowTitleEnabled(true);  
     	
     	//设置actionBar的title bar ， 自定义样式
     	actionBar.setDisplayShowCustomEnabled(true);
     	actionBar.setCustomView(R.layout.apk_actionbar_title);
+    	
+    	actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.titlebar_bk32x74)); //modify by zhuxiaohua
     }
     
     private void setUpViewPager() {
