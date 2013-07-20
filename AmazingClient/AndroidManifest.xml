@@ -18,17 +18,17 @@
             android:name="com.netease.amazing.activity.LoginActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.netease.amazing.activity.NoticeActivity" >
         </activity>
         <activity android:name="com.netease.amazing.activity.HomeActivity" 
             android:theme="@android:style/Theme.Holo.Light"
             android:logo="@drawable/download">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.netease.amazing.activity.RegisterActivity" >
         </activity>
@@ -39,7 +39,8 @@
         <activity android:name = "com.netease.amazing.activity.NoticeSettingActivity"/>
         <activity android:name = "com.netease.amazing.activity.NoticeEditActivity"/>
         <activity android:name = "com.netease.amazing.activity.NewsSettingActivity"/>
-        <activity android:name = "com.netease.amazing.activity.NewsEditActivity"/>
+        <activity android:name = "com.netease.amazing.activity.NewsAddActivity"
+            android:theme="@android:style/Theme.Holo.Light"/>
         <activity android:name = "com.netease.amazing.activity.ContactSettingActivity"/>
         <activity android:name = "com.netease.amazing.activity.ContactAddFriendActivity"/>
     </application>

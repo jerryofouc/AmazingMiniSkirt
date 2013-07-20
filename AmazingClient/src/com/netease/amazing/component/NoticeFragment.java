@@ -41,7 +41,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	private ListViewBasedAdapter listAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
-	private int fragmentLayout = R.layout.fragment2;   //fragment的布局
+	private int fragmentLayout = R.layout.notice_index;   //fragment的布局
 	private int viewListLayout = R.id.mineList;   //viewList的布局
 	
 	private OnItemClickListener itemClickListener = new MyOnItemClickListener(); //itemClick响应事件

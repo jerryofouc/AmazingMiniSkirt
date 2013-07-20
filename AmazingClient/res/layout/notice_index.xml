@@ -21,10 +21,7 @@ limitations under the License.
     android:background="@color/dark_green"
     android:padding="8dip"
     >
-   <ImageView android:id="@+id/news_index_image"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"/>
+    
     <com.netease.amazing.util.RefreshableListView 
         android:id="@+id/mineList" 
         android:layout_width="fill_parent"

@@ -18,12 +18,19 @@ limitations under the License.
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/dark_green"
     android:padding="8dip"
     >
-    
-   	<ListView android:layout_width="fill_parent" android:layout_height="wrap_content"
-	    android:id="@+id/myListView">
-	</ListView>
+    <include layout="@layout/news_index_background"></include>
+    <com.netease.amazing.util.RefreshableListView 
+        android:id="@+id/newsList" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#000000"
+        android:dividerHeight="1dip"
+        android:drawSelectorOnTop="false"
+        android:fadingEdgeLength="0.0sp"
+        android:scrollbars="none">
+     </com.netease.amazing.util.RefreshableListView>
 </LinearLayout>
 

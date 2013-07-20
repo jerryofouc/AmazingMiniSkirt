@@ -153,7 +153,7 @@ public class HomeActivity extends FragmentActivity
     			startActivity(intent);
     		}
     		if(currentFragment == 1) {
-    			intent = new Intent(this,NewsEditActivity.class);
+    			intent = new Intent(this,NewsAddActivity.class);
     			startActivity(intent);
     		}
     		if(currentFragment ==2) {
