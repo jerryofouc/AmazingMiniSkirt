@@ -54,10 +54,20 @@ public class NoticeRestClient extends AbstractBaseClient{
 		return Arrays.asList(retValue);
 	}
 	
-	public List<NoticeDTO> getRangeNotice(int beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
-		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES;
+	public List<NoticeDTO> getDownRangeNotice(int beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_DOWN_NOTICES;
 		URIBuilder urlbuilder = new URIBuilder(requestUrl);
 		urlbuilder.addParameter("count", ""+count);
+		urlbuilder.addParameter("beginId",""+ beginId);
+		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	public List<NoticeDTO> getUpRangeNotice(int beginId) throws URISyntaxException, ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_UP_NOTICES;
+		URIBuilder urlbuilder = new URIBuilder(requestUrl);
 		urlbuilder.addParameter("beginId",""+ beginId);
 		HttpGet httpget = new HttpGet(urlbuilder.toString());
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));

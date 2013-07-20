@@ -5,5 +5,6 @@ public class RequestURLConstants {
 	public static final String TEST_LOGIN_URL = "/api/user";
 	public static final String GET_ALL_CONTACTS = "/api/contacts";
 	public static final String GET_LATEST_NOTICES = "/api/notification/latest";
-	public static final String GET_RANGE_NOTICES = "/api/notificatoin/range";
+	public static final String GET_RANGE_DOWN_NOTICES = "/api/notification/rangeDown";
+	public static final String GET_RANGE_UP_NOTICES = "/api/notification/rangeUp";
 }

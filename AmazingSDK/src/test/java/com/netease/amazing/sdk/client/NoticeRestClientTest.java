@@ -24,14 +24,28 @@ public class NoticeRestClientTest extends BaseTest{
 	}
 	
 	@Test
-	public void getRangeNoticeTest() throws ClientProtocolException, IOException, URISyntaxException{
+	public void getRangeDwonNoticeTest() throws ClientProtocolException, IOException, URISyntaxException{
 		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,USER_NAME, PASSWORD);
 		Gson gson = new Gson();
-		System.out.println(gson.toJson(noticeRestClient.getRangeNotice(5, 5)));
-		for(NoticeDTO n :noticeRestClient.getLatestNotices(5)){
+		System.out.println(gson.toJson(noticeRestClient.getDownRangeNotice(5, 5)));
+		for(NoticeDTO n :noticeRestClient.getDownRangeNotice(5, 5)){
 			System.out.println(n.getId());
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			System.out.println(df.format(n.getNoticeDate()));
 		}
 	}
+	
+	
+	@Test
+	public void getRangeUpNoticeTest() throws ClientProtocolException, IOException, URISyntaxException{
+		NoticeRestClient noticeRestClient = new NoticeRestClient(BASE_URL,USER_NAME, PASSWORD);
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(noticeRestClient.getUpRangeNotice(1)));
+		for(NoticeDTO n :noticeRestClient.getUpRangeNotice(1)){
+			System.out.println(n.getId());
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(df.format(n.getNoticeDate()));
+		}
+	}
+	
 }
