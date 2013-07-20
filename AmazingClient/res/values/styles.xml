@@ -17,6 +17,14 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
+    <style name="CustomTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>
+    </style>
+    
+    <style name="MyActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+	  	<item name="android:background">@drawable/actionbar_tab_bg</item>
+  	</style>
+    
     
     <style name="textviews">
 	    <item name="android:layout_width">fill_parent</item>
