@@ -63,7 +63,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		this.listViewAdapter = adapter;
 	}
 	
-	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickLister) {
+	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickListener) {
 		this.listAdapter = listAdapter;
 		this.itemClickListener = itemClickListener;
 	}
