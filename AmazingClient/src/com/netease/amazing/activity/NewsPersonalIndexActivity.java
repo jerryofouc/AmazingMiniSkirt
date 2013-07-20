@@ -24,7 +24,7 @@ import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 
 public class NewsPersonalIndexActivity extends Activity implements OnRefreshListener{
-	public final static String PERSONAL_NEWS_INDEX_TITLE = "个人主页(成长日志)";
+	public final static String PERSONAL_NEWS_INDEX_TITLE = "成长日志";
 	public final static String MESSAGE_HISTORY = "历史消息"; 
 	public final static String GENERATE_PHOTOS = "生成相册"; 
 	
@@ -114,6 +114,7 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         menu.getItem(0).setTitle(MESSAGE_HISTORY);
+        menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener(){
 
 			@Override
@@ -128,6 +129,7 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
         
         menu.getItem(1).setTitle(GENERATE_PHOTOS);
         menu.getItem(1).setVisible(true);
+        menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.getItem(1).setOnMenuItemClickListener(new OnMenuItemClickListener(){
 
 			@Override
