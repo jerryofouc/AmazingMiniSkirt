@@ -1,6 +1,7 @@
 package com.netease.amazing.component;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,11 +10,13 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import com.example.amazing.R;
+import com.netease.amazing.activity.NewsPersonalIndexActivity;
 import com.netease.amazing.util.DataSource;
 import com.netease.amazing.util.ListViewBasedAdapter;
 import com.netease.amazing.util.NewsDataSource;
@@ -120,6 +123,16 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		//添加ItemClick响应事件
 		mRefreshListView.setOnItemClickListener(itemClickListener);
 		mRefreshListView.setonRefreshListener(this);
+		view.findViewById(R.id.news_user_name).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),NewsPersonalIndexActivity.class);
+    			startActivity(intent);
+			}
+			
+		});
 		return view;
 	}
 
@@ -147,7 +160,6 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				Log.i("up","baba");
 				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}
@@ -163,7 +175,6 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				Log.i("down","baba");
 				changeListView(2);
 				handler.sendEmptyMessage(0);
 			}

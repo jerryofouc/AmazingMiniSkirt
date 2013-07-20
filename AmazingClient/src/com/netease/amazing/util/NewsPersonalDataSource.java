@@ -10,17 +10,12 @@ import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.News;
 
-
-public class NewsDataSource extends DataSource {
+public class NewsPersonalDataSource extends DataSource {
 
 	protected ArrayList<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;
 	
 	private NewsDataHandler ndh = new NewsDataHandler();
-	public NewsDataSource() {
-	//	mDataSource = updateValue(PAGE_START, PAGE_END);
-	}
-	
 	
 	@Override
 	public boolean updateValue(int type) {
@@ -46,23 +41,17 @@ public class NewsDataSource extends DataSource {
 		while(it.hasNext()) {
 			News tempNews = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("icon", R.drawable.ic_launcher);
-			map.put("title", "G");
-			map.put("info", "google ");
-			map.put("imag", R.drawable.ic_pulltorefresh_arrow);
-			map.put("newsFrom", "message from...");
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, "38天");
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_CONTENT, "今天表现不错");
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_FROM, "杭州新华幼儿园");
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_SAVER, "由妈妈收录自抱抱熊");
+			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_PUBLISH_DATE, "2013.7.15");
 			list.add(map);
 		}
 		return list;
 	}
-//	Map<String,Object> map = new HashMap<String,Object>();
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, "38天");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_CONTENT, "今天表现不错");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_FROM, "杭州新华幼儿园");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_SAVER, "由妈妈收录自抱抱熊");
-//	map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_PUBLISH_DATE, "2013.7.15");
-//	
+
 	public void initFetchNews() {
 		newsList = ndh.getInitNews(fetchSize);
 		
@@ -80,4 +69,5 @@ public class NewsDataSource extends DataSource {
 		result.addAll(newsList);
 		newsList = result;
 	}
+
 }

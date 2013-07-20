@@ -36,11 +36,24 @@
             android:name="com.netease.amazing.activity.ContactInfoActivity"
             android:label="@string/title_activity_contact_teacher_info" >
         </activity>
+        
+        
+        <!--添加Notice相关的activity  -->
         <activity android:name = "com.netease.amazing.activity.NoticeSettingActivity"/>
         <activity android:name = "com.netease.amazing.activity.NoticeEditActivity"/>
+        
+        
+        
+        <!-- 添加News相关的activity -->
         <activity android:name = "com.netease.amazing.activity.NewsSettingActivity"/>
         <activity android:name = "com.netease.amazing.activity.NewsAddActivity"
             android:theme="@android:style/Theme.Holo.Light"/>
+        <activity android:name = "com.netease.amazing.activity.NewsPersonalIndexActivity"
+            android:theme="@android:style/Theme.Holo.Light"/>
+        
+        
+        
+        <!-- 添加contact相关的activity -->
         <activity android:name = "com.netease.amazing.activity.ContactSettingActivity"/>
         <activity android:name = "com.netease.amazing.activity.ContactAddFriendActivity"/>
     </application>
