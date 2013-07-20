@@ -1,6 +1,8 @@
 package com.netease.amazing.server.utils;
 
+import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.dto.UserDTO;
+import com.netease.amazing.server.entity.Notification;
 import com.netease.amazing.server.entity.User;
 
 public class ToDTOUtils {
@@ -10,5 +12,14 @@ public class ToDTOUtils {
 		userDTO.setLoginName(user.getLoginName());
 		userDTO.setName(user.getName());
 		return userDTO;
+	}
+	public static NoticeDTO toNoticeDTO(Notification n){
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setTittle(n.getTittle());
+		noticeDTO.setId(n.getId());
+		noticeDTO.setContent(n.getContents());
+		noticeDTO.setNeedFeedBack(n.isNeedFeedBack());
+		noticeDTO.setNoticeDate(n.getCreateTime());
+		return noticeDTO;
 	}
 }

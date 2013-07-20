@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -25,6 +26,7 @@ public class Child extends IdEntity{
 	private Class klass;
 	private List<Parent> parents;
 	private List<ChildRelationship> friends;
+	private User user;
 	public String getName() {
 		return name;
 	}
@@ -84,4 +86,13 @@ public class Child extends IdEntity{
 	public void setFriends(List<ChildRelationship> friends) {
 		this.friends = friends;
 	}
+	
+	@OneToOne(mappedBy="child")
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

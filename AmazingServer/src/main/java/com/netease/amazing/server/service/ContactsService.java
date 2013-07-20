@@ -4,7 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,7 @@ import com.netease.amazing.server.entity.Kindergarden;
 import com.netease.amazing.server.entity.Parent;
 import com.netease.amazing.server.entity.Teacher;
 import com.netease.amazing.server.entity.User;
+import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.repository.UserDao;
 
 @Component
@@ -34,9 +38,11 @@ public class ContactsService {
 		List<ChildDTO> friends = new ArrayList<ChildDTO>();
 
 		User curUser = userDao.findOne(id);
+		if(curUser.getRole()!=Role.PARENT){
+			return null;
+		}
 		//注意这边应该判断是否是父母
-		Parent curParent = curUser.getParent();
-		Child curChild = curParent.getChild();
+		Child curChild = curUser.getChild();
 		
 		if(curChild.getBirthday()!=null){
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -62,8 +68,10 @@ public class ContactsService {
 			teacherDto.setMobilePhone(t.getTelephone());
 			teacherDTOs.add(teacherDto);
 		}
+		
 		contactDTO.setTeachers(teacherDTOs);
 		
+		sortByTeacherDTO(teacherDTOs);
 		
 		List<Child> curClassMates = klass.getChildren();
 		for(Child child : curClassMates){
@@ -88,6 +96,7 @@ public class ContactsService {
 			}
 			classMates.add(childDTO);
 		}
+		sortByChildDTO(classMates);
 		contactDTO.setClassMates(classMates);
 		
 		List<ChildRelationship> friendships = curChild.getFriends();
@@ -114,7 +123,26 @@ public class ContactsService {
 			}
 			friends.add(childDTO);
 		}
+		sortByChildDTO(friends);
 		contactDTO.setFriends(friends);
 		return contactDTO;
 	}
+	private void sortByChildDTO(List<ChildDTO> classMates) {
+		Collections.sort(classMates,new Comparator<ChildDTO>(){
+			@Override
+			public int compare(ChildDTO o1, ChildDTO o2) {
+				return java.text.Collator.getInstance(Locale.SIMPLIFIED_CHINESE).compare(o1.getName(), o2.getName());
+			}
+		} );
+	}
+	private void sortByTeacherDTO(List<TeacherDTO> teacherDTOs) {
+		Collections.sort(teacherDTOs,new Comparator<TeacherDTO>(){
+			@Override
+			public int compare(TeacherDTO o1, TeacherDTO o2) {
+				return java.text.Collator.getInstance(Locale.SIMPLIFIED_CHINESE).compare(o1.getName(), o2.getName());
+			}
+		} );
+	}
+	
+	
 }

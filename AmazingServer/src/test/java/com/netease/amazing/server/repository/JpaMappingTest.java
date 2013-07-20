@@ -31,7 +31,6 @@ public class JpaMappingTest extends SpringTransactionalTestCase {
 			String entityName = entityType.getName();
 			em.createQuery("select o from " + entityName + " o").getResultList();
 			logger.info("ok: " + entityName);
-
 		}
 	}
 }

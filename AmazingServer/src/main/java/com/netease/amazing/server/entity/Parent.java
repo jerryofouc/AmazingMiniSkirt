@@ -5,7 +5,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -17,7 +16,6 @@ public class Parent extends IdEntity{
 	private String address;
 	private Gender gender;
 	private Child child;
-	private User user;
 	
 	public String getName() {
 		return name;
@@ -54,13 +52,4 @@ public class Parent extends IdEntity{
 	public void setChild(Child child) {
 		this.child = child;
 	}
-	
-	@OneToOne(mappedBy="parent")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 }

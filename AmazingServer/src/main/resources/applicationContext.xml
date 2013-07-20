@@ -27,6 +27,7 @@
 		<property name="jpaProperties">
 			<props>
 				<!-- 命名规则 My_NAME->MyName -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 			</props>
 		</property>
@@ -65,7 +66,6 @@
 			<property name="url" value="${jdbc.url}" />
 			<property name="username" value="${jdbc.username}" />
 			<property name="password" value="${jdbc.password}" />
-		
 			<!-- Connection Pooling Info -->
 			<property name="maxActive" value="${dbcp.maxActive}" />
 			<property name="maxIdle" value="${dbcp.maxIdle}" />

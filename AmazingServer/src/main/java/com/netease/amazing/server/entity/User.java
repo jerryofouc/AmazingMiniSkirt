@@ -1,10 +1,16 @@
 package com.netease.amazing.server.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -15,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 
 
+
+
 @Entity
 @Table(name = "user")
 public class User extends IdEntity {
@@ -23,8 +31,14 @@ public class User extends IdEntity {
 	private String password;
 	private String salt;
 	private Date registerDate;
-	private String roles;
-	private Parent parent;
+	private Child child;
+	public enum Role{
+		PARENT,
+		TEACHER
+	}
+	private Role role;//角色：分为老师和家长两个角色
+	private Teacher teacher;
+	private List<ParentNotification> notificatoins; 
 	public String getLoginName() {
 		return loginName;
 	}
@@ -49,32 +63,55 @@ public class User extends IdEntity {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	@Transient
-	@JsonIgnore
-	public List<String> getRoleList() {
-		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
-		return ImmutableList.copyOf(StringUtils.split(roles, ","));
-	}
 	public Date getRegisterDate() {
 		return registerDate;
 	}
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
-	public String getRoles() {
-		return roles;
+	
+	@Enumerated(EnumType.STRING)
+	public Role getRole() {
+		return role;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 	@OneToOne
-    @JoinColumn(name="parent_id")
-	public Parent getParent() {
-		return parent;
+    @JoinColumn(name="teacher_id")
+	public Teacher getTeacher() {
+		return teacher;
 	}
-	public void setParent(Parent parent) {
-		this.parent = parent;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="parent")
+	public List<ParentNotification> getNotificatoins() {
+		return notificatoins;
+	}
+	public void setNotificatoins(List<ParentNotification> notificatoins) {
+		this.notificatoins = notificatoins;
+	}
+	
+	@OneToOne
+    @JoinColumn(name="child_id")
+	public Child getChild() {
+		return child;
+	}
+	public void setChild(Child child) {
+		this.child = child;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public List<String> getRoleList() {
+		List<String> roleList = new ArrayList<String>();
+		roleList.add(role.toString());
+		return roleList;
+		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
+	}
+
 	
 }

@@ -1,8 +1,14 @@
 package com.netease.amazing.server.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -14,6 +20,8 @@ public class Teacher extends IdEntity{
 	private String telephone;
 	private String description;
 	private Class klass;
+	private User user;
+	private List<Notification> notifications; 
 	public String getFixLine() {
 		return fixLine;
 	}
@@ -46,6 +54,20 @@ public class Teacher extends IdEntity{
 	}
 	public void setKlass(Class klass) {
 		this.klass = klass;
+	}
+	@OneToOne(mappedBy="teacher")
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="teacher")
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 	
 }
