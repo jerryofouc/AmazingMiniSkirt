@@ -4,9 +4,12 @@
         android:id="@+id/home_menu_right"
         android:orderInCategory="100"
         android:title="提醒"
-        android:showAsAction="ifRoom"
-        android:layout_width="49dp"
-    	android:layout_height="49dp"
-    	android:background="@drawable/titlebar_addnews_normal74x74" />
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/home_menu_right2"
+        android:orderInCategory="100"
+        android:title="其他"
+        android:visible="false"
+        android:showAsAction="ifRoom"/>
 
 </menu>
