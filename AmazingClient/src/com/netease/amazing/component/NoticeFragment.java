@@ -1,6 +1,8 @@
 package com.netease.amazing.component;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
@@ -37,12 +41,14 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	private ListViewBasedAdapter listAdapter;
 	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
-	private int fragmentLayout = R.layout.fragment2;   //fragment的布局
+	private int fragmentLayout = R.layout.notice_index;   //fragment的布局
 	private int viewListLayout = R.id.mineList;   //viewList的布局
 	
 	private OnItemClickListener itemClickListener = new MyOnItemClickListener(); //itemClick响应事件
 	private MyListViewFragmentHandler fragmentHandler = new MyListViewFragmentHandler();
 	private ProgressDialog proDialog;
+	
+	
 	/**
 	 * 
 	 * @param fragmentLayout fragment布局
@@ -105,6 +111,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 		if (container == null) {
 			return null;
 		}
+		
 		
 		LinearLayout view = (LinearLayout) inflateAndSetupView(inflater,
 				container, savedInstanceState, fragmentLayout);

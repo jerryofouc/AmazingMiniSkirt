@@ -1,26 +1,26 @@
 package com.netease.amazing.activity;
 
 
+
 import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.component.ContactFragment;
+import com.netease.amazing.component.MyApplication;
 import com.netease.amazing.component.NewsFragment;
 import com.netease.amazing.component.NoticeFragment;
-import com.netease.amazing.component.OldNoticeFragment;
-import com.netease.amazing.util.NewsDataSource;
 //import android.support.v4.app.FragmentPagerAdapter;
 
 public class HomeActivity extends FragmentActivity 
@@ -40,42 +40,33 @@ public class HomeActivity extends FragmentActivity
 	private ViewPagerAdapter mViewPagerAdapter;
 	/** Called when the activity is first created. */
 	
+	private Menu menu;
+	private int currentFragment = 0;
 	
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
-        //mFragment2.set(R.layout.fragment2, R.id.mineList, new NewsDataSource(), "com.netease.amazing.util.NewsListAdapter", myItemClickListener);
-        
         setUpActionBar();
         setUpViewPager();
         setUpTabs();
     }
-    
-    /**/
-    
-    /**/
-    class MyOnItemClickListener implements OnItemClickListener {
 
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			
-		}
-    	
-    }
     
     private void setUpActionBar() {
     	final ActionBar actionBar = getActionBar();
-    	actionBar.setHomeButtonEnabled(false);
+    	actionBar.setIcon(R.drawable.download);
+//    	actionBar.setHomeButtonEnabled(false);
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    	actionBar.setDisplayShowTitleEnabled(true);
-    	actionBar.setDisplayShowHomeEnabled(false);   
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+    	actionBar.setDisplayShowHomeEnabled(true);  
+    	actionBar.setDisplayShowTitleEnabled(true);  
     	
     	//设置actionBar的title bar ， 自定义样式
-    	actionBar.setDisplayShowCustomEnabled(true); 
-    	actionBar.setCustomView(R.layout.title_bar);
+    	actionBar.setDisplayShowCustomEnabled(true);
+    	actionBar.setCustomView(R.layout.apk_actionbar_title);
     }
     
     private void setUpViewPager() {
@@ -91,6 +82,21 @@ public class HomeActivity extends FragmentActivity
     		public void onPageSelected(int position) {
     			final ActionBar actionBar = getActionBar();
     			actionBar.setSelectedNavigationItem(position);
+    			
+    			switch(position) {
+    			case 0:
+    				currentFragment = 0;
+    				menu.getItem(0).setTitle("编辑");
+    				break;
+    			case 1:
+    				currentFragment = 1;
+    				menu.getItem(0).setTitle("添加");
+    				break;
+    			case 2:
+    				currentFragment = 2;
+    				menu.getItem(0).setTitle("好友");
+    				break;
+    			}
     		}
     		
     		@Override
@@ -103,14 +109,12 @@ public class HomeActivity extends FragmentActivity
     				case ViewPager.SCROLL_STATE_SETTLING:
     					break;
     				default:
-    					//TODO
     					break;
     			}
     		}
     	});
     }
-    
-    //设置tabs
+
     private void setUpTabs() {
     	final ActionBar actionBar = getActionBar();
     	for (int i = 0; i < mViewPagerAdapter.getCount(); ++i) {
@@ -125,6 +129,41 @@ public class HomeActivity extends FragmentActivity
     	super.onDestroy();
     }
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	Intent intent;
+    	switch(item.getItemId()) {
+    	case android.R.id.home:
+    		if(currentFragment ==0) {
+    			intent = new Intent(this,NoticeSettingActivity.class);
+    			startActivity(intent);
+    		}
+    		if(currentFragment == 1) {
+    			intent = new Intent(this,NewsSettingActivity.class);
+    			startActivity(intent);
+    		}
+    		if(currentFragment ==2) {
+    			intent = new Intent(this,ContactSettingActivity.class);
+    			startActivity(intent);
+    		}
+    		break;
+    	case R.id.home_menu_right:
+    		if(currentFragment ==0) {
+    			intent = new Intent(this,NoticeEditActivity.class);
+    			startActivity(intent);
+    		}
+    		if(currentFragment == 1) {
+    			intent = new Intent(this,NewsAddActivity.class);
+    			startActivity(intent);
+    		}
+    		if(currentFragment ==2) {
+    			intent = new Intent(this,ContactAddFriendActivity.class);
+    			startActivity(intent);
+    		}
+    		break;
+    	}
+    	return super.onOptionsItemSelected(item);
+    }
     public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 		public ViewPagerAdapter(FragmentManager fm) {
@@ -156,13 +195,13 @@ public class HomeActivity extends FragmentActivity
 			String tabLabel = null;
 			switch (position) {
 				case TAB_INDEX_ONE:
-					tabLabel = getString(R.string.tab_1);
+					tabLabel = getString(R.string.notice_tab_title);
 					break;
 				case TAB_INDEX_TWO:
-					tabLabel = getString(R.string.tab_2);
+					tabLabel = getString(R.string.news_tab_title);
 					break;
 				case TAB_INDEX_THREE:
-					tabLabel = getString(R.string.tab_3);
+					tabLabel = getString(R.string.contact_tab_title);
 					break;
 			}
 			return tabLabel;
@@ -186,12 +225,13 @@ public class HomeActivity extends FragmentActivity
 		// TODO Auto-generated method stub
 		
 	}
-//    @Override
-//    /**
-//     * 点击menu按钮时
-//     */
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
+    @Override
+    /**
+     * 点击menu按钮时
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	this.menu = menu;
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

@@ -32,7 +32,7 @@ public class OldNoticeFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflateAndSetupView(inflater, container, savedInstanceState, R.layout.fragment1);
+		return inflateAndSetupView(inflater, container, savedInstanceState, R.layout.notice_index);
 	}
 	
 	private View inflateAndSetupView(LayoutInflater inflater, ViewGroup container, 
@@ -45,35 +45,35 @@ public class OldNoticeFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		View view = getView();
-		
-		
-		int lastReceivedNoticeId = -1;
-		if(notices.size() !=0) {
-			lastReceivedNoticeId = notices.get(notices.size()-1).getId();
-		}
-		
-		//lastReceivedNoticeId表示上次从服务器端获取的所有通知中，处于列表尾部的id，用于服务器端的判断
-		notices = noticeHandler.getNotice(10,10);
-		
-		//用于存储listView项的map集合
-		ArrayList<Map<String,Object>> noticeList = new ArrayList<Map<String,Object>>();
-		Iterator<Notice> it = notices.iterator();
-		
-		while(it.hasNext()) {
-			Notice notice = it.next();
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("image", R.drawable.download);
-			map.put("title", notice.cutTitle(30,"UTF-8"));
-			map.put("date", new SimpleDateFormat("yyyy-MM-dd").format(notice.getNoticeDate()));
-			map.put("content", notice.cutContent(10,"UTF-8"));
-			noticeList.add(map);
-		}
-		ListView lv = (ListView)view.findViewById(R.id.myListView);
-		lv.setAdapter(new SimpleAdapter(getActivity(),noticeList,R.layout.noticeitem,
-				      new String[]{"image","title","date","content"},
-					  new int[]{R.id.notice_item_updown_image,R.id.notice_item_title,R.id.notice_item_date,R.id.notice_item_content}));
-		lv.setOnItemClickListener(new MyOnItemClickListener());	
+//		View view = getView();
+//		
+//		
+//		int lastReceivedNoticeId = -1;
+//		if(notices.size() !=0) {
+//			lastReceivedNoticeId = notices.get(notices.size()-1).getId();
+//		}
+//		
+//		//lastReceivedNoticeId表示上次从服务器端获取的所有通知中，处于列表尾部的id，用于服务器端的判断
+//		notices = noticeHandler.getNotice(10,10);
+//		
+//		//用于存储listView项的map集合
+//		ArrayList<Map<String,Object>> noticeList = new ArrayList<Map<String,Object>>();
+//		Iterator<Notice> it = notices.iterator();
+//		
+//		while(it.hasNext()) {
+//			Notice notice = it.next();
+//			Map<String,Object> map = new HashMap<String,Object>();
+//			map.put("image", R.drawable.download);
+//			map.put("title", notice.cutTitle(30,"UTF-8"));
+//			map.put("date", new SimpleDateFormat("yyyy-MM-dd").format(notice.getNoticeDate()));
+//			map.put("content", notice.cutContent(10,"UTF-8"));
+//			noticeList.add(map);
+//		}
+//		ListView lv = (ListView)view.findViewById(R.id.myListView);
+//		lv.setAdapter(new SimpleAdapter(getActivity(),noticeList,R.layout.noticeitem,
+//				      new String[]{"image","title","date","content"},
+//					  new int[]{R.id.notice_item_updown_image,R.id.notice_item_title,R.id.notice_item_date,R.id.notice_item_content}));
+//		lv.setOnItemClickListener(new MyOnItemClickListener());	
 	}
 	
 	private class MyOnItemClickListener implements OnItemClickListener {

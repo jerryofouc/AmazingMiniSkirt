@@ -31,6 +31,7 @@ public class ContactDataHandler {
 	 * @throws ClientProtocolException 
 	 */
 	public static List<Contact> getContactList() throws Exception{
+
 		List<Contact> contactList = new ArrayList<Contact>();
 		AccountRestClient.testLogin(BASE_URL,USER_NAME, PASSWORD);
 		

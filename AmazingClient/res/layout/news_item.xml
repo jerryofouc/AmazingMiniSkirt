@@ -18,7 +18,57 @@
         <ImageView android:id="@+id/news_item_image" android:layout_width="wrap_content"
             	  android:layout_height="wrap_content" android:src="@drawable/ic_launcher"/>
         <TextView android:id="@+id/news_item_from" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="杭州英华幼儿园"/>"
+            android:layout_height="wrap_content" android:text="杭州英华幼儿园"/>
+        
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        		  android:orientation="horizontal">    
+	        <Button android:id="@+id/news_item_like" android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" android:text="喜欢" 
+	            android:visibility="gone"/>"
+	        <Button android:id="@+id/news_item_take_it" android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" android:text="收录" 
+	            android:visibility="gone" android:textColor="@drawable/btn_txt_color_sel"/>
+	        <Button android:id="@+id/news_item_comment" android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" android:text="评论" 
+	            android:visibility="gone" android:textColor="@drawable/btn_txt_color_sel"/> 
+	    </LinearLayout>  
+	    <TextView android:id="@+id/news_item_comment_content_1" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论1"/>
+	    <TextView android:id="@+id/news_item_comment_content_2" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论2"/>
+	    <TextView android:id="@+id/news_item_comment_content_3" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论3"/>
+	    <TextView android:id="@+id/news_item_comment_content_4" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论4"/>
+	    <TextView android:id="@+id/news_item_comment_content_5" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论5"/>
+	    <TextView android:id="@+id/news_item_comment_content_6" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论6"/>
+	    <TextView android:id="@+id/news_item_comment_content_7" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论7"/>
+	    <TextView android:id="@+id/news_item_comment_content_8" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论8"/>
+	    <TextView android:id="@+id/news_item_comment_content_9" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论9"/>
+	    <TextView android:id="@+id/news_item_comment_content_10" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论10"/>
+	    <TextView android:id="@+id/news_item_comment_content_11" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论11"/>
+	    <TextView android:id="@+id/news_item_comment_content_12" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论12"/>
+	    <TextView android:id="@+id/news_item_comment_content_13" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论13"/>
+	    <TextView android:id="@+id/news_item_comment_content_14" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论14"/>
+	    <TextView android:id="@+id/news_item_comment_content_15" android:layout_width="wrap_content"
+             android:visibility="gone" android:layout_height="wrap_content" android:text="评论15"/>
+	    	    	    	    	    	    	    	    	    	    	    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="fill_parent"
+        		  android:orientation="vertical" android:layout_weight="1" android:background="#FF0000">
+        <Button android:id="@+id/news_item_show_other_buttons" android:layout_width="wrap_content"
+            	  android:layout_height="wrap_content" android:text="功能"/>
     </LinearLayout>
 
 </LinearLayout>

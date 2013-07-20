@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="此为设置通讯录的页面，页面布局文件为          contact_setting.xml"
+        android:textSize="40sp"
+        android:gravity="center_vertical"/>
+
+</LinearLayout>
