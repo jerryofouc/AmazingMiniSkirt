@@ -20,8 +20,11 @@ public class NoticeDataHandler {
 	 * 
 	 * @param noticeCount 通知条数
 	 * @return 获得最新的noticeCount条通知
+	 * @throws URISyntaxException 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public List<Notice> getInitNotice(int noticeCount) {
+	public List<Notice> getInitNotice(int noticeCount) throws ClientProtocolException, IOException, URISyntaxException {
 //		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
 //		String username = myApp.getUsername();
 //		String password = myApp.getPassword();
@@ -30,17 +33,7 @@ public class NoticeDataHandler {
 		String password = "123456";
 		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
 		List<NoticeDTO> results =null;
-		try {
-			results = noticeRestClient.getLatestNotices(noticeCount);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
-		
+		results = noticeRestClient.getLatestNotices(noticeCount);
 		return convertToNotices(results);
 	}
 	
@@ -66,8 +59,11 @@ public class NoticeDataHandler {
 	 * @param bottomNoticeId 当前
 	 * @param noticeCount 通知条数
 	 * @return 返回比id为bottomNoticeId晚发布的通知，通知条数为noticecount
+	 * @throws IOException 
+	 * @throws URISyntaxException 
+	 * @throws ClientProtocolException 
 	 */
-	public List<Notice> getNotice(long bottomNoticeId,int noticeCount) {
+	public List<Notice> getNotice(long bottomNoticeId,int noticeCount) throws ClientProtocolException, URISyntaxException, IOException {
 		
 //		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
 //		String username = myApp.getUsername();
@@ -77,17 +73,8 @@ public class NoticeDataHandler {
 		String password = "123456";
 		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
 		List<NoticeDTO> results =null;
-		try {
-			results = noticeRestClient.getDownRangeNotice(bottomNoticeId, noticeCount);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
 		
-		
+		results = noticeRestClient.getDownRangeNotice(bottomNoticeId, noticeCount);
 		return convertToNotices(results);
 	}
 	
@@ -95,8 +82,11 @@ public class NoticeDataHandler {
 	 * 
 	 * @param topNoticeId 
 	 * @return 返回比topNoticeId早发布的所有通知
+	 * @throws IOException 
+	 * @throws URISyntaxException 
+	 * @throws ClientProtocolException 
 	 */
-	public List<Notice> getNotice(long topNoticeId) {
+	public List<Notice> getNotice(long topNoticeId) throws ClientProtocolException, URISyntaxException, IOException {
 //		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
 //		String username = myApp.getUsername();
 //		String password = myApp.getPassword();
@@ -105,17 +95,7 @@ public class NoticeDataHandler {
 		String password = "123456";
 		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
 		List<NoticeDTO> results =null;
-		try {
-			results = noticeRestClient.getUpRangeNotice(topNoticeId);
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
-		
+		results = noticeRestClient.getUpRangeNotice(topNoticeId);
 		return convertToNotices(results);
 	}
 }

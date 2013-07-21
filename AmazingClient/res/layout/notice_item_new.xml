@@ -2,37 +2,68 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#EEEEEE">
+    android:background="@drawable/background_textview"
+    android:orientation="vertical" >
 
 	<ImageView
 	    android:id="@+id/notice_item_updown_image"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
+	    android:layout_width="30dp"
+	    android:layout_height="40dp"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
-	    android:layout_marginTop="5dp"
+	    android:layout_marginBottom="0dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="0dp"
+	    android:layout_marginTop="2dp"
 	    android:background="#DDDDDD"
 	    android:gravity="center"
-	    android:src="@drawable/upload"
-	    android:layout_marginBottom="2dp"
-	     />
+	    android:src="@drawable/upload" />
 
 	<TextView
 	    android:id="@+id/notice_item_title"
 	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
+	    android:layout_height="40dp"
 	    android:layout_alignBottom="@id/notice_item_updown_image"
 	    android:layout_alignTop="@id/notice_item_updown_image"
-	    android:background="#FF0000"
+	    android:layout_marginBottom="0dp"
+	    android:layout_marginLeft="0dp"
+	    android:layout_marginTop="2dp"
 	    android:layout_toRightOf="@id/notice_item_updown_image"
-	    android:textColor="#00FF00"
-	    android:width="240dp"
-	     />
+	    android:background="@color/transparent"
+	    android:width="200dp"
+	    android:gravity="center_vertical" />
 
-	<TextView   android:id = "@+id/notice_item_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#0000FF"
-	            android:layout_alignTop="@id/notice_item_updown_image" android:layout_alignBottom="@id/notice_item_updown_image" android:layout_alignParentRight="true" 
-	            android:text="gaagobnagoibgoi" android:layout_toRightOf="@id/notice_item_title"></TextView>
-	<TextView   android:id="@+id/notice_item_content " android:layout_height="fill_parent" android:layout_width="fill_parent" 
-	    		android:gravity="left" android:layout_alignParentRight="true" android:layout_alignParentLeft="true" android:height="50dp"
-	    		android:layout_below="@id/notice_item_updown_image" android:text="ghiabgiab" android:layout_marginTop="2dp" android:background="#FF00FF"/>
+	<TextView
+	    android:id="@+id/notice_item_date"
+	    android:layout_width="wrap_content"
+	    android:layout_height="40dp"
+	    android:layout_alignBottom="@id/notice_item_updown_image"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignTop="@id/notice_item_updown_image"
+	    android:layout_marginBottom="0dp"
+	    android:layout_marginRight="5dp"
+	    android:layout_marginTop="2dp"
+	    android:background="@color/transparent"
+	    android:text="gaagobnagoibgoi"
+	    android:width="70dp"
+	    android:gravity="center_vertical" >
+
+	</TextView>
+	
+	<TextView
+	    android:id="@+id/notice_item_content "
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@id/notice_item_updown_image"
+	    android:layout_marginBottom="5dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+	    android:layout_marginTop="1dp"
+	    android:background="@color/transparent"
+	    android:gravity="left"
+	    android:height="50dp"
+	    android:text="ghiabgiab" />
+
 </RelativeLayout>

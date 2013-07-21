@@ -40,7 +40,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	
 	private int fragmentLayout = R.layout.news_index;   //fragment的布局
 	private int viewListLayout = R.id.newsList;   //viewList的布局
-	
+	private ProgressDialog proDialog;
 	//item的响应事件
 	private OnItemClickListener itemClickListener = new OnItemClickListener(){
 
@@ -54,7 +54,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		
 	}; 
 	private NewsListViewFragmentHandler fragmentHandler = new NewsListViewFragmentHandler();
-	private ProgressDialog proDialog;
+	
 
 	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickListener) {
 		this.listAdapter = listAdapter;
@@ -88,6 +88,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			super.handleMessage(msg);
 			//如果连接中。。对话框还在 dismiss它
 			if(proDialog != null) {
+				Log.i("testDialog", "Dialog");
 				proDialog.dismiss();
 			}
 		}
