@@ -57,4 +57,14 @@ public class AccountRestClient extends AbstractBaseClient {
 				return false;
 		}
 	}
+	
+	public boolean hasLogin() throws ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.HAS_LOGIN_URL;
+		 HttpGet httpget = new HttpGet(requestUrl); 
+		 httpget.setHeader("Authorization", Utils.HttpBasicEncodeBase64(loginName, password));
+		 HttpResponse response = httpclient.execute(httpget);
+		 Gson gson = new Gson();
+		 Boolean hasLogin = gson.fromJson(EntityUtils.toString(response.getEntity()), Boolean.class);
+		 return hasLogin;
+	}
 }
