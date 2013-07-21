@@ -101,7 +101,7 @@ public class NewsRestClient extends AbstractBaseClient{
 	}
 	
 	public  List<NewsCommentsDTO> getNewsCommentToNewsIndexByNewsId(long newsId, int newsCommentCount) throws ClientProtocolException, IOException{
-		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP +"/" +newsId + "/comments";
+		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP +"/" +newsId + "/comments?count=" + newsCommentCount;
 		HttpGet httpget = new HttpGet(requestUrl);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
