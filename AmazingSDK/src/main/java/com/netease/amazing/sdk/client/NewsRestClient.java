@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.util.EntityUtils;
 
@@ -107,6 +108,19 @@ public class NewsRestClient extends AbstractBaseClient{
 		return DeserializeNewsCommentsDTOFromHttpReponse(response);
 		
 	}
+	
+	public boolean setLikeNews(long newsId) throws ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP +"/" +newsId + "/like?id=" + newsId;
+		HttpPost httpPost = new HttpPost(requestUrl);
+		httpPost.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpPost);
+		if(response.getStatusLine().getStatusCode() == 201){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	private List<NewsCommentsDTO> DeserializeNewsCommentsDTOFromHttpReponse(HttpResponse response)
 			throws IOException {

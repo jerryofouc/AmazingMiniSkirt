@@ -42,4 +42,10 @@ public class NewsRestClientTest extends BaseTest{
 			 System.out.println(c.getNewsComment());
 		 }
 	}
+	
+	@Test
+	public void likeCommentTest() throws ClientProtocolException, IOException{
+		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
+		System.out.println(newsClient.setLikeNews(1));;
+	}
 }
