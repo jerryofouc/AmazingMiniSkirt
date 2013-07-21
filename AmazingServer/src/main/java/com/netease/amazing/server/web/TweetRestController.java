@@ -48,7 +48,7 @@ public class TweetRestController extends BaseController{
 	
 	@RequestMapping(value={"/{id}/comments"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, produces={"application/json"})
 	@ResponseBody
-	public List<NewsCommentsDTO> getAllComments(@PathVariable("id") Long id,@RequestParam(value="count", defaultValue="5", required=false) int count){
+	public List<NewsCommentsDTO> getAllComments(@PathVariable("id") Long id,@RequestParam(value="count", defaultValue="1000", required=false) int count){
 		long userId = this.getCurrentUserId();
 		return tweetService.getAllNewsComments(userId,id,count);
 	}
@@ -58,6 +58,15 @@ public class TweetRestController extends BaseController{
 	public ResponseEntity<?> likeComment(@PathVariable("id") Long id){
 		long userId = this.getCurrentUserId();
 		tweetService.tweetOP(userId, id, CommentType.LIKE);
+		HttpHeaders headers = new HttpHeaders();
+	    return new ResponseEntity(headers, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value={"/{id}/include"}, method={RequestMethod.POST}, produces={"application/json"})
+	@ResponseBody
+	public ResponseEntity<?> includeComment(@PathVariable("id") Long id){
+		long userId = this.getCurrentUserId();
+		tweetService.includeTweet(userId, id);
 		HttpHeaders headers = new HttpHeaders();
 	    return new ResponseEntity(headers, HttpStatus.CREATED);
 	}

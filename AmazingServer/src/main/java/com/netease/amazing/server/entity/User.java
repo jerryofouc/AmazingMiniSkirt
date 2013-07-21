@@ -32,6 +32,7 @@ public class User extends IdEntity {
 	private String salt;
 	private Date registerDate;
 	private Child child;
+	private List<Tweet> tweets;
 	public enum Role{
 		PARENT,
 		TEACHER
@@ -95,6 +96,13 @@ public class User extends IdEntity {
 		this.notificatoins = notificatoins;
 	}
 	
+	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
+	public List<Tweet> getTweets() {
+		return tweets;
+	}
+	public void setTweets(List<Tweet> tweets) {
+		this.tweets = tweets;
+	}
 	@OneToOne
     @JoinColumn(name="child_id")
 	public Child getChild() {

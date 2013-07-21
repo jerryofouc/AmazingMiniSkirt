@@ -37,6 +37,7 @@ public class ContactsService {
 		List<ChildDTO> classMates = new ArrayList<ChildDTO>();
 		List<ChildDTO> friends = new ArrayList<ChildDTO>();
 
+		contactDTO.setUserID(id);
 		User curUser = userDao.findOne(id);
 		if(curUser.getRole()!=Role.PARENT){
 			return null;
@@ -66,6 +67,7 @@ public class ContactsService {
 			teacherDto.setName(t.getName());
 			teacherDto.setFixLine(t.getFixLine());
 			teacherDto.setMobilePhone(t.getTelephone());
+			teacherDto.setId(t.getUser().getId());
 			teacherDTOs.add(teacherDto);
 		}
 		
@@ -80,6 +82,10 @@ public class ContactsService {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				childDTO.setBirthday(dateFormat.format(child.getBirthday()));
 			}
+			if(child.getUser() != null){
+				childDTO.setUserID(child.getUser().getId());
+			}
+			
 			childDTO.setName(child.getName());
 			childDTO.setFromClass(child.getKlass().getName());
 			childDTO.setFromSchool(child.getKlass().getKindergarden().getName());
@@ -103,6 +109,10 @@ public class ContactsService {
 		for(ChildRelationship friendship : friendships){
 			Child childFriend = friendship.getChildTo();
 			ChildDTO childDTO = new ChildDTO();
+			if(childFriend.getUser() != null){
+				childDTO.setUserID(childFriend.getUser().getId());
+			}
+			
 			childDTO.setFromClass(childFriend.getKlass().getName());
 			childDTO.setFromSchool(childFriend.getKlass().getKindergarden().getName());
 			if(childFriend.getBirthday()!=null){
