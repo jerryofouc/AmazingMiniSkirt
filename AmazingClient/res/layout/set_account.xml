@@ -4,37 +4,111 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/setAccount_password_btn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="密码修改" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
+        
+	    <Button
+	        android:id="@+id/setAccount_password_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_all_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="密码修改" />
+	    
+	    <ImageView
+            android:id="@+id/setting_account_img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setAccount_password_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
 
-    <Button
-        android:id="@+id/setAccount_parent_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="我是孩子的     妈妈" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/setAccount_relativeAccount_btn"
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="关联账号管理" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
 
-    <Button
-        android:id="@+id/setAccount_blacklist_btn"
+	    <Button
+	        android:id="@+id/setAccount_parent_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_all_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="我是孩子的     妈妈" />
+	    
+	    <ImageView
+            android:id="@+id/setting_account_img2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setAccount_parent_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="动态屏蔽" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
+	    
+	    <Button
+	        android:id="@+id/setAccount_relativeAccount_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_up_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="关联账号管理" />
+	    
+	    <ImageView
+            android:id="@+id/setting_account_img3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setAccount_relativeAccount_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+	    
+	    <Button
+	        android:id="@+id/setAccount_blacklist_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_down_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="动态屏蔽" />
+	    
+	    <ImageView
+            android:id="@+id/setting_account_img4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setAccount_blacklist_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
+
+    </RelativeLayout>
 
 </LinearLayout>
