@@ -2,6 +2,7 @@ package com.netease.amazing.util;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,7 +14,6 @@ import org.apache.http.client.ClientProtocolException;
 import android.util.Log;
 
 import com.example.amazing.R;
-import com.netease.amazing.component.MyApplication;
 import com.netease.amazing.dbhandler.NoticeDataHandler;
 import com.netease.amazing.pojo.Notice;
 
@@ -57,9 +57,9 @@ public class NoticeDataSource extends DataSource {
 		while(it.hasNext()) {
 			Notice tempNotice = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("image", R.drawable.download);
+			map.put("image", R.drawable.comment_icon25x25);
 			map.put("title", tempNotice.cutTitle(14,"UTF-8"));
-			map.put("date", tempNotice.getId());
+			map.put("date", new SimpleDateFormat("yyyy.MM.dd").format(tempNotice.getNoticeDate()));
 			map.put("content", tempNotice.cutContent(39,"UTF-8"));
 			list.add(map);
 		}
