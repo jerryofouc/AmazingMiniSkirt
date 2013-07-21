@@ -1,20 +1,19 @@
 package com.netease.amazing.server.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 
 
 @Entity
 @Table(name = "tweet_comment")
 public class Comment extends IdEntity{
 	private String content;
-	public enum CommentType{
-		LIKE,
-		INCLUDE,//收录
-		NORMAL//普通
-	}
 	private CommentType type;
 	private Tweet tweet;
 	private User user;
@@ -24,6 +23,8 @@ public class Comment extends IdEntity{
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	@Enumerated(EnumType.STRING)
 	public CommentType getType() {
 		return type;
 	}

@@ -75,10 +75,11 @@ public class HomeActivity extends FragmentActivity
     	mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
     	
     	//设置加载fragment的数量，防止预加载
-    	//mViewPager.setOffscreenPageLimit(0);
+    	
     	
     	mViewPager = (ViewPager)findViewById(R.id.pager);
     	mViewPager.setAdapter(mViewPagerAdapter);
+    	mViewPager.setOffscreenPageLimit(0);
     	mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
     		@Override
     		public void onPageSelected(int position) {

@@ -166,7 +166,10 @@ public class NoticeEditActivity extends Activity {
 						}
 					}
 				}else {
-					if(defaultReceiver.contains(itemContent +";")) {
+					if(position ==0) {
+						editNoticeReceiverText.setText(defaultReceiver +";");
+					}
+					else if(defaultReceiver.contains(itemContent +";")) {
 						editNoticeReceiverText.setText(itemContent +";");
 						}
 					else if(!editNoticeReceiverText.getText().toString().contains(itemContent +";") )
@@ -198,6 +201,16 @@ public class NoticeEditActivity extends Activity {
 			noticeDTO.setTittle("hehe");
 			noticeDTO.setNeedFeedBack(false);
 			noticeDTO.setNoticeDate(new Date());
+			List<Long> receiverIds = new ArrayList<Long>();
+			int i =0;
+//			for(i=0;i<receiverNames.length;i++) {
+//				for(int j =0;j<friends.size();j++) {
+//					if(friends.get(j).get)
+//				}
+//				for(int k=0;k<teachers.size();i++) {
+//					if(teachers.get(k).getId())
+//				}
+//			}
 			new SendNoitceTask().execute("no");
 			pDialog = ProgressDialog.show(NoticeEditActivity.this, "","消息发送中", true, true);
 		}
