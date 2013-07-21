@@ -13,10 +13,6 @@ import com.netease.amazing.pojo.News;
 
 public class NewsDataSource extends DataSource {
 	
-	private static final String BASE_URL = "http://10.240.34.42:8080/server";
-	private static final String USER_NAME = "xukai";
-	private static final String PASSWORD = "123456";
-	
 	//根据刷新的动作，选择相应的取数据方式
 	public final static int NEWS_INIT_DATA = 0;
 	public final static int NEWS_UP_REFRESH_DATA = 2;
@@ -35,7 +31,6 @@ public class NewsDataSource extends DataSource {
 	protected List<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;
 
-	private NewsDataHandler ndh = new NewsDataHandler();
 	public NewsDataSource() {
 	//	mDataSource = updateValue(PAGE_START, PAGE_END);
 	}
@@ -87,13 +82,13 @@ public class NewsDataSource extends DataSource {
 
 	public void fetchNewsDown() {
 		News topNews = newsList.get(0);
-		List<News> result = ndh.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
+		List<News> result = NewsDataHandler.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
 		newsList.addAll(result);
 	}
 
 	public void fetchNewsUp() {
 		News bottomNews= newsList.get(newsList.size()-1);
-		List<News> result = ndh.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
+		List<News> result = NewsDataHandler.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
 		result.addAll(newsList);
 		newsList = result;
 	}

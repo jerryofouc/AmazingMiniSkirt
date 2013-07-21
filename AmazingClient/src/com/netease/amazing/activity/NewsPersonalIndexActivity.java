@@ -177,13 +177,7 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 		// TODO Auto-generated method stub
 		new Thread() {
 			public void run() {
-				try {
-					//模拟网络请求时间
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				changeListView(1);
+				changeListView(NewsPersonalDataSource.NEWS_GROWTH_UP_REFRESH_DATA);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -194,12 +188,7 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 		// TODO Auto-generated method stub
 		new Thread() {
 			public void run() {
-				try {
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				changeListView(2);
+				changeListView(NewsPersonalDataSource.NEWS_GROWTH_DOWN_REFRESH_DATA);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();

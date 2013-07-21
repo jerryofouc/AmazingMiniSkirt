@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +64,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		Button buttonComment = (Button)view.findViewById(R.id.news_item_comment);
 		
 		final OnClickListener listener = new ShowButtonsListener(isNewsCurrentUserLike,isNewsCurrentUserTakeDown,
-				newsId,buttonLike, buttonTakeIt, buttonComment,commentTextViewList);
+				newsId,buttonLike, buttonTakeIt, buttonComment,buttonShow,commentTextViewList);
 		
 
 		buttonLike.setOnClickListener(new OnClickListener(){
@@ -121,12 +122,14 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private Button buttonLike;
 		private Button buttonTakeIt;
 		private Button buttonComment;
+		private Button buttonShow;
 		private boolean isCurrentUserLike;
 		private boolean isCurrentUserTakeDown;
 		private List<CommentTextView> commentTextViewList;
 		private long newsId;
-		public ShowButtonsListener(boolean isCurrentUserLike, boolean isCurrentUserTakeDown, long newsId,Button buttonLike, Button buttonTakeIt,
-				Button buttonComment, List<CommentTextView> commentTextViewList){
+		public ShowButtonsListener(boolean isCurrentUserLike, boolean isCurrentUserTakeDown, 
+				long newsId,Button buttonLike, Button buttonTakeIt,
+				Button buttonComment, Button buttonShow, List<CommentTextView> commentTextViewList){
 			this.newsId = newsId;
 			this.buttonLike = buttonLike;
 			this.buttonTakeIt = buttonTakeIt;
@@ -134,6 +137,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 			this.commentTextViewList = commentTextViewList;
 			this.isCurrentUserLike = isCurrentUserLike;
 			this.isCurrentUserTakeDown = isCurrentUserTakeDown;
+			this.buttonShow = buttonShow;
 		}
 		public void setIsCurrentUserLike(boolean isCurrentUserLike){
 			this.isCurrentUserLike = isCurrentUserLike;
@@ -155,18 +159,21 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 					this.buttonTakeIt.setClickable(false);
 				}
 				this.buttonComment.setVisibility(View.VISIBLE);
+				this.buttonShow.setBackgroundResource(R.drawable.location_btn_down46x46);
 				IsButtonShow = 1;
 			}else{
 				this.buttonLike.setVisibility(View.GONE);
 				this.buttonTakeIt.setVisibility(View.GONE);
 				this.buttonComment.setVisibility(View.GONE);
 				for(CommentTextView commentTextView:commentTextViewList){
+					commentTextView.getCommentLinearLayoutView().setVisibility(View.GONE);
 					commentTextView.getCommentPublisherNameView().setVisibility(View.GONE);
 					commentTextView.getCommentReplyLabelView().setVisibility(View.GONE);
 					commentTextView.getCommentReplyToNameView().setVisibility(View.GONE);
 					commentTextView.getCommentColonView().setVisibility(View.GONE);
 					commentTextView.getCommentContentView().setVisibility(View.GONE);
 				}
+				this.buttonShow.setBackgroundResource(R.drawable.location_btn_left46x46);
 				IsButtonShow = 0;
 			}
 		}
@@ -174,6 +181,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 	}
 	
 	private void setCommentTextView(CommentTextView viewTempStructure, NewsComment newsComment){
+		viewTempStructure.getCommentLinearLayoutView().setVisibility(View.VISIBLE);
 		viewTempStructure.getCommentPublisherNameView().setVisibility(View.VISIBLE);
 		viewTempStructure.getCommentPublisherNameView().setText(newsComment.getNewsCommmentPublisherName());
 
@@ -332,18 +340,29 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private TextView commentReplyToNameView;
 		private TextView commentColonView;
 		private TextView commentContentView;
+		private LinearLayout commentLinearLayoutView;
 		
 		public CommentTextView(TextView commentPublisherNameView,
 				TextView commentReplyLabelView,
 				TextView commentReplyToNameView, TextView commentColonView,
-				TextView commentContentView) {
+				TextView commentContentView, LinearLayout commentLinearLayoutView) {
 			super();
 			this.commentPublisherNameView = commentPublisherNameView;
 			this.commentReplyLabelView = commentReplyLabelView;
 			this.commentReplyToNameView = commentReplyToNameView;
 			this.commentColonView = commentColonView;
 			this.commentContentView = commentContentView;
+			this.commentLinearLayoutView = commentLinearLayoutView;
 		}
+		
+		public LinearLayout getCommentLinearLayoutView() {
+			return commentLinearLayoutView;
+		}
+
+		public void setCommentLinearLayoutView(LinearLayout commentLinearLayoutView) {
+			this.commentLinearLayoutView = commentLinearLayoutView;
+		}
+
 		public TextView getCommentPublisherNameView() {
 			return commentPublisherNameView;
 		}
@@ -430,12 +449,22 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_6));
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_7));
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_8));
-		
+
+		List<LinearLayout> linearLayoutViewList = new ArrayList<LinearLayout>();
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_1));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_2));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_3));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_4));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_5));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_6));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_7));
+		linearLayoutViewList.add((LinearLayout)view.findViewById(R.id.news_item_comment_linearlayout_8));
+
 		List<CommentTextView> commentTextViewlist = new ArrayList<CommentTextView>();
 		for(int i=0; i<commentContentViewList.size();++i){
 			commentTextViewlist.add(new CommentTextView(commentPublisherNameViewList.get(i),
 					commentReplyLabelViewList.get(i),commentReplyToNameViewList.get(i),
-					commentColonViewList.get(i),commentContentViewList.get(i)));
+					commentColonViewList.get(i),commentContentViewList.get(i),linearLayoutViewList.get(i)));
 		}
 		return commentTextViewlist;
 	}

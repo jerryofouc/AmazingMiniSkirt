@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.pojo.NewsGrowthLog;
 /**
  * 
  * @author Huang Xiao Jun
@@ -20,12 +21,7 @@ import com.example.amazing.R;
  *
  */
 public class NewsPersonalListAdapter extends ListViewBasedAdapter {
-	public final static String NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS = "newsPersonalJoinClassItemDays";
-	public final static String NEWS_PERSONAL_ITEM_SAVER = "newsPersonalItemSaver";
-	public final static String NEWS_PERSONAL_ITEM_IMAGE = "newsPersonalItemImage";
-	public final static String NEWS_PERSONAL_ITEM_CONTENT = "newsPersonalItemContent";
-	public final static String NEWS_PERSONAL_ITEM_PUBLISH_DATE = "newsPersonalItemPublishDate";
-	public final static String NEWS_PERSONAL_ITEM_FROM = "newsPersonalItemFrom";
+
 
 	public NewsPersonalListAdapter(Context context, DataSource dataSource) {
 		super(context, dataSource);
@@ -39,22 +35,27 @@ public class NewsPersonalListAdapter extends ListViewBasedAdapter {
 		
 		final int itemPosition = position;
 		TextView newsPersonalItemJoinClassDaysView = (TextView)view.findViewById(R.id.news_personal_item_join_class_days);
-		newsPersonalItemJoinClassDaysView.setText(m.get(NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS).toString());
+		newsPersonalItemJoinClassDaysView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS).toString());
 		
 		TextView newsPersonalItemSaverAndFromView = (TextView)view.findViewById(R.id.news_personal_item_saver_and_from);
-		newsPersonalItemSaverAndFromView.setText(m.get(NEWS_PERSONAL_ITEM_SAVER).toString());
+		newsPersonalItemSaverAndFromView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_SAVER).toString());
 		
 		ImageView newsPersonalItemImageView = (ImageView)view.findViewById(R.id.news_personal_item_image);
-		newsPersonalItemImageView.setImageResource((Integer)m.get(NEWS_PERSONAL_ITEM_IMAGE));
+		
+		if(Integer.parseInt(m.get(NewsPersonalDataSource.NEWS_GROWTH_TYPE).toString()) == NewsGrowthLog.NEWS_WITH_IMAGE){
+			newsPersonalItemImageView.setImageResource((Integer)m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_IMAGE));
+		}else{
+			newsPersonalItemImageView.setVisibility(View.GONE);
+		}
 
 		TextView newsPersonalItemContentView = (TextView)view.findViewById(R.id.news_personal_item_content);
-		newsPersonalItemContentView.setText(m.get(NEWS_PERSONAL_ITEM_CONTENT).toString());
+		newsPersonalItemContentView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_CONTENT).toString());
 		
 		TextView newsPersonalItemPublishDateView =(TextView)view.findViewById(R.id.news_personal_item_publish_date);
-		newsPersonalItemPublishDateView.setText(m.get(NEWS_PERSONAL_ITEM_PUBLISH_DATE).toString());
+		newsPersonalItemPublishDateView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_PUBLISH_DATE).toString());
 				
 		TextView newsPersonalItemFromView = (TextView)view.findViewById(R.id.news_personal_item_from);
-		newsPersonalItemFromView.setText(m.get(NEWS_PERSONAL_ITEM_FROM).toString());
+		newsPersonalItemFromView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_FROM).toString());
 		
 		Button buttonLike = (Button)view.findViewById(R.id.news_personal_item_like);
 		buttonLike.setOnClickListener(new OnClickListener(){

@@ -11,10 +11,13 @@ import com.netease.amazing.pojo.Contact;
 import com.netease.amazing.pojo.News;
 import com.netease.amazing.pojo.NewsComment;
 import com.netease.amazing.pojo.NewsGrowthLog;
+import com.netease.amazing.sdk.client.GrowthLogClient;
 import com.netease.amazing.sdk.client.NewsRestClient;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
+import com.netease.amazing.sdk.dto.NewsDTO.TweetType;
 import com.netease.amazing.sdk.dto.NewsDTO;
+import com.netease.amazing.sdk.dto.NewsGrowthLogDTO;
 /**
  * Updated by Huang Xiao Jun 2013.7.20
  * @author 
@@ -22,7 +25,7 @@ import com.netease.amazing.sdk.dto.NewsDTO;
  */
 public class NewsDataHandler {
 	private static final String BASE_URL = "http://10.240.34.42:8080/server";
-	private static final long USER_ID = 1;
+	public static final long USER_ID = 1;
 	private static final String USER_NAME = "xukai";
 	private static final String PASSWORD = "123456";
 	
@@ -113,7 +116,7 @@ public class NewsDataHandler {
 		newsItem.setNewsCurrentUserTakeDown(news.isNewsCurrentUserTakeDown());
 		newsItem.setNewsId(news.getNewsId());
 		newsItem.setNewsPublishDate(news.getNewsPublishDate());
-		newsItem.setNewsPublisherName("XXX");
+		newsItem.setNewsPublisherName(news.getNewPublisherName());
 		newsItem.setNewsPublisherRelationship(news.getNewsPublisherRelationship());
 		newsItem.setNewspublisherUserId(news.getNewsPublisherId());
 		newsItem.setNewsType(News.NEWS_WITH_NOTHING);
@@ -208,16 +211,52 @@ public class NewsDataHandler {
 		}
 		return false;
 	}
+	
+	private static NewsGrowthLog convertNewsGrowthLogDTOToNewsGrowthLog(NewsGrowthLogDTO newsLog){
+		NewsGrowthLog news = new NewsGrowthLog();
+		news.setNewPublisherFrom(newsLog.getNewPublisherFrom());
+		news.setNewsContent(newsLog.getNewsContent());
+		news.setNewsGrowthLogOwnerUserName(newsLog.getNewsGrowthLogOwnerUserName());
+		news.setNewsGrowthLogType(newsLog.getNewsGrowthLogType());
+		news.setNewsId(newsLog.getNewsId());
+		news.setNewsPublishDate(newsLog.getNewsPublishDate());
+		news.setNewsPublisherName(newsLog.getNewsPublisherName());
+		news.setNewsTakeDownUserName(newsLog.getNewsTakeDownUserName());
+		if(newsLog.getNewsType() == TweetType.TEXT){
+			news.setNewsType(NewsGrowthLog.NEWS_WITH_NOTHING);
+		}else if(newsLog.getNewsType() == TweetType.WITH_PICTURE){
+			news.setNewsType(NewsGrowthLog.NEWS_WITH_IMAGE);
+		}else if(newsLog.getNewsType() == TweetType.WITH_VOICE){
+			news.setNewsType(NewsGrowthLog.NEWS_WITH_VOICE);
+		}
+		news.setUserClass(newsLog.getUserClass());
+		news.setUserJoinInClassDays(newsLog.getUserJoinInClassDays());
+		
+		return news;
+	}
 	/**
 	 * 初始化成长日志主页的时候，根据用户名，获取响应最新的count条成长记录(原创或收录的动态)，按照时间逆序保存在List中
 	 * @param userId 
 	 * @param count
 	 * @return 根据用户名，获得最新的count条成长记录(原创和收录的动态)
 	 */
-	public static List<NewsGrowthLog> getInitNewsGrowthLog(String userName,int count){
-		List<NewsGrowthLog> newsGrowthLog = new ArrayList<NewsGrowthLog>();
-		
-		return null;
+	public static List<NewsGrowthLog> getInitNewsGrowthLog(long userId,int count){
+		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
+		List<NewsGrowthLogDTO>  commentList = null;
+		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			commentList = newsClient.getInitNewsGrowthLog(userId, count);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsGrowthLogDTO newsGrowthLog:commentList){
+			newsList.add(convertNewsGrowthLogDTOToNewsGrowthLog(newsGrowthLog));
+		}
+		return newsList;
 	}
 	
 	/**
@@ -227,7 +266,7 @@ public class NewsDataHandler {
 	 * @return 根据用户名，返回比id为bottomNewsId更早发布的成长记录(当前用户原创和收录的动态)，
 	 * 		        返回的动态条数为count，如果更早发布的动态不足count条，则返回所有早发布的动态
 	 */
-	public static List<News> getNewsGrowthLogByUpRefresh(String userName, long bottomNewsId,int count) {
+	public static List<NewsGrowthLog> getNewsGrowthLogByUpRefresh(long userId, long bottomNewsId,int count) {
 		return null;
 	}
 	
@@ -236,7 +275,7 @@ public class NewsDataHandler {
 	 * @param topNewsId 
 	 * @return 根据用户名， 返回比topNewsId晚发布(即新发布)的所有成长记录(当前用户原创和收录的动态)
 	 */
-	public static List<News> getNewsGrowthLog(String userName,long topNewsId) {
+	public static List<NewsGrowthLog> getNewsGrowthLog(long userId,long topNewsId) {
 		return null;
 	}
 	
@@ -248,9 +287,9 @@ public class NewsDataHandler {
 	 *      case 1:当服务器中比topNewsId晚发布的信息条数大于count条时，返回服务器中最新的count条数据，并且按时间逆序保存在List中
 	 *      case 2:当服务器中比topNewsId晚发布的信息条数(假设为n条)小于count条时，则只需要返回这n条数据，并且按时间逆序保存在List中
 	 */
-	public static List<News> getNewsGrowthLogByDownRefresh(String userName, long topNewsId, int count) {
+	public static List<NewsGrowthLog> getNewsGrowthLogByDownRefresh(long userId, long topNewsId, int count) {
 		//return NewsDBSimulateHandler.getInstance().getNews(5);
-		return getNewsGrowthLog(userName,topNewsId);
+		return getNewsGrowthLog(userId,topNewsId);
 	}
 	
 	/**
