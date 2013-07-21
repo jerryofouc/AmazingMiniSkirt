@@ -1,10 +1,14 @@
 package com.netease.amazing.util;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.client.ClientProtocolException;
 
 import android.util.Log;
 
@@ -37,18 +41,14 @@ public class NoticeDataSource extends DataSource {
 	public boolean updateValue(int type) {
 		switch(type) {
 		case 0:
-			initFetchNotice();
-			break;
+			return initFetchNotice();
 		case 1:
-			fetchNoticeUp();
-			break;
+			return fetchNoticeDown();
 		case 2:
-			fetchNoticeDown();
-			break;
+			return fetchNoticeUp();
 		default:
-			break;
+			return false;
 		}
-		return true;
 	}
 	
 	public List<Map<String, Object>> toMapList() {
@@ -66,25 +66,57 @@ public class NoticeDataSource extends DataSource {
 		return list;
 	}
 	
-	public void initFetchNotice() {
-		noticeList = (ArrayList<Notice>)ndh.getInitNotice(fetchSize);
+	public boolean initFetchNotice() {
+		Log.i("you are pull downing", "test initFetchNotice");
+		try {
+			noticeList = (ArrayList<Notice>)ndh.getInitNotice(fetchSize);
+			return true;
+		} catch (ClientProtocolException e) {
+			return false;
+		} catch (IOException e) {
+			return false;
+		} catch (URISyntaxException e) {
+			return false;
+		}
 	}
 	
-	public void fetchNoticeDown() {
-		Notice bottomNotice = noticeList.get(noticeList.size()-1);
-		ArrayList<Notice> result = (ArrayList<Notice>)ndh.getNotice(bottomNotice.getId(), fetchSize);
-		noticeList.addAll(result);
-	}
-	
-	public void fetchNoticeUp() {
+	public boolean fetchNoticeDown() {
+		Log.i("you are pull downing", "test fetchNoticeDown");
 		Notice topNotice = noticeList.get(0);
 		Log.i("top id ",topNotice.getId() +"");
-		ArrayList<Notice> result = (ArrayList<Notice>)ndh.getNotice(topNotice.getId());
+		ArrayList<Notice> result;
+		try {
+			result = (ArrayList<Notice>)ndh.getNotice(topNotice.getId());
+		} catch (ClientProtocolException e) {
+			return false;
+		} catch (URISyntaxException e) {
+			return false;
+		} catch (IOException e) {
+			return false;
+		}
 		if(result != null) {
 		result.addAll(noticeList);
 		noticeList = result;
 		}
-		
+		return true;
+	}
+	
+	public boolean fetchNoticeUp() {
+		Log.i("you are pull downing", "test fetchNoticeUp");
+		Notice bottomNotice = noticeList.get(noticeList.size()-1);
+		ArrayList<Notice> result;
+		try {
+			result = (ArrayList<Notice>)ndh.getNotice(bottomNotice.getId(), fetchSize);
+			
+		} catch (ClientProtocolException e) {
+			return false;
+		} catch (URISyntaxException e) {
+			return false;
+		} catch (IOException e) {
+			return false;
+		}
+		noticeList.addAll(result);
+		return true;
 	}
 }
 

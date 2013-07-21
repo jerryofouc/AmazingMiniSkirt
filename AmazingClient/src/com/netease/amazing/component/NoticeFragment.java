@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
@@ -44,7 +45,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	private OnItemClickListener itemClickListener = new MyOnItemClickListener(); //itemClick响应事件
 	private MyListViewFragmentHandler fragmentHandler = new MyListViewFragmentHandler();
 	private ProgressDialog proDialog;
-	
+	private boolean status =true;
 	
 	/**
 	 * 
@@ -72,7 +73,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
-			mDataSource.updateValue(0);
+			status = mDataSource.updateValue(0);
 			listAdapter = new NoticeListAdapter(getActivity(), mDataSource);
 			set(listAdapter);
 			return listAdapter;
@@ -97,6 +98,9 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 			if(proDialog != null) {
 				proDialog.dismiss();
 			}
+			if(!status) {
+				Toast.makeText(getActivity(), "网络不给力", Toast.LENGTH_SHORT).show();
+			}
 			
 		}
 	}
@@ -119,6 +123,8 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 				"连接中..请稍后....", true, true);
 		GetInitDataTask task = new GetInitDataTask(); 
 		task.execute("no");
+		
+		
 		//添加ItemClick响应事件
 		mRefreshListView.setOnItemClickListener(itemClickListener);
 		mRefreshListView.setonRefreshListener(this);
@@ -143,6 +149,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	}
 	
 	protected void changeListView(int type){
+		Log.i("you are pull downing", "test changeListView");
 		mDataSource.updateValue(type);
 	}
 
@@ -182,7 +189,7 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				Log.i("azbzbzb", "aaaa");
+				Log.i("you are pull downing", "test onPullDownRefresh");
 				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}

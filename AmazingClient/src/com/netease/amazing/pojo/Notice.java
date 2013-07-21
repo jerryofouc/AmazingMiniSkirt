@@ -2,6 +2,8 @@ package com.netease.amazing.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.netease.amazing.util.StringCuter;
+
 
 public class Notice implements Serializable{
 	private long id;
@@ -72,7 +74,7 @@ public class Notice implements Serializable{
 	public String cutContent(int length,String encoder) {
 		if(content.length()<length) return content;
 		else {
-			return content.substring(0,length) + "...";
+			return StringCuter.cutStr(content,63);
 		}
 	}
 	
@@ -81,7 +83,7 @@ public class Notice implements Serializable{
 			return title;
 		}
 		else {
-			return title.substring(0,length) + "...";
+			return StringCuter.cutStr(title, 17);
 		}
 	}
 
