@@ -1,15 +1,22 @@
 package com.netease.amazing.pojo;
+
+import java.io.Serializable;
+
 /**
  * 
  * @author Huang Xiao Jun
  * Class Description:
  *   针对动态的评论
  */
-public class NewsComment {
-	public static int NEWS_COMMENT_COUNT_FOR_INDEX = 15;
-	public static int NEWS_COMMENT_LIKE_TYPE = 1; //该评论仅表示喜欢这个动态
-	public static int NEWS_COMMENT_TAKE_DOWN_TYPE = 2;//该评论仅表示收录了这个动态
-	public static int NEWS_COMMENT_COMMON_TYPE = 0; //该评论表示这个动态为普通动态
+public class NewsComment implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static int NEWS_COMMENT_COUNT_FOR_INDEX = 8;
+	public static int NEWS_COMMENT_TYPE_LIKE = 1; //该评论仅表示喜欢这个动态
+	public static int NEWS_COMMENT_TYPE_TAKE_DOWN = 2;//该评论仅表示收录了这个动态
+	public static int NEWS_COMMENT_TYPE_COMMON = 0; //该评论表示这个动态为普通动态
 	
 	private long newsId; //该条评论属于id为newsId的动态
 	private long newsCommentId; //该条评论的ID

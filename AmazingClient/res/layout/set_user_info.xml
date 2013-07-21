@@ -27,7 +27,7 @@
             android:id="@+id/setUserInfo_sex_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/upload" />
+            android:src="@drawable/sex_man_icon20x20" />
 
     </LinearLayout>
 
@@ -47,14 +47,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/gray_border" >
 
         <TextView
             android:id="@+id/setUserInfo_nickname_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="昵称" />
 
         <Button
@@ -62,20 +65,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/gray_border"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="小明" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/gray_border" >
 
         <TextView
             android:id="@+id/setUserInfo_signatrue_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="签名" />
 
         <Button
@@ -83,20 +92,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/gray_border"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="终于打倒感冒了~" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/gray_border" >
 
         <TextView
             android:id="@+id/setUserInfo_birthday_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="生日" />
 
         <Button
@@ -104,20 +121,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/gray_border"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="2006 . 02 . 15" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/gray_border" >
 
         <TextView
             android:id="@+id/setUserInfo_father_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="爸爸" />
 
         <Button
@@ -125,20 +148,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/gray_border"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="13479564987（李煜）" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/gray_border" >
 
         <TextView
             android:id="@+id/setUserInfo_mother_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="妈妈" />
 
         <Button
@@ -146,6 +175,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/gray_border"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="13548969854（林琳）" />
 
     </LinearLayout>
@@ -156,14 +188,34 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/gray_border"
         android:text="+ 添加联系人" />
 
-    <Button
-        android:id="@+id/setUserInfo_voiceCollect_btn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="声纹采集" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
+        
+	    <Button
+	        android:id="@+id/setUserInfo_voiceCollect_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_all_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="声纹采集" />
+	    
+	    <ImageView
+            android:id="@+id/setting_userinfo_img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setUserInfo_voiceCollect_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
+
+    </RelativeLayout>
 
 </LinearLayout>

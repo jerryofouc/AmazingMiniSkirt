@@ -1,19 +1,30 @@
 package com.netease.amazing.dbhandler;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
 
 import com.netease.amazing.pojo.Contact;
 import com.netease.amazing.pojo.News;
 import com.netease.amazing.pojo.NewsComment;
 import com.netease.amazing.pojo.NewsGrowthLog;
-import com.netease.amazing.util.NewsDBSimulateHandler;
+import com.netease.amazing.sdk.client.NewsRestClient;
+import com.netease.amazing.sdk.dto.NewsCommentsDTO;
+import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
+import com.netease.amazing.sdk.dto.NewsDTO;
 /**
  * Updated by Huang Xiao Jun 2013.7.20
  * @author 
  *
  */
 public class NewsDataHandler {
-	
+	private static final String BASE_URL = "http://10.240.34.42:8080/server";
+	private static final long USER_ID = 1;
+	private static final String USER_NAME = "xukai";
+	private static final String PASSWORD = "123456";
 	
 	/**
 	 * 初始化动态页面的时候，获取最新的newsCount条动态，按照时间逆序保存在List中
@@ -21,7 +32,26 @@ public class NewsDataHandler {
 	 * @return 获得最新的newsCount条动态
 	 */
 	public static List<News> getInitNews(int newsCount) {
-		return NewsDBSimulateHandler.getInstance().getNews(5);
+		List<News> newsList = new ArrayList<News>();
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		List<NewsDTO> newsListTemp = null;
+		try {
+			newsListTemp = newsClient.getLatestNews(newsCount);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsDTO news:newsListTemp){
+			News newsItem = convertNewsDTOToNews(news);
+			newsList.add(newsItem);
+		}
+		return newsList;
 	}
 	
 	/**
@@ -31,8 +61,24 @@ public class NewsDataHandler {
 	 * @return 返回比id为bottomNewsId更早发布的动态，
 	 * 		        返回的动态条数为newsCount，如果更早发布的动态不足newsCount条，则返回所有早发布的动态
 	 */
-	public static List<News> getNewsByUpRefresh(long bottomNewsId,int newsCount) {
-		return NewsDBSimulateHandler.getInstance().getNews(5);
+	public static List<News> getNewsByUpRefresh(long bottomNewsId,int newsCount) {		
+		List<News> newsList = new ArrayList<News>();
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		List<NewsDTO> newsListTemp = null;
+		try {
+			newsListTemp = newsClient.getNewsByUpRefresh(bottomNewsId, newsCount);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsDTO news:newsListTemp){
+			News newsItem = convertNewsDTOToNews(news);
+			newsList.add(newsItem);
+		}
+		return newsList;
 	}
 	
 	/**
@@ -41,9 +87,38 @@ public class NewsDataHandler {
 	 * @return 返回比topNewsId晚发布(即新发布)的所有动态
 	 */
 	public static List<News> getNews(long topNewsId) {
-		return NewsDBSimulateHandler.getInstance().getNews(5);
+		List<News> newsList = new ArrayList<News>();
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		List<NewsDTO> newsListTemp = null;
+		try {
+			newsListTemp = newsClient.getNews(topNewsId);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsDTO news:newsListTemp){
+			News newsItem = convertNewsDTOToNews(news);
+			newsList.add(newsItem);
+		}
+		return newsList;
 	}
-	
+	private static News convertNewsDTOToNews(NewsDTO news){
+		News newsItem = new News();
+		newsItem.setNewPublisherFrom(news.getNewPublisherFrom());
+		newsItem.setNewsContent(news.getNewsContent());
+		newsItem.setNewsCurrentUserLike(news.isNewsCurrentUserLike());
+		newsItem.setNewsCurrentUserTakeDown(news.isNewsCurrentUserTakeDown());
+		newsItem.setNewsId(news.getNewsId());
+		newsItem.setNewsPublishDate(news.getNewsPublishDate());
+		newsItem.setNewsPublisherName("XXX");
+		newsItem.setNewsPublisherRelationship(news.getNewsPublisherRelationship());
+		newsItem.setNewspublisherUserId(news.getNewsPublisherId());
+		newsItem.setNewsType(News.NEWS_WITH_NOTHING);
+		return newsItem;
+	}
 	/**
 	 * 
 	 * @param topNewsId
@@ -64,7 +139,36 @@ public class NewsDataHandler {
 	 * @return 返回针对该动态的最新的前 newsCommentCount条评论
 	 */
 	public static List<NewsComment> getNewsCommentToNewsIndexByNewsId(long newsId, int newsCommentCount){
-		return null;
+		List<NewsComment> newsList = new ArrayList<NewsComment>();
+		List<NewsCommentsDTO>  commentList = null;
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			commentList = newsClient.getNewsCommentToNewsIndexByNewsId(newsId, newsCommentCount);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsCommentsDTO comment:commentList){
+			NewsComment newsComment = new NewsComment();
+			newsComment.setNewsComment(comment.getNewsComment());
+			newsComment.setNewsCommentId(comment.getNewsCommentId());
+			newsComment.setNewsCommentPublisherId(comment.getNewsCommentPublisherId());
+			newsComment.setNewsCommentTo(comment.getNewsCommentTo());
+			if(comment.getNewsCommentType() == CommentType.LIKE){
+				newsComment.setNewsCommentType(NewsComment.NEWS_COMMENT_TYPE_LIKE);
+			}else if(comment.getNewsCommentType() == CommentType.INCLUDE){
+				newsComment.setNewsCommentType(NewsComment.NEWS_COMMENT_TYPE_TAKE_DOWN);
+			}else if(comment.getNewsCommentType() == CommentType.NORMAL){
+				newsComment.setNewsCommentType(NewsComment.NEWS_COMMENT_TYPE_COMMON);
+			}
+			newsComment.setNewsCommmentPublisherName(comment.getNewsCommmentPublisherName());
+			newsComment.setNewsId(comment.getNewsId());
+			newsList.add(newsComment);
+		}
+		return newsList;
 	}
 	
 	/**
@@ -91,6 +195,8 @@ public class NewsDataHandler {
 	 * @return 根据用户名，获得最新的count条成长记录(原创和收录的动态)
 	 */
 	public static List<NewsGrowthLog> getInitNewsGrowthLog(String userName,int count){
+		List<NewsGrowthLog> newsGrowthLog = new ArrayList<NewsGrowthLog>();
+		
 		return null;
 	}
 	

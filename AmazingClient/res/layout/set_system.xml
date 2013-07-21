@@ -4,27 +4,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/setSystem_theme_btn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="主题风格" />
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
+        
+	    <Button
+	        android:id="@+id/setSystem_theme_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btn_bk_up_radius"
+	        android:gravity="left|center_vertical"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:text="主题风格" />
+	    
+	    <ImageView
+            android:id="@+id/setting_system_img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setSystem_theme_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/btn_right_arrow30x30" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/btn_bk_down_radius"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:id="@+id/setSystem_notice_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="任务栏提醒" />
+            android:text="任务栏提醒"
+            android:textSize="18sp" />
 
         <ToggleButton
             android:id="@+id/setSystem_notice_toggle"

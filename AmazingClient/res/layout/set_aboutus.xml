@@ -10,7 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_launcher" />
 
     <TextView
@@ -26,7 +26,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_bk_all_radius"
         android:text="检查更新" />
 
     <Button
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/btn_bk_all_radius"
         android:text="隐私声明" />
 
 </LinearLayout>
