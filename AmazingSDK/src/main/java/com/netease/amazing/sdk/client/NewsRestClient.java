@@ -79,6 +79,26 @@ public class NewsRestClient extends AbstractBaseClient{
 	}
 	
 	
+	/**
+	 * 
+	 * @param topNewsId
+	 * @param newsCount
+	 * @return 返回比topNewsId晚发布(即新发布)的newsCount条动态，存在以下两种情况:
+	 *      case 1:当服务器中比topNewsId晚发布的信息条数大于newsCount条时，返回服务器中最新的newsCount条数据，并且按时间逆序保存在List中
+	 *      case 2:当服务器中比topNewsId晚发布的信息条数(假设为n条)小于newsCount条时，则只需要返回这n条数据，并且按时间逆序保存在List中
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsDTO> getNewsByDownRefresh(long topNewsId, int newsCount) throws ClientProtocolException, IOException {
+		//return NewsDBSimulateHandler.getInstance().getNews(5);
+		String requestUrl = baseUrl + RequestURLConstants.GET_TWEET_RANGE_UP;
+		HttpGet httpget = new HttpGet(requestUrl + "?topId=" + topNewsId + "&count="+newsCount);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	
 	
 	private List<NewsDTO> DeserializeFromHttpReponse(HttpResponse response)
 			throws IOException {

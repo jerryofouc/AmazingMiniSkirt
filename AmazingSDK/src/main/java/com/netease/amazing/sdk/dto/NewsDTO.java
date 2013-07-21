@@ -2,15 +2,17 @@ package com.netease.amazing.sdk.dto;
 
 
 public class NewsDTO {
+	public static final int RELATIONSHIP_TEACHER = 1;
+	public static final int RELATIONSHIP_CLASSMATE = 2;
+	public static final int RELATIONSHIP_FRIEND = 2;
 	public enum TweetType{
 		TEXT,
 		WITH_VOICE,
 		WITH_PICTURE
 	}
-	
 	private long newsId;
-	private String newsPublisherName; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
-	private String newsPublisherRelationship; //动态发布人与当前登录用户的关系
+	private long newsPublisherId; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
+	private int newsPublisherRelationship; //动态发布人与当前登录用户的关系
 	private String newsContent;//发布的动态内容;
 	private TweetType newsType;//该条动态信息的类型，参考上面常量
 	/**
@@ -29,16 +31,10 @@ public class NewsDTO {
 	public void setNewsId(long newsId) {
 		this.newsId = newsId;
 	}
-	public String getNewsPublisherName() {
-		return newsPublisherName;
-	}
-	public void setNewsPublisherName(String newsPublisherName) {
-		this.newsPublisherName = newsPublisherName;
-	}
-	public String getNewsPublisherRelationship() {
+	public int getNewsPublisherRelationship() {
 		return newsPublisherRelationship;
 	}
-	public void setNewsPublisherRelationship(String newsPublisherRelationship) {
+	public void setNewsPublisherRelationship(int newsPublisherRelationship) {
 		this.newsPublisherRelationship = newsPublisherRelationship;
 	}
 	public String getNewsContent() {
@@ -76,6 +72,12 @@ public class NewsDTO {
 	}
 	public void setNewsCurrentUserTakeDown(boolean newsCurrentUserTakeDown) {
 		this.newsCurrentUserTakeDown = newsCurrentUserTakeDown;
+	}
+	public long getNewsPublisherId() {
+		return newsPublisherId;
+	}
+	public void setNewsPublisherId(long newsPublisherId) {
+		this.newsPublisherId = newsPublisherId;
 	}
 	
 }
