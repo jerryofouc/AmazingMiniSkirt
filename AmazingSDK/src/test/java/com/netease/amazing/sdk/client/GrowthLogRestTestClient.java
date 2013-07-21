@@ -14,7 +14,33 @@ public class GrowthLogRestTestClient extends BaseTest{
 		GrowthLogClient growthLogClient = new GrowthLogClient(this.BASE_URL, this.USER_NAME, this.PASSWORD);
 		List<NewsGrowthLogDTO> logs = growthLogClient.getInitNewsGrowthLog(1, 10);
 		for(NewsGrowthLogDTO l : logs){
-			System.out.println(l.getNewsContent());
+			System.out.println(l.getNewsId());
+		}
+	}
+	
+	@Test
+	public void getNewsGrowthLogByUpRefreshTest() throws ClientProtocolException, IOException{
+		GrowthLogClient growthLogClient = new GrowthLogClient(this.BASE_URL, this.USER_NAME, this.PASSWORD);
+		List<NewsGrowthLogDTO> logs = growthLogClient.getNewsGrowthLogByUpRefresh(1, 5, 1);
+		for(NewsGrowthLogDTO l : logs){
+			System.out.println(l.getNewsId());
+		}
+	}
+	@Test
+	public void getNewsGrowthLogTest() throws ClientProtocolException, IOException{
+		GrowthLogClient growthLogClient = new GrowthLogClient(this.BASE_URL, this.USER_NAME, this.PASSWORD);
+		List<NewsGrowthLogDTO> logs = growthLogClient.getNewsGrowthLog(1, 4);
+		for(NewsGrowthLogDTO l : logs){
+			System.out.println(l.getNewsId());
+		}
+	}
+	
+	@Test
+	public void getNewsGrowthLogByDownRefreshTest() throws ClientProtocolException, IOException{
+		GrowthLogClient growthLogClient = new GrowthLogClient(this.BASE_URL, this.USER_NAME, this.PASSWORD);
+		List<NewsGrowthLogDTO> logs = growthLogClient.getNewsGrowthLogByDownRefresh(1,1, 2);
+		for(NewsGrowthLogDTO l : logs){
+			System.out.println(l.getNewsId());
 		}
 	}
 }
