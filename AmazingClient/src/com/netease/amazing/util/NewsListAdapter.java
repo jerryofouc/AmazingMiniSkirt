@@ -30,20 +30,23 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		Map<String,Object> m = (Map<String,Object>)getItem(position);
 		
 		final int itemPosition = position;
-		ImageView image1 = (ImageView)view.findViewById(R.id.news_item_icon);
-		image1.setImageResource((Integer)m.get("icon"));
+		ImageView newsSenderImageView = (ImageView)view.findViewById(R.id.news_item_sender_image);
+		newsSenderImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_PUBLISHER_IMAGE));
 		
-		TextView titleView = (TextView)view.findViewById(R.id.news_item_sender);
-		titleView.setText(m.get("title").toString());
+		TextView newsSenderNameView = (TextView)view.findViewById(R.id.news_item_sender);
+		newsSenderNameView.setText(m.get(NewsDataSource.NEWS_PUBLISHER_NAME).toString());
 		
-		TextView infoView =(TextView)view.findViewById(R.id.news_item_content);
-		infoView.setText(m.get("info").toString());
+		TextView newsContentView =(TextView)view.findViewById(R.id.news_item_content);
+		newsContentView.setText(m.get(NewsDataSource.NEWS_CONTENT).toString());
 		
-		ImageView image2 = (ImageView)view.findViewById(R.id.news_item_image);
-		image2.setImageResource((Integer)m.get("imag"));
+		ImageView newsContentImageView = (ImageView)view.findViewById(R.id.news_item_image);
+		newsContentImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_WITH_IMAGE));
 		
-		TextView newsFromView = (TextView)view.findViewById(R.id.news_item_from);
-		newsFromView.setText(m.get("newsFrom").toString());
+		TextView newsSendDateView = (TextView)view.findViewById(R.id.news_item_publish_date);
+		newsSendDateView.setText(m.get(NewsDataSource.NEWS_PUBLISH_DATE).toString());
+		
+		TextView newsSenderFromView = (TextView)view.findViewById(R.id.news_item_from);
+		newsSenderFromView.setText(m.get(NewsDataSource.NEWS_PUBLISHER_FROM).toString());
 		
 		//用于保存关于这个item的评论，以便于动态展示
 		List<TextView> newsCommentTextViewList = new ArrayList<TextView>();

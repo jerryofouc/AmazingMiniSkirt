@@ -53,7 +53,9 @@ public class ContactFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view = (ScrollView)inflateAndSetupView(inflater, container, savedInstanceState, R.layout.contact_info_list);
-		new GetContactListThread(getActivity()).start();		
+		new GetContactListThread(getActivity()).start();	
+		proDialog = ProgressDialog.show(getActivity(), "连接中..",
+				"连接中..请稍后....", true, true);
 		return 	view;
 	}
 	

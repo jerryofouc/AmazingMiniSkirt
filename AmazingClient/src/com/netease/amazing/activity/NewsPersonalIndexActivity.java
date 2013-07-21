@@ -18,11 +18,16 @@ import android.widget.Toast;
 import com.example.amazing.R;
 import com.netease.amazing.util.DataSource;
 import com.netease.amazing.util.ListViewBasedAdapter;
+import com.netease.amazing.util.NewsDataSource;
 import com.netease.amazing.util.NewsPersonalDataSource;
 import com.netease.amazing.util.NewsPersonalListAdapter;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
-
+/**
+ * 
+ * @author Huang Xiao Jun
+ *
+ */
 public class NewsPersonalIndexActivity extends Activity implements OnRefreshListener{
 	public final static String PERSONAL_NEWS_INDEX_TITLE = "成长日志";
 	public final static String MESSAGE_HISTORY = "历史消息"; 
@@ -66,7 +71,7 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
-			mDataSource.updateValue(0);
+			mDataSource.updateValue(NewsDataSource.NEWS_INIT_DATA);
 			personalNewsListAdapter = new NewsPersonalListAdapter(NewsPersonalIndexActivity.this, mDataSource);
 			set(personalNewsListAdapter,itemClickListener);
 			inithandler.sendEmptyMessage(1);

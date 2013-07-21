@@ -10,7 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-
+/**
+ * 
+ * @author Huang Xiao Jun
+ *
+ */
 public class NewsAddActivity extends Activity{
 	public final static String PUBLISH_NEWS_TITLE = "发布动态";
 	public final static String PUBLISH_NEWS = "发布";  

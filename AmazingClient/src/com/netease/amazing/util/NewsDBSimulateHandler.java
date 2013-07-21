@@ -22,7 +22,7 @@ public class NewsDBSimulateHandler {
 	public ArrayList<News> getNews(int size) {
 		ArrayList<News> Newss = new ArrayList<News>();
 		for(int i =0;i<size;i++) {
-			Newss.add(new News(true));
+			Newss.add(new News());
 		}
 		return Newss;
 	}

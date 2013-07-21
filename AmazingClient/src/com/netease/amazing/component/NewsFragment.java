@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
@@ -25,6 +27,7 @@ import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 
 /**
+ * Updated by Huang Xiao Jun 2013.7.20
  * @author Huang Xiao Jun
  * Class Desciption:
  *   ListViewFragment用於列表顯示，并且包括上拉和下拉刷新功能，響應item點擊事件
@@ -32,37 +35,27 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 public class NewsFragment extends Fragment implements OnRefreshListener {
 	
 	private RefreshableListView mRefreshListView;
-	private DataSource mDataSource = new NewsDataSource();
+	private DataSource newsDataSource = new NewsDataSource();
 	private ListViewBasedAdapter listAdapter;
-	private String listViewAdapter;
-	private final static int LIST_VIEW_PAGE_SIZE = 10;
 	
 	private int fragmentLayout = R.layout.news_index;   //fragment的布局
 	private int viewListLayout = R.id.newsList;   //viewList的布局
 	
-	private OnItemClickListener itemClickListener; //itemClick响应事件
-	private MyListViewFragmentHandler fragmentHandler = new MyListViewFragmentHandler();
+	//item的响应事件
+	private OnItemClickListener itemClickListener = new OnItemClickListener(){
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity(), "click" + String.valueOf(arg3),
+				     Toast.LENGTH_SHORT).show();
+		}
+		
+	}; 
+	private NewsListViewFragmentHandler fragmentHandler = new NewsListViewFragmentHandler();
 	private ProgressDialog proDialog;
-	/**
-	 * 
-	 * @param fragmentLayout fragment布局
-	 * @param viewListLayout viewList布局
-	 * @param dataSource 數據源
-	 * @param adapter 適配器類型
-	 * @param itemClickListener 響應的item事件
-	 */
-	public void set(int fragmentLayout, 
-			int viewListLayout, 
-			DataSource dataSource,
-			String adapter,
-			OnItemClickListener itemClickListener){
-		this.fragmentLayout = fragmentLayout;
-		this.viewListLayout = viewListLayout;
-		this.mDataSource = dataSource;
-		this.itemClickListener = itemClickListener;
-		this.listViewAdapter = adapter;
-	}
-	
+
 	public void set(ListViewBasedAdapter listAdapter,OnItemClickListener itemClickListener) {
 		this.listAdapter = listAdapter;
 		this.itemClickListener = itemClickListener;
@@ -72,8 +65,8 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
-			mDataSource.updateValue(0);
-			listAdapter = new NewsListAdapter(getActivity(), mDataSource);
+			newsDataSource.updateValue(NewsDataSource.NEWS_INIT_DATA);
+			listAdapter = new NewsListAdapter(getActivity(), newsDataSource);
 			set(listAdapter,itemClickListener);
 			fragmentHandler.sendEmptyMessage(1);
 			return listAdapter;
@@ -84,12 +77,11 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			super.onPostExecute(result);
 			result = (NewsListAdapter)listAdapter;
 			mRefreshListView.setAdapter(listAdapter);
-			
 		}
 		
 	}
 	
-	private class MyListViewFragmentHandler extends Handler {
+	private class NewsListViewFragmentHandler extends Handler {
 
 		@Override
 		public void handleMessage(Message msg) {
@@ -116,14 +108,12 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		proDialog = ProgressDialog.show(getActivity(), "连接中..",
 				"连接中..请稍后....", true, true);
 		GetInitDataTask task = new GetInitDataTask();  
-		task.execute("no");
-		Log.i("a","aaaaaa");
-		
+		task.execute("news");
 		
 		//添加ItemClick响应事件
 		mRefreshListView.setOnItemClickListener(itemClickListener);
 		mRefreshListView.setonRefreshListener(this);
-		view.findViewById(R.id.news_user_name).setOnClickListener(new OnClickListener(){
+		view.findViewById(R.id.news_user_img).setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
@@ -137,7 +127,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	}
 
 	protected void changeListView(int type){
-		mDataSource.updateValue(type);
+		newsDataSource.updateValue(type);
 	}
 
 	private Handler handler = new Handler(){
@@ -154,13 +144,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	public void onPullUpRefresh() {
 		new Thread() {
 			public void run() {
-				try {
-					//模拟网络请求时间
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				changeListView(1);
+				changeListView(NewsDataSource.NEWS_UP_REFRESH_DATA);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -170,12 +154,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	public void onPullDownRefresh() {
 		new Thread() {
 			public void run() {
-				try {
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				changeListView(2);
+				changeListView(NewsDataSource.NEWS_DOWN_REFRESH_DATA);
 				handler.sendEmptyMessage(0);
 			}
 		}.start();

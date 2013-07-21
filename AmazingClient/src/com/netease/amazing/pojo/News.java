@@ -1,6 +1,5 @@
 package com.netease.amazing.pojo;
 
-import android.graphics.Bitmap;
 
 /**
  * 
@@ -9,19 +8,11 @@ import android.graphics.Bitmap;
  *   News用于存储每一条动态所包含的信息
  */
 public class News {
-	public News(boolean b){
-		
-	}
-	private int newsId;
-	public int getNewsId() {
-		return newsId;
-	}
-	public void setNewsId(int id) {
-		this.newsId = id;
-	}
 	public static final int NEWS_WITH_IMAGE = 1;//带图像的动态
 	public static final int NEWS_WITH_VOICE = 2;//带声音的动态
 	public static final int NEWS_WITH_NOTHING = 0;//单纯文字的动态
+	
+	private long newsId;
 	private String newsPublisherName; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
 	private byte[] newsPublisherImg; //动态发布人头像,存储为数据流
 	private String newsPublisherRelationship; //动态发布人与当前登录用户的关系
@@ -37,4 +28,65 @@ public class News {
 	private String newPublisherFrom; //动态发布人来自的幼儿园
 	private byte[] newsWithImage; //动态中的图片，不能与录音共存，注意动态的类型
 	private byte[] newsWithVoice; //动态中的录音，不能与图片共存，注意动态的类型
+	
+	public long getNewsId() {
+		return newsId;
+	}
+	public void setNewsId(int newsId) {
+		this.newsId = newsId;
+	}
+	public String getNewsPublisherName() {
+		return newsPublisherName;
+	}
+	public void setNewsPublisherName(String newsPublisherName) {
+		this.newsPublisherName = newsPublisherName;
+	}
+	public byte[] getNewsPublisherImg() {
+		return newsPublisherImg;
+	}
+	public void setNewsPublisherImg(byte[] newsPublisherImg) {
+		this.newsPublisherImg = newsPublisherImg;
+	}
+	public String getNewsPublisherRelationship() {
+		return newsPublisherRelationship;
+	}
+	public void setNewsPublisherRelationship(String newsPublisherRelationship) {
+		this.newsPublisherRelationship = newsPublisherRelationship;
+	}
+	public String getNewsContent() {
+		return newsContent;
+	}
+	public void setNewsContent(String newsContent) {
+		this.newsContent = newsContent;
+	}
+	public int getNewsType() {
+		return newsType;
+	}
+	public void setNewsType(int newsType) {
+		this.newsType = newsType;
+	}
+	public String getNewsPublishDate() {
+		return newsPublishDate;
+	}
+	public void setNewsPublishDate(String newsPublishDate) {
+		this.newsPublishDate = newsPublishDate;
+	}
+	public String getNewPublisherFrom() {
+		return newPublisherFrom;
+	}
+	public void setNewPublisherFrom(String newPublisherFrom) {
+		this.newPublisherFrom = newPublisherFrom;
+	}
+	public byte[] getNewsWithImage() {
+		return newsWithImage;
+	}
+	public void setNewsWithImage(byte[] newsWithImage) {
+		this.newsWithImage = newsWithImage;
+	}
+	public byte[] getNewsWithVoice() {
+		return newsWithVoice;
+	}
+	public void setNewsWithVoice(byte[] newsWithVoice) {
+		this.newsWithVoice = newsWithVoice;
+	}
 }

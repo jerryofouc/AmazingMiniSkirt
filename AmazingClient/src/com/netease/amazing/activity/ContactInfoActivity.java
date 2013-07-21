@@ -8,7 +8,11 @@ import android.widget.TextView;
 
 import com.example.amazing.R;
 import com.netease.amazing.pojo.Contact;
-
+/**
+ * 
+ * @author Huang Xiao Jun
+ *
+ */
 public class ContactInfoActivity extends Activity {
 	public static String CONTACT_TYPE = "contactType";
 
