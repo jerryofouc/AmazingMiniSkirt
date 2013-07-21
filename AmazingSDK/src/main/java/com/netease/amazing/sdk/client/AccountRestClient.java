@@ -13,8 +13,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
+import com.netease.amazing.sdk.dto.ContactDTO;
 import com.netease.amazing.sdk.dto.UserDTO;
 import com.netease.amazing.sdk.utils.RequestURLConstants;
 import com.netease.amazing.sdk.utils.Utils;
@@ -24,6 +26,15 @@ public class AccountRestClient extends AbstractBaseClient {
 		super(baseUrl, loginName, password);
 	}
 	
+	public UserDTO getUserInfo() throws ClientProtocolException, IOException{
+		 String requestUrl = baseUrl + RequestURLConstants.TEST_LOGIN_URL;
+		 HttpGet httpget = new HttpGet(requestUrl); 
+		 httpget.setHeader("Authorization", Utils.HttpBasicEncodeBase64(loginName, password));
+		 HttpResponse response = httpclient.execute(httpget);
+		 Gson gson = new Gson();
+		 UserDTO userDTO = gson.fromJson(EntityUtils.toString(response.getEntity()), UserDTO.class);
+		 return userDTO;
+	}
 	/**
 	 * 检测是否登录成功
 	 * @param baseURL 服务器域名
