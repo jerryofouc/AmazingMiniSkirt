@@ -18,4 +18,18 @@ public class NewsRestClientTest extends BaseTest{
 			System.out.println(n.getNewsContent());
 		}
 	}
+	
+	@Test
+	public void getRangeTest() throws ClientProtocolException, IOException, URISyntaxException{
+		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
+		List<NewsDTO> news = newsClient.getNewsByUpRefresh(7, 5);
+		/*for(NewsDTO n : news){
+			System.out.println(n.getNewsContent());
+		}*/
+		
+		news = newsClient.getNews(2);
+		for(NewsDTO n : news){
+			System.out.println(n.getNewsContent());
+		}
+	}
 }

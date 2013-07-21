@@ -63,6 +63,22 @@ public class NewsRestClient extends AbstractBaseClient{
 		return DeserializeFromHttpReponse(response);
 	}
 	
+	/**
+	 * 
+	 * @param topNewsId 
+	 * @return 返回比topNewsId晚发布(即新发布)的所有动态
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsDTO> getNews(long topNewsId) throws ClientProtocolException, IOException {
+		String requestUrl = baseUrl + RequestURLConstants.GET_TWEET_RANGE_UP;
+		HttpGet httpget = new HttpGet(requestUrl + "?topId=" + topNewsId);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	
 	
 	private List<NewsDTO> DeserializeFromHttpReponse(HttpResponse response)
 			throws IOException {
