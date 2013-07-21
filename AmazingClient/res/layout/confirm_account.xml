@@ -13,7 +13,7 @@
             android:id="@+id/confirmAccount_avatar_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/download" />
+            android:src="@drawable/default_avatar163x163" />
 
         <LinearLayout
             android:layout_width="wrap_content"
