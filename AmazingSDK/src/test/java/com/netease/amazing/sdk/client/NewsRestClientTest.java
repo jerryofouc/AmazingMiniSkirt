@@ -1,5 +1,7 @@
 package com.netease.amazing.sdk.client;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.junit.Test;
 
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsDTO;
+import com.netease.amazing.sdk.dto.NewsDTO.TweetType;
 
 public class NewsRestClientTest extends BaseTest{
 	@Test
@@ -54,5 +57,14 @@ public class NewsRestClientTest extends BaseTest{
 	public void includeCommentTest() throws ClientProtocolException, IOException{
 		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
 		System.out.println(newsClient.includeNews(1));;
+	}
+	
+	@Test
+	public void addNewsTest() throws ClientProtocolException, IOException{
+		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
+		NewsDTO newsDTO = new NewsDTO();
+		newsDTO.setNewsContent("÷’”⁄≥§¥Û¿≤");
+		newsDTO.setNewsType(TweetType.TEXT);
+		assertTrue(newsClient.addNews(newsDTO));
 	}
 }

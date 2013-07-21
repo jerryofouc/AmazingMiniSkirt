@@ -1,6 +1,7 @@
 package com.netease.amazing.sdk.client;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -8,9 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -160,5 +163,33 @@ public class NewsRestClient extends AbstractBaseClient{
 		Gson gson = builder.create();
 		NewsDTO[] retValue = gson.fromJson(EntityUtils.toString(response.getEntity()), NewsDTO[].class);
 		return Arrays.asList(retValue);
+	}
+	
+	/**
+	 * 当前登录用户发表新动态，客户端只负责传 动态的文字和附件(声音或图像)
+	 * 服务器端负责写入动态的添加时间等其他各种相关信息到相应数据表中，参考News.java的字段
+	 * 
+	 * @param newsContent 动态的文字内容
+	 * @param attachment 录音 或 图片
+	 * @param newsType 参考News.java中关于动态类型的分类
+	 * @return 是否操作成功
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  boolean addNews(NewsDTO newDTO) throws ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP;
+		HttpPost httpPost = new HttpPost(requestUrl);
+		Gson gson = new Gson();
+		String sendJson = gson.toJson(newDTO);
+		StringEntity stringEntity = new StringEntity(sendJson,"UTF-8");
+		stringEntity.setContentType("application/json; charset=utf-8");
+		httpPost.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		httpPost.setEntity(stringEntity);
+		HttpResponse response = httpclient.execute(httpPost);
+		if(response.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

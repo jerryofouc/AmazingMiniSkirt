@@ -50,7 +50,6 @@
             android:theme="@android:style/Theme.Holo.Light"/>
         
         
-        
         <!-- 添加contact相关的activity -->
         <activity android:name = "com.netease.amazing.activity.ContactAddFriendActivity"/>
         <activity android:name = "com.netease.amazing.activity.SettingActivity"></activity>
