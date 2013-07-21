@@ -14,11 +14,14 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.netease.amazing.sdk.dto.NewsCommentsDTO;
+import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 import com.netease.amazing.sdk.dto.NewsDTO;
 import com.netease.amazing.server.entity.Comment;
 import com.netease.amazing.server.entity.Tweet;
 import com.netease.amazing.server.entity.User;
 import com.netease.amazing.server.entity.User.Role;
+import com.netease.amazing.server.repository.CommentDao;
 import com.netease.amazing.server.repository.TweetDao;
 import com.netease.amazing.server.repository.UserDao;
 
@@ -32,6 +35,8 @@ public class TweetService {
 	private UserDao userDao;
 	@Autowired
 	private TweetDao tweetDao;
+	@Autowired
+	private CommentDao commentDao;
 	public List<NewsDTO> getLatestTweets(long userId, int count){
 		List<NewsDTO> allNews = new ArrayList<NewsDTO>();
 		Sort sort = new Sort( Direction.DESC,"createTime");
@@ -53,10 +58,11 @@ public class TweetService {
 	}
 	
 	
-	public List<NewsDTO> getRangeAllUpTweets(long userId, long bottomId) {
+	public List<NewsDTO> getRangeAllUpTweets(long userId, long bottomId,int count) {
 		List<NewsDTO> allNews = new ArrayList<NewsDTO>();
 		Sort sort = new Sort( Direction.DESC,"createTime");
-		List<Tweet> tweets = tweetDao.findRangeAllTweets(userId, bottomId,sort);
+		Pageable pageable = new PageRequest(0,count,sort);
+		List<Tweet> tweets = tweetDao.findRangeAllTweets(userId, bottomId,pageable);
 		tweetToNews(userId, allNews, tweets);
 		return allNews;
 	}
@@ -67,22 +73,23 @@ public class TweetService {
 			NewsDTO newsDTO = new NewsDTO();
 			
 			User fromUser = t.getUser();
-			if(fromUser.getRole() == Role.PARENT){
+			newsDTO.setNewPublisherFrom(fromUser.getChild().getKlass().getKindergarden().getName());
+			/*if(fromUser.getRole() == Role.PARENT){
 				newsDTO.setNewPublisherFrom(fromUser.getChild().getName());
 			}else if(fromUser.getRole() == Role.TEACHER) {
 				newsDTO.setNewPublisherFrom(fromUser.getTeacher().getName());
-			}
+			}*/
 			
 			newsDTO.setNewsContent(t.getContents());
 			
-			List<Comment> selfLikeComments = tweetDao.findComment(userId, Comment.CommentType.LIKE, t.getId());
+			List<Comment> selfLikeComments = tweetDao.findComment(userId, CommentType.LIKE, t.getId());
 			if(selfLikeComments == null || selfLikeComments.isEmpty()){
 				newsDTO.setNewsCurrentUserLike(false);
 			}else{
 				newsDTO.setNewsCurrentUserLike(true);
 			}
 			
-			List<Comment> selfIncludeComments = tweetDao.findComment(userId, Comment.CommentType.INCLUDE, t.getId());
+			List<Comment> selfIncludeComments = tweetDao.findComment(userId, CommentType.INCLUDE, t.getId());
 			if(selfIncludeComments == null || selfIncludeComments.isEmpty()){
 				newsDTO.setNewsCurrentUserTakeDown(false);
 			}else{
@@ -103,12 +110,14 @@ public class TweetService {
 			}
 			newsDTO.setNewsPublishDate(simpleDateFormat.format(newsDate));
 			
-			newsDTO.setNewsPublisherName(t.getUser().getName());
-			
-			if(t.getUser().getRole() == Role.PARENT){
-				newsDTO.setNewsPublisherRelationship("家长");
+			newsDTO.setNewsPublisherId(t.getUser().getId());
+			User curUser = userDao.findOne(userId);
+			if(t.getUser().getRole() == Role.TEACHER){
+				newsDTO.setNewsPublisherRelationship(NewsDTO.RELATIONSHIP_TEACHER);
+			}else if(t.getUser().getChild().getKlass().getId().equals(curUser.getChild().getKlass().getId())){
+				newsDTO.setNewsPublisherRelationship(NewsDTO.RELATIONSHIP_CLASSMATE);
 			}else{
-				newsDTO.setNewsPublisherRelationship("幼儿园");
+				newsDTO.setNewsPublisherRelationship(NewsDTO.RELATIONSHIP_FRIEND);
 			}
 			
 			newsDTO.setNewsType(t.getType());
@@ -125,5 +134,34 @@ public class TweetService {
 
 
 
-	
+	public List<NewsCommentsDTO> getAllNewsComments(Long userId, Long newsId, int count){
+		Tweet tweet = tweetDao.findOne(newsId);
+		List<Comment> comments = tweet.getComments();
+		List<NewsCommentsDTO> newComments = new ArrayList<NewsCommentsDTO>();
+		for(Comment c : comments){
+			NewsCommentsDTO commentDTO = new NewsCommentsDTO();
+			commentDTO.setNewsComment(c.getContent());
+			commentDTO.setNewsCommentId(c.getId());
+			commentDTO.setNewsCommentPublisherId(c.getUser().getId());
+			//commentDTO.setNewsCommentTo(newsCommentTo);
+			commentDTO.setNewsCommentType(c.getType());
+			commentDTO.setNewsCommmentPublisherName(c.getUser().getName());
+			commentDTO.setNewsId(c.getTweet().getId());
+			newComments.add(commentDTO);
+		}
+		return newComments;
+	}
+
+
+	@Transactional(readOnly = false)
+	public void tweetOP(long userId, Long tweetId,CommentType type) {
+		User user = userDao.findOne(userId);
+		Tweet tweet = tweetDao.findOne(tweetId);
+		Comment comment = new Comment();
+		comment.setTweet(tweet);
+		comment.setType(type);
+		comment.setUser(user);
+		commentDao.save(comment);
+	}
+
 }
