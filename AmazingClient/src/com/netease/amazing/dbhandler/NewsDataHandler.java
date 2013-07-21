@@ -2,6 +2,7 @@ package com.netease.amazing.dbhandler;
 
 import java.util.List;
 
+import com.netease.amazing.pojo.Contact;
 import com.netease.amazing.pojo.News;
 import com.netease.amazing.pojo.NewsComment;
 import com.netease.amazing.pojo.NewsGrowthLog;
@@ -148,5 +149,14 @@ public class NewsDataHandler {
 	 */
 	public static boolean deleteNewsGrowthLogById(long newsId){
 		return false;
+	}
+	
+	/**
+	 * 获取用户名为userName的用户的联系信息
+	 * @param userName
+	 * @return
+	 */
+	public static Contact getNewsPublisherContact(String userName){
+		return null;
 	}
 }
