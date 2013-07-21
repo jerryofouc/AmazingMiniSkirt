@@ -43,10 +43,8 @@ public class NoticeRestClient extends AbstractBaseClient{
 	 * @throws URISyntaxException
 	 */
 	public List<NoticeDTO> getLatestNotices(int count) throws ClientProtocolException, IOException, URISyntaxException{
-		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES;
-		URIBuilder urlbuilder = new URIBuilder(requestUrl);
-		urlbuilder.addParameter("count", ""+count);
-		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NOTICES + "?count=" + count;
+		HttpGet httpget = new HttpGet(requestUrl);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
 		return DeserializeFromHttpReponse(response);
@@ -63,11 +61,8 @@ public class NoticeRestClient extends AbstractBaseClient{
 	 * @throws IOException
 	 */
 	public List<NoticeDTO> getDownRangeNotice(long beginId, int count) throws URISyntaxException, ClientProtocolException, IOException{
-		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_DOWN_NOTICES;
-		URIBuilder urlbuilder = new URIBuilder(requestUrl);
-		urlbuilder.addParameter("count", ""+count);
-		urlbuilder.addParameter("beginId",""+ beginId);
-		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_DOWN_NOTICES  + "?count=" + count +"&beginId=" + beginId;
+		HttpGet httpget = new HttpGet(requestUrl);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
 		return DeserializeFromHttpReponse(response);
@@ -82,10 +77,8 @@ public class NoticeRestClient extends AbstractBaseClient{
 	 * @throws IOException
 	 */
 	public List<NoticeDTO> getUpRangeNotice(long beginId) throws URISyntaxException, ClientProtocolException, IOException{
-		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_UP_NOTICES;
-		URIBuilder urlbuilder = new URIBuilder(requestUrl);
-		urlbuilder.addParameter("beginId",""+ beginId);
-		HttpGet httpget = new HttpGet(urlbuilder.toString());
+		String requestUrl = baseUrl + RequestURLConstants.GET_RANGE_UP_NOTICES + "?beginId=" + beginId;
+		HttpGet httpget = new HttpGet(requestUrl);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
 		return DeserializeFromHttpReponse(response);
