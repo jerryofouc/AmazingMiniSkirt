@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.example.amazing.R;
 public class NewsAddActivity extends Activity{
 	public final static String PUBLISH_NEWS_TITLE = "发布动态";
 	public final static String PUBLISH_NEWS = "发布";  
+	public final static int NEW_INPUT_MAX_LENGTH = 10;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,8 +49,18 @@ public class NewsAddActivity extends Activity{
 			@Override
 			public boolean onMenuItemClick(MenuItem arg0) {
 				// TODO Auto-generated method stub
-				Toast.makeText(NewsAddActivity.this, "已发布",
-					     Toast.LENGTH_SHORT).show();
+				String text = ((EditText)findViewById(R.id.newsAdd_input_editText)).getText().toString();
+				if(text.trim().length() > NEW_INPUT_MAX_LENGTH*2){
+					Toast.makeText(NewsAddActivity.this, "请输入"+NEW_INPUT_MAX_LENGTH+"字以内的动态！",
+						     Toast.LENGTH_SHORT).show();
+				}else if(text.trim().length() > 0){
+					Toast.makeText(NewsAddActivity.this, text.trim(),
+						     Toast.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(NewsAddActivity.this, "请输入文字",
+						     Toast.LENGTH_SHORT).show();
+				}
+
 				return true;
 			}
         	

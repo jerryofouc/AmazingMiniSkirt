@@ -37,7 +37,6 @@
         android:background="@drawable/gray_border"
         android:ems="10"
         android:hint="这里输入你的动态…"
-        android:inputType="textPostalAddress"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin" />
  

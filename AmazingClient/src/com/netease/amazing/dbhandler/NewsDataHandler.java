@@ -125,4 +125,28 @@ public class NewsDataHandler {
 		//return NewsDBSimulateHandler.getInstance().getNews(5);
 		return getNewsGrowthLog(userName,topNewsId);
 	}
+	
+	/**
+	 * 当前登录用户发表新动态，客户端只负责传 动态的文字和附件(声音或图像)
+	 * 服务器端负责写入动态的添加时间等其他各种相关信息到相应数据表中，参考News.java的字段
+	 * 
+	 * @param newsContent 动态的文字内容
+	 * @param attachment 录音 或 图片
+	 * @param newsType 参考News.java中关于动态类型的分类
+	 * @return 是否操作成功
+	 */
+	public static boolean addNews(String newsContent, byte[] attachment, int newsType){
+		return false;
+	}
+	
+	/**
+	 * 当前登录用户删除该条成长日志 ，分两种情况：
+	 *   case 1:当这条成长日志是登录用户的原创动态时，直接在数据库中删除该条动态信息
+	 *   case 2:当这条成长日志是登录用户收录的动态时，在数据库中标记用户不在收录该动态
+	 * @param newsId
+	 * @return
+	 */
+	public static boolean deleteNewsGrowthLogById(long newsId){
+		return false;
+	}
 }
