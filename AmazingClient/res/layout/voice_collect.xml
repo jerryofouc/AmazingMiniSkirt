@@ -9,7 +9,7 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="46dp"
         android:src="@drawable/voice_collect_text_bg358x66" />
 
     <Button
@@ -19,5 +19,12 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:background="@drawable/voice_collect_btn416x400"
         android:text=" " />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="长按录音键，以采集声纹" />
 
 </LinearLayout>
