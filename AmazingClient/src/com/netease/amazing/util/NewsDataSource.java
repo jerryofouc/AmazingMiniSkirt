@@ -1,20 +1,14 @@
 package com.netease.amazing.util;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.client.ClientProtocolException;
-
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.News;
-import com.netease.amazing.sdk.client.NewsRestClient;
-import com.netease.amazing.sdk.dto.NewsDTO;
 
 
 public class NewsDataSource extends DataSource {
@@ -35,6 +29,8 @@ public class NewsDataSource extends DataSource {
 	public final static String NEWS_PUBLISH_DATE = "newsPublishDate";
 	public final static String NEWS_PUBLISHER_FROM = "newPublisherFrom";
 	public final static String NEWS_WITH_IMAGE = "newsWithImage";
+	public final static String NEWS_CURRENT_USER_LIKE = "isCurrentUserLike";
+	public final static String NEWS_CURRENT_USER_TAKE_DOWN = "isCurrentUserTakeDown";
 
 	protected List<News> newsList = new ArrayList<News>();
 	private int fetchSize = FETCH_SIZE;
@@ -78,6 +74,8 @@ public class NewsDataSource extends DataSource {
 			map.put(NEWS_PUBLISHER_FROM, news.getNewPublisherFrom());
 			map.put(NEWS_PUBLISH_DATE, news.getNewsPublishDate());
 			map.put(NEWS_ID, news.getNewsId());
+			map.put(NEWS_CURRENT_USER_LIKE, news.isNewsCurrentUserLike());
+			map.put(NEWS_CURRENT_USER_TAKE_DOWN, news.isNewsCurrentUserTakeDown());
 			list.add(map);
 		}
 		return list;
