@@ -25,4 +25,18 @@ public class TweetRestController extends BaseController{
 		long userId = getCurrentUserId();
 		return tweetService.getLatestTweets(userId, count);
 	}
+
+	@RequestMapping(value={"/rangeDown"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, produces={"application/json"})
+	@ResponseBody
+	public List<NewsDTO> getRangeDown(@RequestParam("bottomId") long bottomId, @RequestParam(value="count", defaultValue="5", required=false) int count){
+		long userId = getCurrentUserId();
+		return tweetService.getRangeDownTweets(userId, bottomId, count);
+	}
+	
+	@RequestMapping(value={"/rangeUp"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, produces={"application/json"})
+	@ResponseBody
+	public List<NewsDTO> getRangeUp(@RequestParam("topId") long topId){
+		long userId = getCurrentUserId();
+		return tweetService.getRangeAllUpTweets(userId, topId);
+	}
 }

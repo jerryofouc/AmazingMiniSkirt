@@ -37,7 +37,32 @@ public class TweetService {
 		Sort sort = new Sort( Direction.DESC,"createTime");
 		Pageable pageable = new PageRequest(0,count,sort);
 		List<Tweet> tweets = tweetDao.findLatestTweets(userId, pageable);
-		
+		tweetToNews(userId, allNews, tweets);
+		return allNews;
+	}
+
+	
+	
+	public List<NewsDTO> getRangeDownTweets(long userId, long bottomId, int count){
+		List<NewsDTO> allNews = new ArrayList<NewsDTO>();
+		Sort sort = new Sort( Direction.DESC,"createTime");
+		Pageable pageable = new PageRequest(0,count,sort);
+		List<Tweet> tweets = tweetDao.findRangeDownTweets(userId, bottomId, pageable);
+		tweetToNews(userId, allNews, tweets);
+		return allNews;
+	}
+	
+	
+	public List<NewsDTO> getRangeAllUpTweets(long userId, long bottomId) {
+		List<NewsDTO> allNews = new ArrayList<NewsDTO>();
+		Sort sort = new Sort( Direction.DESC,"createTime");
+		List<Tweet> tweets = tweetDao.findRangeAllTweets(userId, bottomId,sort);
+		tweetToNews(userId, allNews, tweets);
+		return allNews;
+	}
+	
+	private void tweetToNews(long userId, List<NewsDTO> allNews,
+			List<Tweet> tweets) {
 		for(Tweet t : tweets){
 			NewsDTO newsDTO = new NewsDTO();
 			
@@ -72,9 +97,9 @@ public class TweetService {
 			if(curDate.getTime() - newsDate.getTime() < A_DAY_IN_MINISED ){
 				simpleDateFormat = new SimpleDateFormat("今天  HH:mm");
 			}else if(curDate.getTime() - newsDate.getTime() < A_YEAR_IN_MINISED){
-				simpleDateFormat = new SimpleDateFormat("mm月dd日  HH:mm");
+				simpleDateFormat = new SimpleDateFormat("MM月dd日  HH:mm");
 			}else{
-				simpleDateFormat = new SimpleDateFormat("yyyy年mm月dd日  HH:mm");
+				simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
 			}
 			newsDTO.setNewsPublishDate(simpleDateFormat.format(newsDate));
 			
@@ -90,10 +115,15 @@ public class TweetService {
 			
 			allNews.add(newsDTO);
 		}
-		return allNews;
 	}
+	
+	
 	public static void main(String args[]){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
 		System.out.println(simpleDateFormat.format(Calendar.getInstance().getTime()));
 	}
+
+
+
+	
 }
