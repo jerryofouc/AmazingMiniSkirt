@@ -1,17 +1,28 @@
 package com.netease.amazing.util;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.client.ClientProtocolException;
+
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.News;
+import com.netease.amazing.sdk.client.NewsRestClient;
+import com.netease.amazing.sdk.dto.NewsDTO;
 
 
 public class NewsDataSource extends DataSource {
+	
+	private static final String BASE_URL = "http://10.240.34.42:8080/server";
+	private static final String USER_NAME = "xukai";
+	private static final String PASSWORD = "123456";
+	
 	//根据刷新的动作，选择相应的取数据方式
 	public final static int NEWS_INIT_DATA = 0;
 	public final static int NEWS_UP_REFRESH_DATA = 2;
@@ -55,25 +66,6 @@ public class NewsDataSource extends DataSource {
 	public List<Map<String, Object>> toMapList() {
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Iterator<News> it = newsList.iterator();
-		int countTemp = 0;
-		while(it.hasNext()) {
-			News tempNews = it.next();
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put(NEWS_PUBLISHER_IMAGE, R.drawable.ic_launcher);
-			map.put(NEWS_PUBLISHER_NAME, "李晓明"+countTemp);
-			map.put(NEWS_CONTENT, "今天很开心 "+countTemp);
-			map.put(NEWS_WITH_IMAGE, R.drawable.ic_pulltorefresh_arrow);
-			map.put(NEWS_PUBLISHER_FROM, "杭州幼儿园"+countTemp);
-			map.put(NEWS_PUBLISH_DATE, "今天  14:59");
-			list.add(map);
-			countTemp++;
-		}
-		return list;
-	}
-
-	public List<Map<String, Object>> toMapListTemp() {
-		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		Iterator<News> it = newsList.iterator();
 		Map<String,Object> map;
 		while(it.hasNext()) {
 			News news = it.next();
@@ -85,14 +77,14 @@ public class NewsDataSource extends DataSource {
 				map.put(NEWS_WITH_IMAGE, R.drawable.ic_pulltorefresh_arrow);
 			map.put(NEWS_PUBLISHER_FROM, news.getNewPublisherFrom());
 			map.put(NEWS_PUBLISH_DATE, news.getNewsPublishDate());
+			map.put(NEWS_ID, news.getNewsId());
 			list.add(map);
 		}
 		return list;
 	} 
 
 	public void initFetchNews() {
-		newsList = ndh.getInitNews(fetchSize);
-
+		newsList = NewsDataHandler.getInitNews(fetchSize);
 	}
 
 	public void fetchNewsDown() {

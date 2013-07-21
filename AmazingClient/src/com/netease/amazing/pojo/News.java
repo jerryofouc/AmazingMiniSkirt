@@ -1,5 +1,7 @@
 package com.netease.amazing.pojo;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -7,16 +9,21 @@ package com.netease.amazing.pojo;
  * Class Description:
  *   News用于存储每一条动态所包含的信息
  */
-public class News {
+public class News implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int NEWS_WITH_IMAGE = 1;//带图像的动态
 	public static final int NEWS_WITH_VOICE = 2;//带声音的动态
 	public static final int NEWS_WITH_NOTHING = 0;//单纯文字的动态
 	
 	private long newsId;
-	private String newspublisherUserName;//动态发布人在系统中的用户名
+	private long newspublisherUserId;//动态发布人在系统中的用户名
+
 	private String newsPublisherName; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
 	private byte[] newsPublisherImg; //动态发布人头像,存储为数据流
-	private String newsPublisherRelationship; //动态发布人与当前登录用户的关系
+	private int newsPublisherRelationship; //动态发布人与当前登录用户的关系
 	private String newsContent;//发布的动态内容;
 	private int newsType;//该条动态信息的类型，参考上面常量
 	/**
@@ -34,11 +41,11 @@ public class News {
 	private boolean newsCurrentUserTakeDown;//该动态是否被当前登录用户收录
 	
 	
-	public String getNewspublisherUserName() {
-		return newspublisherUserName;
+	public long getNewspublisherUserId() {
+		return newspublisherUserId;
 	}
-	public void setNewspublisherUserName(String newspublisherUserName) {
-		this.newspublisherUserName = newspublisherUserName;
+	public void setNewspublisherUserId(long newspublisherUserId) {
+		this.newspublisherUserId = newspublisherUserId;
 	}
 	public String getNewsPublisherName() {
 		return newsPublisherName;
@@ -52,10 +59,10 @@ public class News {
 	public void setNewsPublisherImg(byte[] newsPublisherImg) {
 		this.newsPublisherImg = newsPublisherImg;
 	}
-	public String getNewsPublisherRelationship() {
+	public int getNewsPublisherRelationship() {
 		return newsPublisherRelationship;
 	}
-	public void setNewsPublisherRelationship(String newsPublisherRelationship) {
+	public void setNewsPublisherRelationship(int newsPublisherRelationship) {
 		this.newsPublisherRelationship = newsPublisherRelationship;
 	}
 	public String getNewsContent() {

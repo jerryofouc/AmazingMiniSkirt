@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,7 +44,11 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		newsContentView.setText(m.get(NewsDataSource.NEWS_CONTENT).toString());
 		
 		ImageView newsContentImageView = (ImageView)view.findViewById(R.id.news_item_image);
-		newsContentImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_WITH_IMAGE));
+		if(m.get(NewsDataSource.NEWS_WITH_IMAGE)!=null){
+			newsContentImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_WITH_IMAGE));
+		}else{
+			newsContentImageView.setVisibility(View.GONE);
+		}
 		
 		TextView newsSendDateView = (TextView)view.findViewById(R.id.news_item_publish_date);
 		newsSendDateView.setText(m.get(NewsDataSource.NEWS_PUBLISH_DATE).toString());
@@ -93,7 +98,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		});
 		
 		Button buttonShow = (Button)view.findViewById(R.id.news_item_show_other_buttons);
-		buttonShow.setOnClickListener(new ShowButtonsListener(buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
+		buttonShow.setOnClickListener(new ShowButtonsListener(Long.parseLong(m.get(NewsDataSource.NEWS_ID).toString()),buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
 		
 		return view;
 	}
@@ -129,24 +134,9 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private Button buttonTakeIt;
 		private Button buttonComment;
 		private List<CommentTextView> commentTextViewList;
-		private Handler handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				super.handleMessage(msg);
-				String[] commentArray = msg.getData().getStringArray("comment");
-				TextView viewTemp;
-				for(int i=0; i<commentArray.length; ++i){
-					commentTextViewList.get(i).getCommentPublisherNameView().setVisibility(View.VISIBLE);
-					commentTextViewList.get(i).getCommentReplyLabelView().setVisibility(View.VISIBLE);
-					commentTextViewList.get(i).getCommentReplyToNameView().setVisibility(View.VISIBLE);
-					commentTextViewList.get(i).getCommentColonView().setVisibility(View.VISIBLE);
-					viewTemp = commentTextViewList.get(i).getCommentContentView(); 
-					viewTemp.setText(commentArray[i]);
-					viewTemp.setVisibility(View.VISIBLE);
-				}
-			}
-		};
-		public ShowButtonsListener(Button buttonLike, Button buttonTakeIt, Button buttonComment, List<CommentTextView> commentTextViewList){
+		private long newsId;
+		public ShowButtonsListener(long newsId,Button buttonLike, Button buttonTakeIt, Button buttonComment, List<CommentTextView> commentTextViewList){
+			this.newsId = newsId;
 			this.buttonLike = buttonLike;
 			this.buttonTakeIt = buttonTakeIt;
 			this.buttonComment = buttonComment;
@@ -156,7 +146,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(IsButtonShow == 0){
-				new GetCommentsListThread().start();
+				new GetInitNewsDataTask().execute(newsId);
 				this.buttonLike.setVisibility(View.VISIBLE);
 				this.buttonTakeIt.setVisibility(View.VISIBLE);
 				this.buttonComment.setVisibility(View.VISIBLE);
@@ -179,49 +169,47 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		 * 
 		 * @author Huang Xiao Jun
 		 * Class Description:
-		 *    获取评论内容的线程 替换下面thread操作
-		 */		
-		class GetCommentsListExecute extends AsyncTask<Long,Integer,List<NewsComment>> {
+		 *    获取评论内容的线程
+		 */
+		class GetInitNewsDataTask extends AsyncTask<Long,String,List<NewsComment>> {
 
 			@Override
-			protected List<NewsComment> doInBackground(Long... params) {
-				// TODO Auto-generated method stub
-				return NewsDataHandler.getNewsCommentToNewsIndexByNewsId(params[0],
-						NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);
+			protected List<NewsComment> doInBackground(Long... arg0) {
+				List<NewsComment> newsCommentList = NewsDataHandler.getNewsCommentToNewsIndexByNewsId(
+						newsId, NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);				
+				return newsCommentList;
 			}
 			
 			@Override
 			protected void onPostExecute(List<NewsComment> result) {
 				super.onPostExecute(result);
-				/**
-				 * 更新commentsListView
-				 */
-			}
-		}
-		/**
-		 * 
-		 * @author Huang Xiao Jun
-		 * Class Description:
-		 *    获取评论内容的线程
-		 */
-		class GetCommentsListThread extends Thread {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				int n = new Random().nextInt(16);
-				String[] stringArray = new String[n]; 
-				for(int i=0; i<n ; ++i){
-					stringArray[i] = new String("comment"+i);
-				}
+				CommentTextView viewTempStructure;
+				NewsComment newsComment;
+				for(int i=0; i<result.size(); ++i){
+					viewTempStructure = commentTextViewList.get(i);
+					newsComment = result.get(i);
+					
+					viewTempStructure.getCommentPublisherNameView().setVisibility(View.VISIBLE);
+					viewTempStructure.getCommentPublisherNameView().setText(newsComment.getNewsCommmentPublisherName());
 
-				Bundle b = new Bundle();
-				b.putStringArray("comment",stringArray);
-				Message msg = new Message();
-				msg.setData(b);
-	            handler.sendMessage(msg);
+					//viewTempStructure.getCommentReplyLabelView().setVisibility(View.VISIBLE);
+					//viewTempStructure.getCommentReplyToNameView().setVisibility(View.VISIBLE);
+					viewTempStructure.getCommentColonView().setVisibility(View.VISIBLE);
+					viewTempStructure.getCommentContentView().setVisibility(View.VISIBLE);
+					if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_LIKE){
+						viewTempStructure.getCommentContentView().setText("喜欢这个动态！");	
+						viewTempStructure.getCommentContentView().setTextColor(R.color.light_blue);
+					}else if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_TAKE_DOWN){
+						viewTempStructure.getCommentContentView().setText("收录了这个动态");	
+						viewTempStructure.getCommentContentView().setTextColor(R.color.light_green);
+					}else{
+						viewTempStructure.getCommentContentView().setText(newsComment.getNewsComment());	
+					}
+				}
 			}
+			
 		}
+
 	}
 	/**
 	 * 
@@ -290,13 +278,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_6));
 		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_7));
 		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_8));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_9));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_10));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_11));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_12));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_13));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_14));
-		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_15));
+
 
 		List<TextView> commentReplyLabelViewList = new ArrayList<TextView>();
 		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_1));
@@ -307,13 +289,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_6));
 		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_7));
 		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_8));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_9));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_10));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_11));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_12));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_13));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_14));
-		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_15));
+
 		
 		List<TextView> commentReplyToNameViewList = new ArrayList<TextView>();
 		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_1));
@@ -324,13 +300,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_6));
 		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_7));
 		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_8));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_9));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_10));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_11));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_12));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_13));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_14));
-		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_15));
+
 
 		List<TextView> commentColonViewList = new ArrayList<TextView>();
 		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_1));
@@ -341,13 +311,6 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_6));
 		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_7));
 		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_8));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_9));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_10));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_11));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_12));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_13));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_14));
-		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_15));
 
 		List<TextView> commentContentViewList = new ArrayList<TextView>();
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_1));
@@ -358,13 +321,6 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_6));
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_7));
 		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_8));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_9));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_10));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_11));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_12));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_13));
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_14));	
-		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_15));
 		
 		List<CommentTextView> commentTextViewlist = new ArrayList<CommentTextView>();
 		for(int i=0; i<commentContentViewList.size();++i){

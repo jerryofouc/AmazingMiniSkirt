@@ -61,7 +61,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		this.itemClickListener = itemClickListener;
 	}
 	
-	class GetInitDataTask extends AsyncTask {
+	class GetInitNewsDataTask extends AsyncTask {
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
@@ -107,7 +107,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 		
 		proDialog = ProgressDialog.show(getActivity(), "连接中..",
 				"连接中..请稍后....", true, true);
-		GetInitDataTask task = new GetInitDataTask();  
+		GetInitNewsDataTask task = new GetInitNewsDataTask();  
 		task.execute("news");
 		
 		//添加ItemClick响应事件
