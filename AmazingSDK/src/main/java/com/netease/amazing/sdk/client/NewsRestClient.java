@@ -56,7 +56,7 @@ public class NewsRestClient extends AbstractBaseClient{
 	 * @throws ClientProtocolException 
 	 */
 	public  List<NewsDTO> getNewsByUpRefresh(long bottomNewsId,int count) throws ClientProtocolException, IOException {
-		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NEWS;
+		String requestUrl = baseUrl + RequestURLConstants.GET_TWEET_RANGE_DOWN;
 		HttpGet httpget = new HttpGet(requestUrl + "?count=" + count + "&bottomId=" + bottomNewsId);
 		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
 		HttpResponse response = httpclient.execute(httpget);
