@@ -9,6 +9,7 @@ import java.util.Map;
 import android.util.Log;
 
 import com.example.amazing.R;
+import com.netease.amazing.component.MyApplication;
 import com.netease.amazing.dbhandler.NoticeDataHandler;
 import com.netease.amazing.pojo.Notice;
 
@@ -57,28 +58,28 @@ public class NoticeDataSource extends DataSource {
 			Notice tempNotice = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("image", R.drawable.download);
-			map.put("title", tempNotice.cutTitle(30,"UTF-8"));
+			map.put("title", tempNotice.cutTitle(14,"UTF-8"));
 			map.put("date", tempNotice.getId());
-			map.put("content", tempNotice.cutContent(10,"UTF-8"));
+			map.put("content", tempNotice.cutContent(39,"UTF-8"));
 			list.add(map);
 		}
 		return list;
 	}
 	
 	public void initFetchNotice() {
-		noticeList = ndh.getInitNotice(fetchSize);
+		noticeList = (ArrayList<Notice>)ndh.getInitNotice(fetchSize);
 	}
 	
 	public void fetchNoticeDown() {
 		Notice bottomNotice = noticeList.get(noticeList.size()-1);
-		ArrayList<Notice> result = ndh.getNotice(bottomNotice.getId(), fetchSize);
+		ArrayList<Notice> result = (ArrayList<Notice>)ndh.getNotice(bottomNotice.getId(), fetchSize);
 		noticeList.addAll(result);
 	}
 	
 	public void fetchNoticeUp() {
 		Notice topNotice = noticeList.get(0);
 		Log.i("top id ",topNotice.getId() +"");
-		ArrayList<Notice> result = ndh.getNotice(topNotice.getId());
+		ArrayList<Notice> result = (ArrayList<Notice>)ndh.getNotice(topNotice.getId());
 		if(result != null) {
 		result.addAll(noticeList);
 		noticeList = result;
