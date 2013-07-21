@@ -121,6 +121,18 @@ public class NewsRestClient extends AbstractBaseClient{
 		}
 	}
 	
+	public boolean includeNews(long newsId) throws ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP +"/" +newsId + "/include?id=" + newsId;
+		HttpPost httpPost = new HttpPost(requestUrl);
+		httpPost.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpPost);
+		if(response.getStatusLine().getStatusCode() == 201){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	private List<NewsCommentsDTO> DeserializeNewsCommentsDTOFromHttpReponse(HttpResponse response)
 			throws IOException {
