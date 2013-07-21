@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.dbhandler.NewsDataHandler;
+import com.netease.amazing.pojo.NewsComment;
 
 public class NewsListAdapter extends ListViewBasedAdapter {
 	public NewsListAdapter(Context context,DataSource dataSource) {
@@ -125,6 +128,24 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		
 		return view;
 	}
+	class LikeNewsExecute extends AsyncTask<Long,Integer,Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Long... params) {
+			// TODO Auto-generated method stub
+			return NewsDataHandler.setLikeNews(params[0]);
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			if(result){
+				/**
+				 * 修改commentListView
+				 */
+			}	
+		}
+	}
 	/**
 	 * 
 	 * @author Huang Xiao Jun
@@ -161,7 +182,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(IsButtonShow == 0){
-				new GetContactListThread().start();
+				new GetCommentsListThread().start();
 				this.buttonLike.setVisibility(View.VISIBLE);
 				this.buttonTakeIt.setVisibility(View.VISIBLE);
 				this.buttonComment.setVisibility(View.VISIBLE);
@@ -180,9 +201,32 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		 * 
 		 * @author Huang Xiao Jun
 		 * Class Description:
+		 *    获取评论内容的线程 替换下面thread操作
+		 */		
+		class GetCommentsListExecute extends AsyncTask<Long,Integer,List<NewsComment>> {
+
+			@Override
+			protected List<NewsComment> doInBackground(Long... params) {
+				// TODO Auto-generated method stub
+				return NewsDataHandler.getNewsCommentToNewsIndexByNewsId(params[0],
+						NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);
+			}
+			
+			@Override
+			protected void onPostExecute(List<NewsComment> result) {
+				super.onPostExecute(result);
+				/**
+				 * 更新commentsListView
+				 */
+			}
+		}
+		/**
+		 * 
+		 * @author Huang Xiao Jun
+		 * Class Description:
 		 *    获取评论内容的线程
 		 */
-		class GetContactListThread extends Thread {
+		class GetCommentsListThread extends Thread {
 			
 			@Override
 			public void run() {

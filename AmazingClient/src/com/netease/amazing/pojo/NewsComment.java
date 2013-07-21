@@ -6,6 +6,7 @@ package com.netease.amazing.pojo;
  *   针对动态的评论
  */
 public class NewsComment {
+	public static int NEWS_COMMENT_COUNT_FOR_INDEX = 15;
 	public static int NEWS_COMMENT_LIKE_TYPE = 1; //该评论仅表示喜欢这个动态
 	public static int NEWS_COMMENT_TAKE_DOWN_TYPE = 2;//该评论仅表示收录了这个动态
 	public static int NEWS_COMMENT_COMMON_TYPE = 0; //该评论表示这个动态为普通动态
