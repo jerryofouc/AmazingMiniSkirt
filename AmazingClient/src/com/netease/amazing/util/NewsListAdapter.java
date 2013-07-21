@@ -51,38 +51,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		TextView newsSenderFromView = (TextView)view.findViewById(R.id.news_item_from);
 		newsSenderFromView.setText(m.get(NewsDataSource.NEWS_PUBLISHER_FROM).toString());
 		
-		//用于保存关于这个item的评论，以便于动态展示
-		List<TextView> newsCommentTextViewList = new ArrayList<TextView>();
-		TextView newsComment1 = (TextView)view.findViewById(R.id.news_item_comment_content_1);
-		TextView newsComment2 = (TextView)view.findViewById(R.id.news_item_comment_content_2);
-		TextView newsComment3 = (TextView)view.findViewById(R.id.news_item_comment_content_3);
-		TextView newsComment4 = (TextView)view.findViewById(R.id.news_item_comment_content_4);
-		TextView newsComment5 = (TextView)view.findViewById(R.id.news_item_comment_content_5);
-		TextView newsComment6 = (TextView)view.findViewById(R.id.news_item_comment_content_6);
-		TextView newsComment7 = (TextView)view.findViewById(R.id.news_item_comment_content_7);
-		TextView newsComment8 = (TextView)view.findViewById(R.id.news_item_comment_content_8);
-		TextView newsComment9 = (TextView)view.findViewById(R.id.news_item_comment_content_9);
-		TextView newsComment10 = (TextView)view.findViewById(R.id.news_item_comment_content_10);
-		TextView newsComment11 = (TextView)view.findViewById(R.id.news_item_comment_content_11);
-		TextView newsComment12 = (TextView)view.findViewById(R.id.news_item_comment_content_12);
-		TextView newsComment13 = (TextView)view.findViewById(R.id.news_item_comment_content_13);
-		TextView newsComment14 = (TextView)view.findViewById(R.id.news_item_comment_content_14);
-		TextView newsComment15 = (TextView)view.findViewById(R.id.news_item_comment_content_15);
-		newsCommentTextViewList.add(newsComment1);
-		newsCommentTextViewList.add(newsComment2);
-		newsCommentTextViewList.add(newsComment3);
-		newsCommentTextViewList.add(newsComment4);
-		newsCommentTextViewList.add(newsComment5);
-		newsCommentTextViewList.add(newsComment6);
-		newsCommentTextViewList.add(newsComment7);
-		newsCommentTextViewList.add(newsComment8);
-		newsCommentTextViewList.add(newsComment9);
-		newsCommentTextViewList.add(newsComment10);
-		newsCommentTextViewList.add(newsComment11);
-		newsCommentTextViewList.add(newsComment12);
-		newsCommentTextViewList.add(newsComment13);
-		newsCommentTextViewList.add(newsComment14);
-		newsCommentTextViewList.add(newsComment15);
+		List<CommentTextView> commentTextViewList = getCommentView(view);
 		
 		Button buttonLike = (Button)view.findViewById(R.id.news_item_like);
 		buttonLike.setOnClickListener(new OnClickListener(){
@@ -124,10 +93,11 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		});
 		
 		Button buttonShow = (Button)view.findViewById(R.id.news_item_show_other_buttons);
-		buttonShow.setOnClickListener(new ShowButtonsListener(buttonLike, buttonTakeIt, buttonComment,newsCommentTextViewList));
+		buttonShow.setOnClickListener(new ShowButtonsListener(buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
 		
 		return view;
 	}
+	
 	class LikeNewsExecute extends AsyncTask<Long,Integer,Boolean> {
 
 		@Override
@@ -158,7 +128,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private Button buttonLike;
 		private Button buttonTakeIt;
 		private Button buttonComment;
-		private List<TextView> textViewList;
+		private List<CommentTextView> commentTextViewList;
 		private Handler handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
@@ -166,17 +136,21 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 				String[] commentArray = msg.getData().getStringArray("comment");
 				TextView viewTemp;
 				for(int i=0; i<commentArray.length; ++i){
-					viewTemp = textViewList.get(i); 
+					commentTextViewList.get(i).getCommentPublisherNameView().setVisibility(View.VISIBLE);
+					commentTextViewList.get(i).getCommentReplyLabelView().setVisibility(View.VISIBLE);
+					commentTextViewList.get(i).getCommentReplyToNameView().setVisibility(View.VISIBLE);
+					commentTextViewList.get(i).getCommentColonView().setVisibility(View.VISIBLE);
+					viewTemp = commentTextViewList.get(i).getCommentContentView(); 
 					viewTemp.setText(commentArray[i]);
 					viewTemp.setVisibility(View.VISIBLE);
 				}
 			}
 		};
-		public ShowButtonsListener(Button buttonLike, Button buttonTakeIt, Button buttonComment, List<TextView> textViewList){
+		public ShowButtonsListener(Button buttonLike, Button buttonTakeIt, Button buttonComment, List<CommentTextView> commentTextViewList){
 			this.buttonLike = buttonLike;
 			this.buttonTakeIt = buttonTakeIt;
 			this.buttonComment = buttonComment;
-			this.textViewList = textViewList;
+			this.commentTextViewList = commentTextViewList;
 		}
 		@Override
 		public void onClick(View v) {
@@ -191,8 +165,12 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 				this.buttonLike.setVisibility(View.GONE);
 				this.buttonTakeIt.setVisibility(View.GONE);
 				this.buttonComment.setVisibility(View.GONE);
-				for(View commentView:textViewList){
-					commentView.setVisibility(View.GONE);
+				for(CommentTextView commentTextView:commentTextViewList){
+					commentTextView.getCommentPublisherNameView().setVisibility(View.GONE);
+					commentTextView.getCommentReplyLabelView().setVisibility(View.GONE);
+					commentTextView.getCommentReplyToNameView().setVisibility(View.GONE);
+					commentTextView.getCommentColonView().setVisibility(View.GONE);
+					commentTextView.getCommentContentView().setVisibility(View.GONE);
 				}
 				IsButtonShow = 0;
 			}
@@ -245,7 +223,155 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 			}
 		}
 	}
+	/**
+	 * 
+	 * @author Huang Xiao Jun
+	 * Class Description:
+	 *    用于保存评论相关的view控件
+	 */
+	class CommentTextView{
+		private TextView commentPublisherNameView;
+		private TextView commentReplyLabelView;
+		private TextView commentReplyToNameView;
+		private TextView commentColonView;
+		private TextView commentContentView;
+		
+		public CommentTextView(TextView commentPublisherNameView,
+				TextView commentReplyLabelView,
+				TextView commentReplyToNameView, TextView commentColonView,
+				TextView commentContentView) {
+			super();
+			this.commentPublisherNameView = commentPublisherNameView;
+			this.commentReplyLabelView = commentReplyLabelView;
+			this.commentReplyToNameView = commentReplyToNameView;
+			this.commentColonView = commentColonView;
+			this.commentContentView = commentContentView;
+		}
+		public TextView getCommentPublisherNameView() {
+			return commentPublisherNameView;
+		}
+		public void setCommentPublisherNameView(TextView commentPublisherNameView) {
+			this.commentPublisherNameView = commentPublisherNameView;
+		}
+		public TextView getCommentReplyLabelView() {
+			return commentReplyLabelView;
+		}
+		public void setCommentReplyLabelView(TextView commentReplyLabelView) {
+			this.commentReplyLabelView = commentReplyLabelView;
+		}
+		public TextView getCommentReplyToNameView() {
+			return commentReplyToNameView;
+		}
+		public void setCommentReplyToNameView(TextView commentReplyToNameView) {
+			this.commentReplyToNameView = commentReplyToNameView;
+		}
+		public TextView getCommentColonView() {
+			return commentColonView;
+		}
+		public void setCommentColonView(TextView commentColonView) {
+			this.commentColonView = commentColonView;
+		}
+		public TextView getCommentContentView() {
+			return commentContentView;
+		}
+		public void setCommentContentView(TextView commentContentView) {
+			this.commentContentView = commentContentView;
+		}
+		
+	}
 	
+	private List<CommentTextView> getCommentView(View view){
+		List<TextView> commentPublisherNameViewList = new ArrayList<TextView>();
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_1));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_2));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_3));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_4));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_5));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_6));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_7));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_8));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_9));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_10));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_11));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_12));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_13));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_14));
+		commentPublisherNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_publisher_name_15));
 
-	
+		List<TextView> commentReplyLabelViewList = new ArrayList<TextView>();
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_1));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_2));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_3));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_4));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_5));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_6));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_7));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_8));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_9));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_10));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_11));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_12));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_13));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_14));
+		commentReplyLabelViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_label_15));
+		
+		List<TextView> commentReplyToNameViewList = new ArrayList<TextView>();
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_1));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_2));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_3));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_4));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_5));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_6));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_7));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_8));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_9));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_10));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_11));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_12));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_13));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_14));
+		commentReplyToNameViewList.add((TextView)view.findViewById(R.id.news_item_comment_reply_to_name_15));
+
+		List<TextView> commentColonViewList = new ArrayList<TextView>();
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_1));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_2));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_3));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_4));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_5));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_6));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_7));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_8));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_9));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_10));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_11));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_12));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_13));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_14));
+		commentColonViewList.add((TextView)view.findViewById(R.id.news_item_comment_colon_15));
+
+		List<TextView> commentContentViewList = new ArrayList<TextView>();
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_1));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_2));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_3));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_4));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_5));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_6));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_7));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_8));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_9));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_10));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_11));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_12));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_13));
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_14));	
+		commentContentViewList.add((TextView)view.findViewById(R.id.news_item_comment_content_15));
+		
+		List<CommentTextView> commentTextViewlist = new ArrayList<CommentTextView>();
+		for(int i=0; i<commentContentViewList.size();++i){
+			commentTextViewlist.add(new CommentTextView(commentPublisherNameViewList.get(i),
+					commentReplyLabelViewList.get(i),commentReplyToNameViewList.get(i),
+					commentColonViewList.get(i),commentContentViewList.get(i)));
+		}
+		return commentTextViewlist;
+	}
 }

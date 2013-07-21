@@ -2,6 +2,7 @@ package com.netease.amazing.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.dbhandler.NewsDataHandler;
+import com.netease.amazing.pojo.News;
 /**
  * 
  * @author Huang Xiao Jun
@@ -54,8 +57,7 @@ public class NewsAddActivity extends Activity{
 					Toast.makeText(NewsAddActivity.this, "请输入"+NEW_INPUT_MAX_LENGTH+"字以内的动态！",
 						     Toast.LENGTH_SHORT).show();
 				}else if(text.trim().length() > 0){
-					Toast.makeText(NewsAddActivity.this, text.trim(),
-						     Toast.LENGTH_SHORT).show();
+					new GetCommentsListExecute().execute(text.trim());
 				}else{
 					Toast.makeText(NewsAddActivity.this, "请输入文字",
 						     Toast.LENGTH_SHORT).show();
@@ -67,6 +69,33 @@ public class NewsAddActivity extends Activity{
         });
         return super.onCreateOptionsMenu(menu);
     }
+    /**
+	 * 
+	 * @author Huang Xiao Jun
+	 * Class Description:
+	 *    发布动态的异步操作
+	 */		
+	class GetCommentsListExecute extends AsyncTask<String,Integer,Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return NewsDataHandler.addNews(params[0], null, News.NEWS_WITH_NOTHING);
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			
+			/**
+			 * 清空动态消息
+			 */
+			Toast.makeText(NewsAddActivity.this, result.toString(),
+				     Toast.LENGTH_SHORT).show();
+			((EditText)findViewById(R.id.newsAdd_input_editText)).setText("");
+			
+		}
+	}
     /**
      * back listener
      */

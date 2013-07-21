@@ -41,8 +41,8 @@ public class NewsPersonalListAdapter extends ListViewBasedAdapter {
 		TextView newsPersonalItemJoinClassDaysView = (TextView)view.findViewById(R.id.news_personal_item_join_class_days);
 		newsPersonalItemJoinClassDaysView.setText(m.get(NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS).toString());
 		
-		TextView newsPersonalItemSaverView = (TextView)view.findViewById(R.id.news_personal_item_saver);
-		newsPersonalItemSaverView.setText(m.get(NEWS_PERSONAL_ITEM_SAVER).toString());
+		TextView newsPersonalItemSaverAndFromView = (TextView)view.findViewById(R.id.news_personal_item_saver_and_from);
+		newsPersonalItemSaverAndFromView.setText(m.get(NEWS_PERSONAL_ITEM_SAVER).toString());
 		
 		ImageView newsPersonalItemImageView = (ImageView)view.findViewById(R.id.news_personal_item_image);
 		newsPersonalItemImageView.setImageResource((Integer)m.get(NEWS_PERSONAL_ITEM_IMAGE));
@@ -69,9 +69,8 @@ public class NewsPersonalListAdapter extends ListViewBasedAdapter {
 			
 		});
 		
-		Button buttonTakeIt = (Button)view.findViewById(R.id.news_personal_item_take_it);
-		buttonLike.setText("É¾³ý");
-		buttonTakeIt.setOnClickListener(new OnClickListener(){
+		Button buttonDeleteIt = (Button)view.findViewById(R.id.news_personal_item_delete_it);
+		buttonDeleteIt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View view){
 				Toast.makeText(view.getContext().getApplicationContext(), "ÒÑÉ¾³ý" + itemPosition,
@@ -97,7 +96,7 @@ public class NewsPersonalListAdapter extends ListViewBasedAdapter {
 		});
 		
 		Button buttonShow = (Button)view.findViewById(R.id.news_personal_item_show_other_buttons);
-		buttonShow.setOnClickListener(new ShowButtonsListener(buttonLike, buttonTakeIt, buttonComment));
+		buttonShow.setOnClickListener(new ShowButtonsListener(buttonLike, buttonDeleteIt, buttonComment));
 		
 		return view;
 	}
