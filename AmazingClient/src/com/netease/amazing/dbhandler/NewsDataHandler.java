@@ -84,44 +84,45 @@ public class NewsDataHandler {
 		return false;
 	}
 	/**
-	 * 初始化成长日志主页的时候，获取最新的count条动态，按照时间逆序保存在List中
+	 * 初始化成长日志主页的时候，根据用户名，获取响应最新的count条成长记录(原创或收录的动态)，按照时间逆序保存在List中
+	 * @param userId 
 	 * @param count
-	 * @return 获得最新的count条成长记录(原创和收录的动态)
+	 * @return 根据用户名，获得最新的count条成长记录(原创和收录的动态)
 	 */
-	public static List<NewsGrowthLog> getInitNewsGrowthLog(int count){
+	public static List<NewsGrowthLog> getInitNewsGrowthLog(String userName,int count){
 		return null;
 	}
 	
 	/**
-	 * 
+	 * @param userName
 	 * @param bottomNewsId 当前
-	 * @param newsCount 动态条数
-	 * @return 返回比id为bottomNewsId更早发布的成长记录(当前用户原创和收录的动态)，
+	 * @param count 动态条数
+	 * @return 根据用户名，返回比id为bottomNewsId更早发布的成长记录(当前用户原创和收录的动态)，
 	 * 		        返回的动态条数为count，如果更早发布的动态不足count条，则返回所有早发布的动态
 	 */
-	public static List<News> getNewsGrowthLogByUpRefresh(long bottomNewsId,int count) {
+	public static List<News> getNewsGrowthLogByUpRefresh(String userName, long bottomNewsId,int count) {
 		return null;
 	}
 	
 	/**
-	 * 
+	 * @param userName
 	 * @param topNewsId 
-	 * @return 返回比topNewsId晚发布(即新发布)的所有成长记录(当前用户原创和收录的动态)
+	 * @return 根据用户名， 返回比topNewsId晚发布(即新发布)的所有成长记录(当前用户原创和收录的动态)
 	 */
-	public static List<News> getNewsGrowthLog(long topNewsId) {
+	public static List<News> getNewsGrowthLog(String userName,long topNewsId) {
 		return null;
 	}
 	
 	/**
-	 * 
+	 * @param userName
 	 * @param topNewsId
 	 * @param newsCount
-	 * @return 返回比topNewsId晚发布(即新发布)的count条成长记录(当前用户原创和收录的动态)，存在以下两种情况:
+	 * @return 根据用户名，返回比topNewsId晚发布(即新发布)的count条成长记录(当前用户原创和收录的动态)，存在以下两种情况:
 	 *      case 1:当服务器中比topNewsId晚发布的信息条数大于count条时，返回服务器中最新的count条数据，并且按时间逆序保存在List中
 	 *      case 2:当服务器中比topNewsId晚发布的信息条数(假设为n条)小于count条时，则只需要返回这n条数据，并且按时间逆序保存在List中
 	 */
-	public static List<News> getNewsGrowthLogByDownRefresh(long topNewsId, int count) {
+	public static List<News> getNewsGrowthLogByDownRefresh(String userName, long topNewsId, int count) {
 		//return NewsDBSimulateHandler.getInstance().getNews(5);
-		return getNewsGrowthLog(topNewsId);
+		return getNewsGrowthLog(userName,topNewsId);
 	}
 }

@@ -13,6 +13,7 @@ public class News {
 	public static final int NEWS_WITH_NOTHING = 0;//单纯文字的动态
 	
 	private long newsId;
+	private String newspublisherUserName;//动态发布人在系统中的用户名
 	private String newsPublisherName; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
 	private byte[] newsPublisherImg; //动态发布人头像,存储为数据流
 	private String newsPublisherRelationship; //动态发布人与当前登录用户的关系
@@ -32,6 +33,13 @@ public class News {
 	private boolean newsCurrentUserLike;//该动态是否被当前登录用户喜欢
 	private boolean newsCurrentUserTakeDown;//该动态是否被当前登录用户收录
 	
+	
+	public String getNewspublisherUserName() {
+		return newspublisherUserName;
+	}
+	public void setNewspublisherUserName(String newspublisherUserName) {
+		this.newspublisherUserName = newspublisherUserName;
+	}
 	public String getNewsPublisherName() {
 		return newsPublisherName;
 	}

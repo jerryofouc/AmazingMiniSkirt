@@ -13,6 +13,7 @@ public class NewsGrowthLog extends News{
 	public static final int NEWS_GROWTH_TYPE_ORIGINAL = 0;//该条成长记录是自己发布的动态
 	public static final int NEWS_GROWTH_TYPE_TAKE_DOWN = 1;//该条成长记录是别人发布的动态，但是当前登录用户收录了
 	
+	private String newsGrowthLogOwnerUserName; //该条动态属于谁的成长日志(原创或者收录的动态),这里是系统中的用户名
 	private long newsId; //自己发布的动态或者收录别人发布的动态的ID
 	private String newsPublisherName; //该条动态发布人的姓名
 	private String newsContent;//发布的动态内容;
@@ -103,5 +104,11 @@ public class NewsGrowthLog extends News{
 	}
 	public void setNewsWithVoice(byte[] newsWithVoice) {
 		this.newsWithVoice = newsWithVoice;
+	}
+	public String getNewsGrowthLogOwnerUserName() {
+		return newsGrowthLogOwnerUserName;
+	}
+	public void setNewsGrowthLogOwnerUserName(String newsGrowthLogOwnerUserName) {
+		this.newsGrowthLogOwnerUserName = newsGrowthLogOwnerUserName;
 	}
 }
