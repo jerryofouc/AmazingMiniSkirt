@@ -12,5 +12,5 @@ public class RequestURLConstants {
 	public static final String GET_LATEST_NEWS = TWEET_OP + "/latest";
 	public static final String GET_TWEET_RANGE_DOWN = TWEET_OP + "/rangeDown";
 	public static final String GET_TWEET_RANGE_UP = TWEET_OP + "/rangeUp";
-	
+	public static final String GROWTH_LOG = "/api/growthlog";
 }

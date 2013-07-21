@@ -13,7 +13,7 @@ import com.netease.amazing.server.entity.Tweet;
 
 
 public interface TweetDao extends PagingAndSortingRepository<Tweet, Long>{
-	@Query("select t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1")
+	@Query("select distinct  t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1")
 	public List<Tweet> findLatestTweets(long userId,Pageable pageable);
 	
 	@Query("select c from com.netease.amazing.server.entity.Comment as c inner join c.user as u where u.id=?1 and c.type =?2 and c.tweet.id=?3")
@@ -24,4 +24,10 @@ public interface TweetDao extends PagingAndSortingRepository<Tweet, Long>{
 
 	@Query("select t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1 and t.id>?2")
 	public List<Tweet> findRangeAllTweets(long userId, long bottomId, Pageable page);
+
+	@Query("select distinct c from com.netease.amazing.server.entity.Comment as c inner join c.tweet as t where t.id=?1")
+	public List<Comment> findCommentByNewId(Long newsId, Pageable pageable);
+
+	@Query("select distinct t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.include=true and r.user.id=?1")
+	public List<Tweet> getAllIncludeTweets(Long userId);
 }

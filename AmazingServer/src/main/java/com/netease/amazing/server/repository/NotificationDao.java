@@ -13,11 +13,11 @@ public abstract interface NotificationDao extends PagingAndSortingRepository<Not
   @Query("select n from  com.netease.amazing.server.entity.Notification as n inner join n.parents as np inner join np.parent p where p.id=?1")
   public abstract List<Notification> findLatestNotification(long paramLong, Pageable paramPageable);
 
-  @Query("select n from  com.netease.amazing.server.entity.Notification as n inner join n.parents as np inner join np.parent p where p.id=?1 and n.id > ?2")
+  @Query("select n from  com.netease.amazing.server.entity.Notification as n inner join n.parents as np inner join np.parent p where p.id=?1 and ?2 >  n.id ")
   public abstract List<Notification> findRangeNotification(Long paramLong, long paramLong1, Pageable paramPageable);
 
-  @Query("select n from  com.netease.amazing.server.entity.Notification as n inner join n.parents as np inner join np.parent p where p.id=?1 and n.id < ?2")
-  public abstract List<Notification> findRangeUpNotification(Long paramLong, long paramLong1, Sort paramSort);
+  @Query("select n from  com.netease.amazing.server.entity.Notification as n inner join n.parents as np inner join np.parent p where p.id=?1 and ?2 < n.id  ")
+  public abstract List<Notification> findRangeUpNotification(Long paramLong, long noticeId, Sort paramSort);
 
   @Modifying
   @Query("delete from ParentNotification pn where pn.parent.id=?1 and pn.notification.id=?2")
