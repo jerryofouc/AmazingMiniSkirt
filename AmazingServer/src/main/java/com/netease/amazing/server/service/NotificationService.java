@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -13,10 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netease.amazing.sdk.dto.NoticeDTO;
-import com.netease.amazing.server.entity.Child;
 import com.netease.amazing.server.entity.Notification;
-import com.netease.amazing.server.entity.Parent;
-import com.netease.amazing.server.entity.Teacher;
 import com.netease.amazing.server.entity.User;
 import com.netease.amazing.server.repository.NotificationDao;
 import com.netease.amazing.server.repository.UserDao;
