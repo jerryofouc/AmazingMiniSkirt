@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public class ContactDTO {
+	private long userID;
 	private String name;  //联系人姓名
 	private String nickName;  //昵称
 	private String birthday;  //生日
@@ -13,8 +14,6 @@ public class ContactDTO {
 	List<TeacherDTO> teachers;//老师
 	List<ChildDTO> friends;//朋友
 	List<ChildDTO> classMates;//班级同学
-	
-	
 	public String getName() {
 		return name;
 	}
@@ -69,5 +68,10 @@ public class ContactDTO {
 	public void setClassMates(List<ChildDTO> classMates) {
 		this.classMates = classMates;
 	}
-	
+	public long getUserID() {
+		return userID;
+	}
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
 }

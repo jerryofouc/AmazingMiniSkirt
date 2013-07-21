@@ -1,6 +1,7 @@
 package com.netease.amazing.sdk.dto;
 
 public class ChildDTO {
+	private long userID;
 	private String name;
 	private String fatherName;
 	private String birthday;
@@ -64,4 +65,11 @@ public class ChildDTO {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
+	public long getUserID() {
+		return userID;
+	}
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
+	
 }

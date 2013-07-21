@@ -11,6 +11,7 @@ public class NewsDTO {
 		WITH_PICTURE
 	}
 	private long newsId;
+	private String newPublisherName;
 	private long newsPublisherId; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
 	private int newsPublisherRelationship; //动态发布人与当前登录用户的关系
 	private String newsContent;//发布的动态内容;
@@ -78,6 +79,12 @@ public class NewsDTO {
 	}
 	public void setNewsPublisherId(long newsPublisherId) {
 		this.newsPublisherId = newsPublisherId;
+	}
+	public String getNewPublisherName() {
+		return newPublisherName;
+	}
+	public void setNewPublisherName(String newPublisherName) {
+		this.newPublisherName = newPublisherName;
 	}
 	
 }

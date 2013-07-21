@@ -1,7 +1,7 @@
 package com.netease.amazing.sdk.dto;
 
 public class TeacherDTO {
-	private String id;
+	private long id;
 	private String name;
 	private String fixLine;//固话
 	private String mobilePhone;//移动电话
@@ -24,10 +24,10 @@ public class TeacherDTO {
 	public void setFixLine(String fixLine) {
 		this.fixLine = fixLine;
 	}
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 }
