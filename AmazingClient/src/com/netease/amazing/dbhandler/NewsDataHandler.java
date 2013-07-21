@@ -267,7 +267,22 @@ public class NewsDataHandler {
 	 * 		        返回的动态条数为count，如果更早发布的动态不足count条，则返回所有早发布的动态
 	 */
 	public static List<NewsGrowthLog> getNewsGrowthLogByUpRefresh(long userId, long bottomNewsId,int count) {
-		return null;
+		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
+		List<NewsGrowthLogDTO>  commentList = null;
+		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			commentList = newsClient.getNewsGrowthLogByUpRefresh(userId, bottomNewsId ,count);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsGrowthLogDTO newsGrowthLog:commentList){
+			newsList.add(convertNewsGrowthLogDTOToNewsGrowthLog(newsGrowthLog));
+		}
+		return newsList;
 	}
 	
 	/**
@@ -276,7 +291,22 @@ public class NewsDataHandler {
 	 * @return 根据用户名， 返回比topNewsId晚发布(即新发布)的所有成长记录(当前用户原创和收录的动态)
 	 */
 	public static List<NewsGrowthLog> getNewsGrowthLog(long userId,long topNewsId) {
-		return null;
+		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
+		List<NewsGrowthLogDTO>  commentList = null;
+		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			commentList = newsClient.getNewsGrowthLog(userId, topNewsId);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(NewsGrowthLogDTO newsGrowthLog:commentList){
+			newsList.add(convertNewsGrowthLogDTOToNewsGrowthLog(newsGrowthLog));
+		}
+		return newsList;
 	}
 	
 	/**
@@ -288,7 +318,6 @@ public class NewsDataHandler {
 	 *      case 2:当服务器中比topNewsId晚发布的信息条数(假设为n条)小于count条时，则只需要返回这n条数据，并且按时间逆序保存在List中
 	 */
 	public static List<NewsGrowthLog> getNewsGrowthLogByDownRefresh(long userId, long topNewsId, int count) {
-		//return NewsDBSimulateHandler.getInstance().getNews(5);
 		return getNewsGrowthLog(userId,topNewsId);
 	}
 	
