@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
 		view_password = (EditText) findViewById(R.id.loginPasswordEdit);
 		view_rememberMe = (CheckBox) findViewById(R.id.loginRememberMeCheckBox);
 		view_loginSubmit = (Button) findViewById(R.id.loginSubmit);
-		view_loginRegister = (Button) findViewById(R.id.loginRegister);
+		//view_loginRegister = (Button) findViewById(R.id.loginRegister);
 	}
 
 	/**

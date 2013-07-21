@@ -3,14 +3,9 @@ package com.netease.amazing.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -33,6 +28,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		view = inflater.inflate(R.layout.news_item,null);
 		Map<String,Object> m = (Map<String,Object>)getItem(position);
 		
+		final long newsId = Long.parseLong(m.get(NewsDataSource.NEWS_ID).toString());
 		final int itemPosition = position;
 		ImageView newsSenderImageView = (ImageView)view.findViewById(R.id.news_item_sender_image);
 		newsSenderImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_PUBLISHER_IMAGE));
@@ -59,31 +55,41 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		List<CommentTextView> commentTextViewList = getCommentView(view);
 		
 		Button buttonLike = (Button)view.findViewById(R.id.news_item_like);
-		buttonLike.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View view){
-				Toast.makeText(view.getContext().getApplicationContext(), "已添加至喜歡" + itemPosition,
-					     Toast.LENGTH_SHORT).show();
-				/**登录用户喜欢该动态，写入数据库中动态评论表中，并且返回最新的前15条评论
-				 * 
-				 * */
-			}
-			
-		});
+		if((Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_LIKE)){
+			buttonLike.setClickable(false);
+		}else{
+			buttonLike.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View view){
+					/**登录用户喜欢该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
+					 * 
+					 * */
+					new LikeNewsCommentExecuteTask(getCommentView(view),
+							view.getContext().getApplicationContext(), 
+							(Button)view.findViewById(R.id.news_item_like)).execute(newsId);
+				}
+				
+			});
+		}
+		
 		
 		Button buttonTakeIt = (Button)view.findViewById(R.id.news_item_take_it);
-		buttonTakeIt.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View view){
-				Toast.makeText(view.getContext().getApplicationContext(), "已收錄" + itemPosition,
-					     Toast.LENGTH_SHORT).show();
-				/**登录用户收录该动态，写入数据库中动态评论表中，并且返回最新的前15条评论
-				 * 
-				 * */
-			}
-			
-		});
-		
+		if((Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_TAKE_DOWN)){
+			buttonTakeIt.setClickable(false);
+		}else{
+			buttonTakeIt.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View view){
+					/**登录用户收录该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
+					 * 
+					 * */
+					new TakeDownNewsCommentExecuteTask(getCommentView(view),
+							view.getContext().getApplicationContext(), 
+							(Button)view.findViewById(R.id.news_item_like)).execute(newsId);		
+				}
+				
+			});
+		}
 		Button buttonComment = (Button)view.findViewById(R.id.news_item_comment);
 		buttonComment.setOnClickListener(new OnClickListener(){
 			@Override
@@ -98,7 +104,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		});
 		
 		Button buttonShow = (Button)view.findViewById(R.id.news_item_show_other_buttons);
-		buttonShow.setOnClickListener(new ShowButtonsListener(Long.parseLong(m.get(NewsDataSource.NEWS_ID).toString()),buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
+		buttonShow.setOnClickListener(new ShowButtonsListener(newsId,buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
 		
 		return view;
 	}
@@ -146,7 +152,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(IsButtonShow == 0){
-				new GetInitNewsDataTask().execute(newsId);
+				new GetInitNewsCommentDataTask(commentTextViewList).execute(newsId);
 				this.buttonLike.setVisibility(View.VISIBLE);
 				this.buttonTakeIt.setVisibility(View.VISIBLE);
 				this.buttonComment.setVisibility(View.VISIBLE);
@@ -165,52 +171,150 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 				IsButtonShow = 0;
 			}
 		}
-		/**
-		 * 
-		 * @author Huang Xiao Jun
-		 * Class Description:
-		 *    获取评论内容的线程
-		 */
-		class GetInitNewsDataTask extends AsyncTask<Long,String,List<NewsComment>> {
+		
+	}
+	
+	private void setCommentTextView(CommentTextView viewTempStructure, NewsComment newsComment){
+		viewTempStructure.getCommentPublisherNameView().setVisibility(View.VISIBLE);
+		viewTempStructure.getCommentPublisherNameView().setText(newsComment.getNewsCommmentPublisherName());
 
-			@Override
-			protected List<NewsComment> doInBackground(Long... arg0) {
-				List<NewsComment> newsCommentList = NewsDataHandler.getNewsCommentToNewsIndexByNewsId(
-						newsId, NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);				
-				return newsCommentList;
-			}
-			
-			@Override
-			protected void onPostExecute(List<NewsComment> result) {
-				super.onPostExecute(result);
-				CommentTextView viewTempStructure;
-				NewsComment newsComment;
-				for(int i=0; i<result.size(); ++i){
-					viewTempStructure = commentTextViewList.get(i);
-					newsComment = result.get(i);
-					
-					viewTempStructure.getCommentPublisherNameView().setVisibility(View.VISIBLE);
-					viewTempStructure.getCommentPublisherNameView().setText(newsComment.getNewsCommmentPublisherName());
-
-					//viewTempStructure.getCommentReplyLabelView().setVisibility(View.VISIBLE);
-					//viewTempStructure.getCommentReplyToNameView().setVisibility(View.VISIBLE);
-					viewTempStructure.getCommentColonView().setVisibility(View.VISIBLE);
-					viewTempStructure.getCommentContentView().setVisibility(View.VISIBLE);
-					if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_LIKE){
-						viewTempStructure.getCommentContentView().setText("喜欢这个动态！");	
-						viewTempStructure.getCommentContentView().setTextColor(R.color.light_blue);
-					}else if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_TAKE_DOWN){
-						viewTempStructure.getCommentContentView().setText("收录了这个动态");	
-						viewTempStructure.getCommentContentView().setTextColor(R.color.light_green);
-					}else{
-						viewTempStructure.getCommentContentView().setText(newsComment.getNewsComment());	
-					}
-				}
-			}
-			
+		//viewTempStructure.getCommentReplyLabelView().setVisibility(View.VISIBLE);
+		//viewTempStructure.getCommentReplyToNameView().setVisibility(View.VISIBLE);
+		viewTempStructure.getCommentColonView().setVisibility(View.VISIBLE);
+		viewTempStructure.getCommentContentView().setVisibility(View.VISIBLE);
+		if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_LIKE){
+			viewTempStructure.getCommentContentView().setText("喜欢这个动态！");	
+			viewTempStructure.getCommentContentView().setTextColor(R.color.light_blue);
+		}else if(newsComment.getNewsCommentType() == NewsComment.NEWS_COMMENT_TYPE_TAKE_DOWN){
+			viewTempStructure.getCommentContentView().setText("收录了这个动态");	
+			viewTempStructure.getCommentContentView().setTextColor(R.color.light_green);
+		}else{
+			viewTempStructure.getCommentContentView().setText(newsComment.getNewsComment());	
+		}
+	}
+	/**
+	 * 
+	 * @author Huang Xiao Jun
+	 * Class Description:
+	 *    获取评论内容的线程
+	 */
+	class GetInitNewsCommentDataTask extends AsyncTask<Long,String,List<NewsComment>> {
+		private List<CommentTextView> commentTextViewList;
+		GetInitNewsCommentDataTask(List<CommentTextView> commentTextViewList){
+			this.commentTextViewList = commentTextViewList;
 		}
 
+		@Override
+		protected List<NewsComment> doInBackground(Long... arg0) {
+			List<NewsComment> newsCommentList = NewsDataHandler.getNewsCommentToNewsIndexByNewsId(
+					arg0[0].longValue(), NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);				
+			return newsCommentList;
+		}
+		
+		@Override
+		protected void onPostExecute(List<NewsComment> result) {
+			super.onPostExecute(result);
+			CommentTextView viewTempStructure ;
+			NewsComment newsComment;
+			for(int i=0; i<result.size(); ++i){
+				viewTempStructure = commentTextViewList.get(i);
+				newsComment = result.get(i);
+				setCommentTextView(viewTempStructure, newsComment);
+			}
+		}
+		
 	}
+	
+	/**
+	 * 
+	 * @author Huang Xiao Jun
+	 * Class Description:
+	 *    添加喜欢这个动态的操作
+	 */
+	class LikeNewsCommentExecuteTask extends AsyncTask<Long,String,List<NewsComment>> {
+		private List<CommentTextView> commentTextViewList;
+		private boolean isLikeNewsExecuteSuccess = false;
+		private Context context;
+		private Button button;
+		LikeNewsCommentExecuteTask(List<CommentTextView> commentTextViewList ,Context context, Button button){
+			this.commentTextViewList = commentTextViewList;
+			this.context = context;
+			this.button = button;
+		}
+
+		@Override
+		protected List<NewsComment> doInBackground(Long... arg0) {
+			isLikeNewsExecuteSuccess = NewsDataHandler.setLikeNews(arg0[0].longValue());
+			List<NewsComment> newsCommentList = NewsDataHandler.getNewsCommentToNewsIndexByNewsId(
+					arg0[0], NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);				
+			return newsCommentList;
+		}
+		
+		@Override
+		protected void onPostExecute(List<NewsComment> result) {
+			super.onPostExecute(result);
+			CommentTextView viewTempStructure ;
+			NewsComment newsComment;
+			for(int i=0; i<result.size(); ++i){
+				viewTempStructure = commentTextViewList.get(i);
+				newsComment = result.get(i);
+				setCommentTextView(viewTempStructure, newsComment);
+			}
+			if(isLikeNewsExecuteSuccess){
+				Toast.makeText(context, "已添加至喜歡",Toast.LENGTH_SHORT).show();
+				button.setClickable(false);
+			}else{
+				Toast.makeText(context, "操作失败",Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @author Huang Xiao Jun
+	 * Class Description:
+	 *    添加收录这个动态的操作
+	 */
+	class TakeDownNewsCommentExecuteTask extends AsyncTask<Long,String,List<NewsComment>> {
+		private List<CommentTextView> commentTextViewList;
+		private boolean isLikeNewsExecuteSuccess = false;
+		private Context context;
+		private Button button;
+		TakeDownNewsCommentExecuteTask(List<CommentTextView> commentTextViewList ,Context context, Button button){
+			this.commentTextViewList = commentTextViewList;
+			this.context = context;
+			this.button = button;
+		}
+
+		@Override
+		protected List<NewsComment> doInBackground(Long... arg0) {
+			isLikeNewsExecuteSuccess = NewsDataHandler.setTakeDownNews(arg0[0].longValue());
+			List<NewsComment> newsCommentList = NewsDataHandler.getNewsCommentToNewsIndexByNewsId(
+					arg0[0], NewsComment.NEWS_COMMENT_COUNT_FOR_INDEX);				
+			return newsCommentList;
+		}
+		
+		@Override
+		protected void onPostExecute(List<NewsComment> result) {
+			super.onPostExecute(result);
+			CommentTextView viewTempStructure ;
+			NewsComment newsComment;
+			for(int i=0; i<result.size(); ++i){
+				viewTempStructure = commentTextViewList.get(i);
+				newsComment = result.get(i);
+				setCommentTextView(viewTempStructure, newsComment);
+			}
+			if(isLikeNewsExecuteSuccess){
+				Toast.makeText(context, "已收录该动态",Toast.LENGTH_SHORT).show();
+				button.setClickable(false);
+			}else{
+				Toast.makeText(context, "操作失败",Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @author Huang Xiao Jun
