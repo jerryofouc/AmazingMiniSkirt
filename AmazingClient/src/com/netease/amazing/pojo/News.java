@@ -29,12 +29,9 @@ public class News {
 	private byte[] newsWithImage; //动态中的图片，不能与录音共存，注意动态的类型
 	private byte[] newsWithVoice; //动态中的录音，不能与图片共存，注意动态的类型
 	
-	public long getNewsId() {
-		return newsId;
-	}
-	public void setNewsId(int newsId) {
-		this.newsId = newsId;
-	}
+	private boolean newsCurrentUserLike;//该动态是否被当前登录用户喜欢
+	private boolean newsCurrentUserTakeDown;//该动态是否被当前登录用户收录
+	
 	public String getNewsPublisherName() {
 		return newsPublisherName;
 	}
@@ -88,5 +85,23 @@ public class News {
 	}
 	public void setNewsWithVoice(byte[] newsWithVoice) {
 		this.newsWithVoice = newsWithVoice;
+	}
+	public boolean isNewsCurrentUserLike() {
+		return newsCurrentUserLike;
+	}
+	public void setNewsCurrentUserLike(boolean newsCurrentUserLike) {
+		this.newsCurrentUserLike = newsCurrentUserLike;
+	}
+	public boolean isNewsCurrentUserTakeDown() {
+		return newsCurrentUserTakeDown;
+	}
+	public void setNewsCurrentUserTakeDown(boolean newsCurrentUserTakeDown) {
+		this.newsCurrentUserTakeDown = newsCurrentUserTakeDown;
+	}
+	public void setNewsId(long newsId) {
+		this.newsId = newsId;
+	}
+	public long getNewsId() {
+		return newsId;
 	}
 }

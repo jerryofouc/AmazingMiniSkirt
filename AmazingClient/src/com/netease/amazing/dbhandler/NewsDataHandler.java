@@ -64,4 +64,22 @@ public class NewsDataHandler {
 	public List<NewsComment> getNewsCommentToNewsIndexByNewsId(long newsId, int newsCommentCount){
 		return null;
 	}
+	
+	/**
+	 * 当前登录用户喜欢ID为newsId的动态操作，写入评论表中，评论类型为NewsComment.NEWS_COMMENT_LIKE_TYPE
+	 * @param newsId
+	 * @return 如果操作成功返回true
+	 */
+	public boolean setLikeNews(long newsId){
+		return false;
+	}
+	
+	/**
+	 * 当前登录用户收录ID为newsId的动态操作，写入评论表中，评论类型为NewsComment.NEWS_COMMENT_TAKE_DOWN_TYPE
+	 * @param newsId
+	 * @return 如果操作成功返回true
+	 */
+	public boolean setTakeDownNews(long newsId){
+		return false;
+	}
 }
