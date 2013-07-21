@@ -21,7 +21,7 @@ public class NoticeListAdapter extends ListViewBasedAdapter {
 	
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.noticeitem,null);
+        view = inflater.inflate(R.layout.notice_item_new,null);
         
 		ImageView image1 = (ImageView)view.findViewById(R.id.notice_item_updown_image);
 		Map<String,Object> m = (Map<String,Object>)getItem(position);

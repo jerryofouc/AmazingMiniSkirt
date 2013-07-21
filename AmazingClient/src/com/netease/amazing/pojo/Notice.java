@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 public class Notice implements Serializable{
-	private int id;
+	private long id;
 	private String title;
 	private boolean isUpload;
 	private Date noticeDate;
@@ -70,18 +70,26 @@ public class Notice implements Serializable{
 	}
 	
 	public String cutContent(int length,String encoder) {
-		return content.substring(0, 30) +"...";
+		if(content.length()<length) return content;
+		else {
+			return content.substring(0,length) + "...";
+		}
 	}
 	
 	public String cutTitle(int length,String encoder) {
-		return title.substring(0, 10) +"...";
+		if(title.length()<length) {
+			return title;
+		}
+		else {
+			return title.substring(0,length) + "...";
+		}
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Notice(Boolean b) {
