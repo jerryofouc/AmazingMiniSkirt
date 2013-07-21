@@ -23,6 +23,7 @@ public class Child extends IdEntity{
 	private String description;
 	private String nickname;
 	private Date birthday;
+	private Date joinClassDate;
 	private Class klass;
 	private List<Parent> parents;
 	private List<ChildRelationship> friends;
@@ -94,5 +95,10 @@ public class Child extends IdEntity{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+	public Date getJoinClassDate() {
+		return joinClassDate;
+	}
+	public void setJoinClassDate(Date joinClassDate) {
+		this.joinClassDate = joinClassDate;
+	}
 }

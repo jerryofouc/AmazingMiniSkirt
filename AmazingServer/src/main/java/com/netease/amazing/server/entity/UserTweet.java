@@ -23,6 +23,7 @@ public class UserTweet extends IdEntity{
 		FROM_PARENT
 	}
 	private PublicRelation pubRelation;
+	private boolean include;//是否被收录
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -50,6 +51,11 @@ public class UserTweet extends IdEntity{
 		this.pubRelation = pubRelation;
 	}
 	
-	
+	public boolean isInclude() {
+		return include;
+	}
+	public void setInclude(boolean include) {
+		this.include = include;
+	}
 	
 }

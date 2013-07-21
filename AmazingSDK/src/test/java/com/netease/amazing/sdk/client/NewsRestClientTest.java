@@ -14,9 +14,9 @@ public class NewsRestClientTest extends BaseTest{
 	@Test
 	public void getLatestNewsTest() throws ClientProtocolException, IOException, URISyntaxException{
 		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
-		List<NewsDTO> news = newsClient.getLatestNews(5);
+		List<NewsDTO> news = newsClient.getLatestNews(15);
 		for(NewsDTO n : news){
-			System.out.println(n.getNewsContent());
+			System.out.println(n.getNewsId());
 		}
 	}
 	
@@ -37,9 +37,9 @@ public class NewsRestClientTest extends BaseTest{
 	@Test 
 	public void getCommentsTest() throws ClientProtocolException, IOException{
 		NewsRestClient newsClient = new NewsRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
-		 List<NewsCommentsDTO>  comments = newsClient.getNewsCommentToNewsIndexByNewsId(1, 5);
+		 List<NewsCommentsDTO>  comments = newsClient.getNewsCommentToNewsIndexByNewsId(1, 20);
 		 for(NewsCommentsDTO c : comments){
-			 System.out.println(c.getNewsComment());
+			 System.out.println(c.getNewsCommentType());
 		 }
 	}
 	

@@ -11,7 +11,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -22,7 +21,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsDTO;
-import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.utils.RequestURLConstants;
 import com.netease.amazing.sdk.utils.Utils;
 

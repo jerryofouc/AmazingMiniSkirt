@@ -3,6 +3,8 @@ package com.netease.amazing.server.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -21,22 +23,25 @@ import com.netease.amazing.server.entity.Comment;
 import com.netease.amazing.server.entity.Tweet;
 import com.netease.amazing.server.entity.User;
 import com.netease.amazing.server.entity.User.Role;
+import com.netease.amazing.server.entity.UserTweet;
 import com.netease.amazing.server.repository.CommentDao;
 import com.netease.amazing.server.repository.TweetDao;
 import com.netease.amazing.server.repository.UserDao;
+import com.netease.amazing.server.repository.UserTweetDao;
+import com.netease.amazing.server.utils.DateUtils;
 
 
 @Component
 @Transactional(readOnly = true)
 public class TweetService {
-	private static final long A_DAY_IN_MINISED = 24*60*60*60*1000;
-	private static final long A_YEAR_IN_MINISED = 365*A_DAY_IN_MINISED;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
 	private TweetDao tweetDao;
 	@Autowired
 	private CommentDao commentDao;
+	@Autowired
+	private UserTweetDao userTweetDao;
 	public List<NewsDTO> getLatestTweets(long userId, int count){
 		List<NewsDTO> allNews = new ArrayList<NewsDTO>();
 		Sort sort = new Sort( Direction.DESC,"createTime");
@@ -99,17 +104,9 @@ public class TweetService {
 			newsDTO.setNewsId(t.getId());
 			
 			Date newsDate = t.getCreateTime();
-			Date curDate = Calendar.getInstance().getTime();
-			SimpleDateFormat simpleDateFormat;
-			if(curDate.getTime() - newsDate.getTime() < A_DAY_IN_MINISED ){
-				simpleDateFormat = new SimpleDateFormat("今天  HH:mm");
-			}else if(curDate.getTime() - newsDate.getTime() < A_YEAR_IN_MINISED){
-				simpleDateFormat = new SimpleDateFormat("MM月dd日  HH:mm");
-			}else{
-				simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
-			}
+			SimpleDateFormat simpleDateFormat = DateUtils.getDateFormat(newsDate);
 			newsDTO.setNewsPublishDate(simpleDateFormat.format(newsDate));
-			
+			newsDTO.setNewPublisherName(t.getUser().getName());
 			newsDTO.setNewsPublisherId(t.getUser().getId());
 			User curUser = userDao.findOne(userId);
 			if(t.getUser().getRole() == Role.TEACHER){
@@ -125,7 +122,9 @@ public class TweetService {
 			allNews.add(newsDTO);
 		}
 	}
-	
+
+
+
 	
 	public static void main(String args[]){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
@@ -135,8 +134,9 @@ public class TweetService {
 
 
 	public List<NewsCommentsDTO> getAllNewsComments(Long userId, Long newsId, int count){
-		Tweet tweet = tweetDao.findOne(newsId);
-		List<Comment> comments = tweet.getComments();
+		Sort sort = new Sort( Direction.DESC,"id");
+		Pageable pageable = new PageRequest(0,count,sort);
+		List<Comment> comments = tweetDao.findCommentByNewId(newsId,pageable);
 		List<NewsCommentsDTO> newComments = new ArrayList<NewsCommentsDTO>();
 		for(Comment c : comments){
 			NewsCommentsDTO commentDTO = new NewsCommentsDTO();
@@ -149,6 +149,12 @@ public class TweetService {
 			commentDTO.setNewsId(c.getTweet().getId());
 			newComments.add(commentDTO);
 		}
+		Collections.sort(newComments, new Comparator<NewsCommentsDTO>(){
+			@Override
+			public int compare(NewsCommentsDTO o1, NewsCommentsDTO o2) {
+				return (int)(o2.getNewsId()-o1.getNewsId());
+			}
+		});
 		return newComments;
 	}
 
@@ -162,6 +168,23 @@ public class TweetService {
 		comment.setType(type);
 		comment.setUser(user);
 		commentDao.save(comment);
+	}
+
+
+	@Transactional(readOnly = false)
+	public void includeTweet(long userId, Long tweetId) {
+		User user = userDao.findOne(userId);
+		Tweet tweet = tweetDao.findOne(tweetId);
+		Comment comment = new Comment();
+		comment.setTweet(tweet);
+		comment.setType(CommentType.INCLUDE);
+		comment.setUser(user);
+		commentDao.save(comment);
+		UserTweet userTweet = new UserTweet();
+		userTweet.setInclude(true);
+		userTweet.setTweet(tweet);
+		userTweet.setUser(user);
+		userTweetDao.save(userTweet);
 	}
 
 }
