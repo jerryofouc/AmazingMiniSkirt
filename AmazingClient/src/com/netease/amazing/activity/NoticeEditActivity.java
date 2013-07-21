@@ -90,6 +90,7 @@ public class NoticeEditActivity extends Activity {
 	public void setView() {
 		ArrayList<String> contactNames = new ArrayList<String>();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, R.id.contentTextView);
+		if(contactDTO == null) {Log.i("contactDTO", "test ");}
 		teachers = contactDTO.getTeachers();
 		friends = contactDTO.getFriends();
 		int i=0;
@@ -200,17 +201,27 @@ public class NoticeEditActivity extends Activity {
 			noticeDTO.setContent(content);
 			noticeDTO.setTittle("hehe");
 			noticeDTO.setNeedFeedBack(false);
+			noticeDTO.setId(-1);
 			noticeDTO.setNoticeDate(new Date());
 			List<Long> receiverIds = new ArrayList<Long>();
 			int i =0;
-//			for(i=0;i<receiverNames.length;i++) {
-//				for(int j =0;j<friends.size();j++) {
-//					if(friends.get(j).get)
-//				}
-//				for(int k=0;k<teachers.size();i++) {
-//					if(teachers.get(k).getId())
-//				}
-//			}
+			for(i=0;i<receiverNames.length;i++) {
+				if(friends != null) {
+				for(int j =0;j<friends.size();j++) {
+					if(friends.get(j).getName().equals(receiverNames[i]))
+						receiverIds.add(friends.get(j).getUserID());
+				}
+				}
+				if(teachers != null) {
+				for(int k=0;k<teachers.size();k++) {
+					Log.i("teachersize",teachers.size()+"");
+					if(teachers.get(k).getName().equals(receiverNames[i])) {
+						receiverIds.add(teachers.get(k).getId());
+					}
+				}
+				}
+			}
+			noticeDTO.setRecieveObjsIDs(receiverIds);
 			new SendNoitceTask().execute("no");
 			pDialog = ProgressDialog.show(NoticeEditActivity.this, "","消息发送中", true, true);
 		}
@@ -221,11 +232,12 @@ public class NoticeEditActivity extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
-//			noticeRestClient.sendNotice(noticeDTO);
 			try {
-				Thread.currentThread().sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				noticeRestClient.sendNewNotice(noticeDTO);
+			} catch (ClientProtocolException e) {
+				isNetError = true;
+			} catch (IOException e) {
+				isNetError = true;
 			}
 			return null;
 		}
@@ -237,10 +249,13 @@ public class NoticeEditActivity extends Activity {
 			if(pDialog !=null) {
 				pDialog.dismiss();
 			}
+			if(!isNetError) {
 			Toast.makeText(NoticeEditActivity.this, "通知已发送", Toast.LENGTH_SHORT).show();
 			editNoticeContent.setText("");
 			editNoticeReceiverText.setText("");
-			
+			}else {
+			Toast.makeText(NoticeEditActivity.this, "网络连接出错", Toast.LENGTH_SHORT).show();
+			}
 		}
 		
 	}
