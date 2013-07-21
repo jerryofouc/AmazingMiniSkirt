@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
  	   <LinearLayout android:id = "@+id/notice_edit_front_layout"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -22,15 +23,46 @@
  	   <TextView android:id="@+id/notice_edit_status" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#FF0000"
  	       		 android:gravity="center_vertical" android:layout_weight="1" android:width="0dp" android:text = "" android:height="30dp"/>
        </LinearLayout>
+
+ 	   <LinearLayout
+ 	       android:layout_width="match_parent"
+ 	       android:layout_height="wrap_content"
+ 	       android:paddingLeft="@dimen/activity_horizontal_margin"
+ 	       android:paddingRight="@dimen/activity_horizontal_margin" >
+
+ 	       <TextView
+ 	           android:id="@+id/notice_edit_sendfrom_text"
+ 	           android:layout_width="wrap_content"
+ 	           android:layout_height="wrap_content"
+ 	           android:text="发布自：" />
+
+ 	       <TextView
+ 	           android:id="@+id/notice_edit_sendfrom_name_text"
+ 	           android:layout_width="wrap_content"
+ 	           android:layout_height="wrap_content"
+ 	           android:text="妈妈"
+ 	           android:textColor="@color/dark_red"
+ 	           android:textSize="18sp" />
+
+ 	   </LinearLayout>
     
- 	   <EditText android:id = "@+id/notice_edit_content" android:layout_width="fill_parent" android:layout_height="200dp"
- 	       		 android:gravity="left" android:text=""/>
+ 	   <EditText
+ 	       android:id="@+id/notice_edit_content"
+ 	       android:layout_width="fill_parent"
+ 	       android:layout_height="200dp"
+ 	       android:background="@drawable/gray_border"
+ 	       android:gravity="left"
+ 	       android:padding="10dp"
+ 	       android:text="" />
 
  	   <LinearLayout
  	       android:id="@+id/notice_edit_bottom_layout"
  	       android:layout_width="fill_parent"
  	       android:layout_height="50dp"
- 	       android:orientation="horizontal" >
+ 	       android:background="@drawable/sharebar_bk36x53"
+ 	       android:orientation="horizontal"
+ 	       android:paddingLeft="@dimen/activity_horizontal_margin"
+ 	       android:paddingRight="@dimen/activity_horizontal_margin" >
 
  	       <TextView
  	           android:layout_width="wrap_content"
@@ -56,8 +88,15 @@
  	   <LinearLayout android:layout_width="fill_parent"
  	       android:layout_height="50dp"
  	       android:orientation="horizontal">
- 	       <TextView android:id = "@+id/notice_edit_receiver_text"
- 	           android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="#EEEEEE"/>
+
+ 	       <TextView
+ 	           android:id="@+id/notice_edit_receiver_text"
+ 	           android:layout_width="fill_parent"
+ 	           android:layout_height="fill_parent"
+ 	           android:background="@drawable/gray_border"
+ 	           android:paddingLeft="@dimen/activity_horizontal_margin"
+ 	           android:paddingRight="@dimen/activity_horizontal_margin" />
+
  	   </LinearLayout>
 
 </LinearLayout>

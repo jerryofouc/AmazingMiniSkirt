@@ -5,51 +5,64 @@
     android:background="@drawable/background_textview"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:id="@+id/layout_notice_top"
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="@drawable/background_layout_noticeview" 
+	    android:orientation="horizontal">
+	</LinearLayout>
 	<ImageView
 	    android:id="@+id/notice_item_updown_image"
 	    android:layout_width="30dp"
-	    android:layout_height="40dp"
+	    android:layout_height="21dp"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
 	    android:layout_marginBottom="0dp"
-	    android:layout_marginLeft="5dp"
+	    android:layout_marginLeft="0dp"
 	    android:layout_marginRight="0dp"
-	    android:layout_marginTop="2dp"
+	    android:layout_marginTop="0dp"
 	    android:background="#DDDDDD"
 	    android:gravity="center"
-	    android:src="@drawable/upload" />
+	    />
 
 	<TextView
 	    android:id="@+id/notice_item_title"
 	    android:layout_width="wrap_content"
-	    android:layout_height="40dp"
+	    android:layout_height="21dp"
 	    android:layout_alignBottom="@id/notice_item_updown_image"
 	    android:layout_alignTop="@id/notice_item_updown_image"
 	    android:layout_marginBottom="0dp"
 	    android:layout_marginLeft="0dp"
-	    android:layout_marginTop="2dp"
+	    android:layout_marginTop="0dp"
 	    android:layout_toRightOf="@id/notice_item_updown_image"
 	    android:background="@color/transparent"
+	    android:gravity="center_vertical"
 	    android:width="200dp"
-	    android:gravity="center_vertical" />
+	    android:textSize="15sp"
+	    android:textStyle="bold" 
+	    android:textColor="#111111"
+	    android:fontFamily="sans-serif"
+	    android:text="将军令"/>
 
 	<TextView
 	    android:id="@+id/notice_item_date"
 	    android:layout_width="wrap_content"
-	    android:layout_height="40dp"
+	    android:layout_height="21dp"
 	    android:layout_alignBottom="@id/notice_item_updown_image"
 	    android:layout_alignParentRight="true"
 	    android:layout_alignTop="@id/notice_item_updown_image"
 	    android:layout_marginBottom="0dp"
-	    android:layout_marginRight="5dp"
-	    android:layout_marginTop="2dp"
+	    android:layout_marginRight="13dp"
+	    android:layout_marginTop="0dp"
 	    android:background="@color/transparent"
+	    android:gravity="center"
 	    android:text="gaagobnagoibgoi"
-	    android:width="70dp"
-	    android:gravity="center_vertical" >
+	    android:width="70dp" >
 
 	</TextView>
-	
+
+
 	<TextView
 	    android:id="@+id/notice_item_content "
 	    android:layout_width="fill_parent"
@@ -60,7 +73,7 @@
 	    android:layout_marginBottom="5dp"
 	    android:layout_marginLeft="5dp"
 	    android:layout_marginRight="5dp"
-	    android:layout_marginTop="1dp"
+	    android:layout_marginTop="0dp"
 	    android:background="@color/transparent"
 	    android:gravity="left"
 	    android:height="50dp"

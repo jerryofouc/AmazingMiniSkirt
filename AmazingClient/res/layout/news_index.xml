@@ -18,7 +18,7 @@ limitations under the License.
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_green"
+    android:background="#EEEEEE"
     android:padding="8dip"
     >
     <include layout="@layout/news_index_background"></include>

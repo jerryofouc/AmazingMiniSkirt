@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="若您的孩子的信息有误（包括：姓名、性别、学校、班级、生日、入学时间），请及时与管理员取得联系，以便及时修正。" />
+        android:text="若您的孩子的信息有误（包括：姓名、性别、学校、班级、生日、入学时间），请及时与管理员取得联系，以便及时修正。"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/reportError_phone_text"
@@ -24,8 +25,16 @@
     <Button
         android:id="@+id/reportError_phone_btn"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_margin="@dimen/activity_vertical_margin"
-        android:text="立即拨打" />
+        android:background="@drawable/red_btn_bk"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="立即拨打"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

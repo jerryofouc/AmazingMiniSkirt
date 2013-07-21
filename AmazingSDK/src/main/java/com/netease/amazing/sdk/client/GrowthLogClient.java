@@ -36,6 +36,41 @@ public class GrowthLogClient extends AbstractBaseClient{
 		return DeserializeFromHttpReponse(response);
 	}
 	
+	
+
+	/**
+	 * @param userName
+	 * @param bottomNewsId 当前
+	 * @param count 动态条数
+	 * @return 根据用户名，返回比id为bottomNewsId更早发布的成长记录(当前用户原创和收录的动态)，
+	 * 		        返回的动态条数为count，如果更早发布的动态不足count条，则返回所有早发布的动态
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsGrowthLogDTO> getNewsGrowthLogByUpRefresh(long userId, long bottomNewsId,int count) throws ClientProtocolException, IOException {
+		String requestUrl = baseUrl + RequestURLConstants.GROWTH_LOG + "/"+userId + "/pre?bottomNewsId=" + bottomNewsId ;
+		HttpGet httpget = new HttpGet(requestUrl + "&count=" + count);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	/**
+	 * @param userName
+	 * @param topNewsId 
+	 * @return 根据用户名， 返回比topNewsId晚发布(即新发布)的所有成长记录(当前用户原创和收录的动态)
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsGrowthLogDTO> getNewsGrowthLog(long userId,long topNewsId) throws ClientProtocolException, IOException {
+		String requestUrl = baseUrl + RequestURLConstants.GROWTH_LOG + "/"+userId + "/allNewGrowlog?topNewsId=" + topNewsId ;
+		HttpGet httpget = new HttpGet(requestUrl);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	
 	private List<NewsGrowthLogDTO> DeserializeFromHttpReponse(HttpResponse response)
 			throws IOException {
 		// Creates the json object which will manage the information received 
@@ -49,5 +84,24 @@ public class GrowthLogClient extends AbstractBaseClient{
 		Gson gson = builder.create();
 		NewsGrowthLogDTO[] retValue = gson.fromJson(EntityUtils.toString(response.getEntity()), NewsGrowthLogDTO[].class);
 		return Arrays.asList(retValue);
+	}
+	
+
+	/**
+	 * @param userName
+	 * @param topNewsId
+	 * @param newsCount
+	 * @return 根据用户名，返回比topNewsId晚发布(即新发布)的count条成长记录(当前用户原创和收录的动态)，存在以下两种情况:
+	 *      case 1:当服务器中比topNewsId晚发布的信息条数大于count条时，返回服务器中最新的count条数据，并且按时间逆序保存在List中
+	 *      case 2:当服务器中比topNewsId晚发布的信息条数(假设为n条)小于count条时，则只需要返回这n条数据，并且按时间逆序保存在List中
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsGrowthLogDTO> getNewsGrowthLogByDownRefresh(long userId, long topNewsId, int count) throws ClientProtocolException, IOException {
+		String requestUrl = baseUrl + RequestURLConstants.GROWTH_LOG + "/"+userId + "/topNews?topNewsId=" + topNewsId ;
+		HttpGet httpget = new HttpGet(requestUrl + "&count=" + count);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
 	}
 }

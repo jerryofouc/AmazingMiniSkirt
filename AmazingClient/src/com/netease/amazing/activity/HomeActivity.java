@@ -63,7 +63,6 @@ public class HomeActivity extends FragmentActivity
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
     	actionBar.setDisplayShowTitleEnabled(true);  
-    	
     	//设置actionBar的title bar ， 自定义样式
     	actionBar.setDisplayShowCustomEnabled(true);
     	actionBar.setCustomView(R.layout.apk_actionbar_title);
@@ -137,18 +136,8 @@ public class HomeActivity extends FragmentActivity
     	Intent intent;
     	switch(item.getItemId()) {
     	case android.R.id.home:
-    		if(currentFragment ==0) {
-    			intent = new Intent(this,NoticeSettingActivity.class);
-    			startActivity(intent);
-    		}
-    		if(currentFragment == 1) {
-    			intent = new Intent(this,NewsSettingActivity.class);
-    			startActivity(intent);
-    		}
-    		if(currentFragment ==2) {
-    			intent = new Intent(this,ContactSettingActivity.class);
-    			startActivity(intent);
-    		}
+    		intent = new Intent(this,SettingActivity.class);
+			startActivity(intent);
     		break;
     	case R.id.home_menu_right:
     		if(currentFragment ==0) {
