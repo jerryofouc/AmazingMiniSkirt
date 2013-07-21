@@ -52,45 +52,48 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		TextView newsSenderFromView = (TextView)view.findViewById(R.id.news_item_from);
 		newsSenderFromView.setText(m.get(NewsDataSource.NEWS_PUBLISHER_FROM).toString());
 		
-		List<CommentTextView> commentTextViewList = getCommentView(view);
-		
-		Button buttonLike = (Button)view.findViewById(R.id.news_item_like);
-		if((Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_LIKE)){
-			buttonLike.setClickable(false);
-		}else{
-			buttonLike.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View view){
-					/**登录用户喜欢该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
-					 * 
-					 * */
-					new LikeNewsCommentExecuteTask(getCommentView(view),
-							view.getContext().getApplicationContext(), 
-							(Button)view.findViewById(R.id.news_item_like)).execute(newsId);
-				}
+		boolean isNewsCurrentUserLike = (Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_LIKE);
+		boolean isNewsCurrentUserTakeDown = (Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_TAKE_DOWN);
 				
-			});
-		}
+		final List<CommentTextView> commentTextViewList = getCommentView(view);
 		
-		
-		Button buttonTakeIt = (Button)view.findViewById(R.id.news_item_take_it);
-		if((Boolean)m.get(NewsDataSource.NEWS_CURRENT_USER_TAKE_DOWN)){
-			buttonTakeIt.setClickable(false);
-		}else{
-			buttonTakeIt.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View view){
-					/**登录用户收录该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
-					 * 
-					 * */
-					new TakeDownNewsCommentExecuteTask(getCommentView(view),
-							view.getContext().getApplicationContext(), 
-							(Button)view.findViewById(R.id.news_item_like)).execute(newsId);		
-				}
-				
-			});
-		}
+		final Button buttonLike = (Button)view.findViewById(R.id.news_item_like);
+		final Button buttonTakeIt = (Button)view.findViewById(R.id.news_item_take_it);
+		Button buttonShow = (Button)view.findViewById(R.id.news_item_show_other_buttons);
 		Button buttonComment = (Button)view.findViewById(R.id.news_item_comment);
+		
+		final OnClickListener listener = new ShowButtonsListener(isNewsCurrentUserLike,isNewsCurrentUserTakeDown,
+				newsId,buttonLike, buttonTakeIt, buttonComment,commentTextViewList);
+		
+
+		buttonLike.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				/**登录用户喜欢该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
+				 * 
+				 * */
+				new LikeNewsCommentExecuteTask(listener,commentTextViewList,
+						view.getContext().getApplicationContext(), 
+						buttonLike).execute(newsId);
+			}
+			
+		});
+		
+		
+
+		buttonTakeIt.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				/**登录用户收录该动态，写入数据库中动态评论表中，并且返回最新的前8条评论
+				 * 
+				 * */
+				new TakeDownNewsCommentExecuteTask(listener,commentTextViewList,
+						view.getContext().getApplicationContext(), 
+						buttonTakeIt).execute(newsId);		
+			}
+			
+		});
+
 		buttonComment.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View view){
@@ -103,29 +106,8 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 			
 		});
 		
-		Button buttonShow = (Button)view.findViewById(R.id.news_item_show_other_buttons);
-		buttonShow.setOnClickListener(new ShowButtonsListener(newsId,buttonLike, buttonTakeIt, buttonComment,commentTextViewList));
-		
+		buttonShow.setOnClickListener(listener);
 		return view;
-	}
-	
-	class LikeNewsExecute extends AsyncTask<Long,Integer,Boolean> {
-
-		@Override
-		protected Boolean doInBackground(Long... params) {
-			// TODO Auto-generated method stub
-			return NewsDataHandler.setLikeNews(params[0]);
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-			if(result){
-				/**
-				 * 修改commentListView
-				 */
-			}	
-		}
 	}
 	/**
 	 * 
@@ -139,14 +121,25 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private Button buttonLike;
 		private Button buttonTakeIt;
 		private Button buttonComment;
+		private boolean isCurrentUserLike;
+		private boolean isCurrentUserTakeDown;
 		private List<CommentTextView> commentTextViewList;
 		private long newsId;
-		public ShowButtonsListener(long newsId,Button buttonLike, Button buttonTakeIt, Button buttonComment, List<CommentTextView> commentTextViewList){
+		public ShowButtonsListener(boolean isCurrentUserLike, boolean isCurrentUserTakeDown, long newsId,Button buttonLike, Button buttonTakeIt,
+				Button buttonComment, List<CommentTextView> commentTextViewList){
 			this.newsId = newsId;
 			this.buttonLike = buttonLike;
 			this.buttonTakeIt = buttonTakeIt;
 			this.buttonComment = buttonComment;
 			this.commentTextViewList = commentTextViewList;
+			this.isCurrentUserLike = isCurrentUserLike;
+			this.isCurrentUserTakeDown = isCurrentUserTakeDown;
+		}
+		public void setIsCurrentUserLike(boolean isCurrentUserLike){
+			this.isCurrentUserLike = isCurrentUserLike;
+		}
+		public void setIsCurrentUserTakeDown(boolean isCurrentUserTakeDown){
+			this.isCurrentUserTakeDown = isCurrentUserTakeDown;
 		}
 		@Override
 		public void onClick(View v) {
@@ -155,6 +148,12 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 				new GetInitNewsCommentDataTask(commentTextViewList).execute(newsId);
 				this.buttonLike.setVisibility(View.VISIBLE);
 				this.buttonTakeIt.setVisibility(View.VISIBLE);
+				if(this.isCurrentUserLike){
+					this.buttonLike.setClickable(false);
+				}
+				if(this.isCurrentUserTakeDown){
+					this.buttonTakeIt.setClickable(false);
+				}
 				this.buttonComment.setVisibility(View.VISIBLE);
 				IsButtonShow = 1;
 			}else{
@@ -236,10 +235,12 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private boolean isLikeNewsExecuteSuccess = false;
 		private Context context;
 		private Button button;
-		LikeNewsCommentExecuteTask(List<CommentTextView> commentTextViewList ,Context context, Button button){
+		private OnClickListener clickListener;
+		LikeNewsCommentExecuteTask(OnClickListener clickListener, List<CommentTextView> commentTextViewList ,Context context, Button button){
 			this.commentTextViewList = commentTextViewList;
 			this.context = context;
 			this.button = button;
+			this.clickListener = clickListener;
 		}
 
 		@Override
@@ -263,6 +264,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 			if(isLikeNewsExecuteSuccess){
 				Toast.makeText(context, "已添加至喜歡",Toast.LENGTH_SHORT).show();
 				button.setClickable(false);
+				((ShowButtonsListener)clickListener).setIsCurrentUserLike(true);
 			}else{
 				Toast.makeText(context, "操作失败",Toast.LENGTH_SHORT).show();
 			}
@@ -281,10 +283,12 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		private boolean isLikeNewsExecuteSuccess = false;
 		private Context context;
 		private Button button;
-		TakeDownNewsCommentExecuteTask(List<CommentTextView> commentTextViewList ,Context context, Button button){
+		private OnClickListener clickListener;
+		TakeDownNewsCommentExecuteTask(OnClickListener clickListener,List<CommentTextView> commentTextViewList ,Context context, Button button){
 			this.commentTextViewList = commentTextViewList;
 			this.context = context;
 			this.button = button;
+			this.clickListener = clickListener;
 		}
 
 		@Override
@@ -308,6 +312,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 			if(isLikeNewsExecuteSuccess){
 				Toast.makeText(context, "已收录该动态",Toast.LENGTH_SHORT).show();
 				button.setClickable(false);
+				((ShowButtonsListener)clickListener).setIsCurrentUserTakeDown(true);
 			}else{
 				Toast.makeText(context, "操作失败",Toast.LENGTH_SHORT).show();
 			}

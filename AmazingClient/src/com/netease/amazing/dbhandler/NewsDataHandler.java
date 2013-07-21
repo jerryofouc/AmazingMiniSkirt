@@ -177,6 +177,16 @@ public class NewsDataHandler {
 	 * @return 如果操作成功返回true
 	 */
 	public static boolean setLikeNews(long newsId){
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			return newsClient.setLikeNews(newsId);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	
@@ -186,6 +196,16 @@ public class NewsDataHandler {
 	 * @return 如果操作成功返回true
 	 */
 	public static boolean setTakeDownNews(long newsId){
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			return newsClient.includeNews(newsId);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	/**
