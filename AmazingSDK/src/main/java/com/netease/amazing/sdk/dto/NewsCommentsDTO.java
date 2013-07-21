@@ -22,7 +22,7 @@ public class NewsCommentsDTO {
 	public long getNewsId() {
 		return newsId;
 	}
-	public void setNewsId(long newsId) {
+	public void commentDTO(long newsId) {
 		this.newsId = newsId;
 	}
 	public long getNewsCommentId() {
@@ -60,5 +60,8 @@ public class NewsCommentsDTO {
 	}
 	public void setNewsCommentType(CommentType newsCommentType) {
 		this.newsCommentType = newsCommentType;
+	}
+	public void setNewsId(long newsId) {
+		this.newsId = newsId;
 	}
 }

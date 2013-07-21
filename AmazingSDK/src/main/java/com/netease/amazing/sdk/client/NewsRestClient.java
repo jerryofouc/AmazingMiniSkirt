@@ -19,6 +19,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsDTO;
 import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.utils.RequestURLConstants;
@@ -98,7 +99,29 @@ public class NewsRestClient extends AbstractBaseClient{
 		return DeserializeFromHttpReponse(response);
 	}
 	
+	public  List<NewsCommentsDTO> getNewsCommentToNewsIndexByNewsId(long newsId, int newsCommentCount) throws ClientProtocolException, IOException{
+		String requestUrl = baseUrl + RequestURLConstants.TWEET_OP +"/" +newsId + "/comments";
+		HttpGet httpget = new HttpGet(requestUrl);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeNewsCommentsDTOFromHttpReponse(response);
+		
+	}
 	
+	private List<NewsCommentsDTO> DeserializeNewsCommentsDTOFromHttpReponse(HttpResponse response)
+			throws IOException {
+		// Creates the json object which will manage the information received 
+		GsonBuilder builder = new GsonBuilder(); 
+		// Register an adapter to manage the date types as long values 
+		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() { 
+			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+					return new Date(json.getAsJsonPrimitive().getAsLong()); 
+			}
+		});
+		Gson gson = builder.create();
+		NewsCommentsDTO[] retValue = gson.fromJson(EntityUtils.toString(response.getEntity()), NewsCommentsDTO[].class);
+		return Arrays.asList(retValue);
+	}
 	
 	private List<NewsDTO> DeserializeFromHttpReponse(HttpResponse response)
 			throws IOException {
@@ -114,5 +137,4 @@ public class NewsRestClient extends AbstractBaseClient{
 		NewsDTO[] retValue = gson.fromJson(EntityUtils.toString(response.getEntity()), NewsDTO[].class);
 		return Arrays.asList(retValue);
 	}
-	
 }
