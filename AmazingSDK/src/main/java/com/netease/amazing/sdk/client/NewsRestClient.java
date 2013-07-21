@@ -45,6 +45,25 @@ public class NewsRestClient extends AbstractBaseClient{
 		return DeserializeFromHttpReponse(response);
 	}
 	
+	
+	/**
+	 * 
+	 * @param bottomNewsId 当前
+	 * @param newsCount 动态条数
+	 * @return 返回比id为bottomNewsId更早发布的动态，
+	 * 		        返回的动态条数为newsCount，如果更早发布的动态不足newsCount条，则返回所有早发布的动态
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public  List<NewsDTO> getNewsByUpRefresh(long bottomNewsId,int count) throws ClientProtocolException, IOException {
+		String requestUrl = baseUrl + RequestURLConstants.GET_LATEST_NEWS;
+		HttpGet httpget = new HttpGet(requestUrl + "?count=" + count + "&bottomId=" + bottomNewsId);
+		httpget.setHeader("Authorization",Utils.HttpBasicEncodeBase64(loginName, password));
+		HttpResponse response = httpclient.execute(httpget);
+		return DeserializeFromHttpReponse(response);
+	}
+	
+	
 	private List<NewsDTO> DeserializeFromHttpReponse(HttpResponse response)
 			throws IOException {
 		// Creates the json object which will manage the information received 
