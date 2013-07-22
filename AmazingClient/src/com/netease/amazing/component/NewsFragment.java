@@ -1,10 +1,13 @@
 package com.netease.amazing.component;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.UnknownHostException;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -73,13 +76,14 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	}
 
 	class GetInitNewsDataTask extends AsyncTask {
-
+		private Bitmap bitmap;
 		@Override
 		protected Object doInBackground(Object... arg0) {
 			newsDataSource.updateValue(NewsDataSource.NEWS_INIT_DATA);
 			listAdapter = new NewsListAdapter(getActivity(), newsDataSource);
 			set(listAdapter, itemClickListener);
 			fragmentHandler.sendEmptyMessage(1);
+			bitmap = returnBitMap("http://content.52pk.com/files/100623/2230_102437_1_lit.jpg");
 			return listAdapter;
 		}
 
@@ -89,7 +93,8 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			result = (NewsListAdapter) listAdapter;
 			mRefreshListView.setAdapter(listAdapter);
 			ImageView imageView = (ImageView)view.findViewById(R.id.news_index_image); 
-			//imageView.setImageBitmap(returnBitMap("http://content.52pk.com/files/100623/2230_102437_1_lit.jpg")); 
+
+			imageView.setImageBitmap(bitmap); 
 		}
 
 	}
@@ -192,12 +197,12 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			e.printStackTrace();
 		}
 		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
+			URLConnection conn = myFileUrl
 					.openConnection();
-			conn.setDoInput(true);
 			conn.connect();
 			InputStream is = conn.getInputStream();
-			bitmap = BitmapFactory.decodeStream(is);
+			BufferedInputStream bis = new BufferedInputStream(is);
+			bitmap = BitmapFactory.decodeStream(bis);
 			is.close();
 		} catch (IOException e) {
 			e.printStackTrace();
