@@ -12,16 +12,15 @@
         android:allowBackup="true"
         android:icon="@drawable/logo180x180"
         android:label="@string/app_name"
-        android:theme="@style/CustomTheme"
-        android:name="com.netease.amazing.component.MyApplication" >
+        android:theme="@style/CustomTheme" >
         <activity
-            android:name="com.netease.amazing.activity.LoginActivity"
+            android:name="com.netease.amazing.activity.HomeActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
         <activity android:name="com.netease.amazing.activity.NoticeActivity" >
         </activity>
-        <activity android:name="com.netease.amazing.activity.HomeActivity" 
+        <activity android:name="com.netease.amazing.activity.LoginActivity" 
             android:theme="@android:style/Theme.Holo.Light"
             android:logo="@drawable/download">
             <intent-filter>
@@ -52,7 +51,15 @@
         
         <!-- 添加contact相关的activity -->
         <activity android:name = "com.netease.amazing.activity.ContactAddFriendActivity"/>
-        <activity android:name = "com.netease.amazing.activity.SettingActivity"></activity>
+        <activity android:name = "com.netease.amazing.activity.SettingActivity">
+            
+        </activity>
+        <activity android:name = "com.netease.amazing.activity.AboutUsButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.AccountSettingButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.DimCodeButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.SetUserInfoActivity"/>
+        <activity android:name = "com.netease.amazing.activity.SystemSettingButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.ContactUsButtonActivity"/>
     </application>
 	
     <uses-permission android:name="android.permission.INTERNET" />

@@ -18,7 +18,7 @@
     </style>
     
     <style name="CustomTheme" parent="android:style/Theme.Holo.Light">
-        <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>
+      <!--   <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>  -->
     </style>
     
     <style name="MyActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">

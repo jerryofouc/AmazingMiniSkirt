@@ -1,4 +1,4 @@
-package com.netease.amazing.util;
+package com.netease.amazing.adapter;
 
 import java.util.Map;
 
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.datasource.DataSource;
+import com.netease.amazing.datasource.NewsPersonalDataSource;
 import com.netease.amazing.pojo.NewsGrowthLog;
 /**
  * 

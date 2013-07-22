@@ -6,7 +6,7 @@ public class StringCuter {
 	public static String cutStr(String inputStr,int length) {
 		int len = length-3;
 		int i =0;
-		int rowCounts = 21;
+		int rowCounts = 24;
 		int nowPosition  =0;
 		boolean isTooShort = false;
 		StringBuilder sb = new StringBuilder("");
@@ -43,7 +43,7 @@ public class StringCuter {
 			return sb.toString();
 		}
 		else {
-			return sb.append("...").toString();
+			return sb.append("....").toString();
 		}
 	}
 }

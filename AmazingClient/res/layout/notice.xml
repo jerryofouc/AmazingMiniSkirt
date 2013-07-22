@@ -18,11 +18,14 @@
 	        android:layout_height="30dp"
 	        android:layout_weight="1"
 	        android:background="@drawable/actionbar_tab_bg"
-	        android:gravity="right"
+	        android:gravity="center_horizontal|center_vertical"
 	        android:text="gaognaon"
 	        android:width="0dp" />
 
 	</RelativeLayout>
 	
-	<TextView android:id="@+id/notice_view_content" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@drawable/background_textview"/>
+	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<TextView android:id="@+id/notice_view_content" android:layout_width="fill_parent" android:layout_height="fill_parent"
+	     android:background="@drawable/background_textview" android:scrollbars="vertical" android:scrollbarStyle="insideOverlay"/>
+	</ScrollView>
 </LinearLayout>

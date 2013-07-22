@@ -1,4 +1,4 @@
-package com.netease.amazing.util;
+package com.netease.amazing.datasource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -58,7 +58,7 @@ public class NoticeDataSource extends DataSource {
 			Notice tempNotice = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("image", R.drawable.comment_icon25x25);
-			map.put("title", tempNotice.cutTitle(14,"UTF-8"));
+			map.put("title", tempNotice.cutTitle(10,"UTF-8"));
 			map.put("date", new SimpleDateFormat("yyyy.MM.dd").format(tempNotice.getNoticeDate()));
 			map.put("content", tempNotice.cutContent(39,"UTF-8"));
 			list.add(map);

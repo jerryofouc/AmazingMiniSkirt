@@ -1,7 +1,9 @@
-package com.netease.amazing.util;
+package com.netease.amazing.adapter;
 
 import java.util.List;
 import java.util.Map;
+
+import com.netease.amazing.datasource.DataSource;
 
 import android.content.Context;
 import android.view.LayoutInflater;

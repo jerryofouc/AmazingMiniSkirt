@@ -2,59 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.12" >
+        android:layout_marginBottom="16dp" >
 
-        <Button
-            android:id="@+id/contact_no_back_button"
-            style="?android:attr/buttonStyleSmall"
+        <ImageView
+            android:id="@+id/contact_teacher_img"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/default_avatar163x163" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="88dp"
+            android:orientation="vertical" >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="联系信息"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+                <TextView
+                    android:id="@+id/contact_teacher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="王琦"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/contact_teacher_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/sex_man_icon20x20" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/contact_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(班主任)"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
 
     </LinearLayout>
-    
-    <ImageView
-    android:id="@+id/contact_teacher_img"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/contact_teacher_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="王琦"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/contact_teacher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:text="(班主任)"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.04" >
+        android:layout_height="38dp"
+        android:background="@drawable/btn_bk_up_radius"
+        android:paddingLeft="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:id="@+id/contact_no_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
             android:text="固话"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -62,20 +75,25 @@
             android:id="@+id/contact_no_teacher_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="0571-68487943"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/dark_red" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12" >
+        android:layout_height="38dp"
+        android:background="@drawable/btn_bk_down_radius"
+        android:paddingLeft="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:id="@+id/contact_mobile_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
             android:text="手机"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -83,16 +101,26 @@
             android:id="@+id/contact_mobile_teacher_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="13569798946"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/dark_red" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/contact_teacher_class_index"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12"
-        android:text="班级主页" />
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/red_btn_bk"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="班级主页"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

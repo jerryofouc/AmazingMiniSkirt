@@ -2,88 +2,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.12" >
+        android:layout_marginBottom="@dimen/activity_horizontal_margin" >
 
-        <Button
-            android:id="@+id/contact_no_back_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+        <ImageView
+            android:id="@+id/contact_friend_img"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/default_avatar163x163" />
 
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="联系信息"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
-    
-    <ImageView
-    android:id="@+id/contact_friend_img"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/contact_friend_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="林天羽"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/contact_friend_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:text="(天天)"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	<TextView
-        android:id="@+id/contact_friend_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:text="杭州新苗幼儿园中二班"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.04" >
-
-        <TextView
-            android:id="@+id/contact_friend_birth_label"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="生日"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="66dp"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/contact_friend_birthday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2006.06.02"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" >
+
+                <TextView
+                    android:id="@+id/contact_friend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="林天羽"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/contact_friend_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(天天)"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/contact_friend_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="杭州新苗幼儿园中二班"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/contact_friend_birth_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="生日"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/contact_friend_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2006.06.02"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.04" >
+        android:layout_height="38dp"
+        android:background="@drawable/btn_bk_up_radius"
+        android:paddingLeft="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:id="@+id/contact_friend_father"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
             android:text="父亲"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -91,14 +97,16 @@
             android:id="@+id/contact_friend_father_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
             android:text="13333333333"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
         
         <TextView
             android:id="@+id/contact_friend_father_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="hehe"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
@@ -106,13 +114,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12" >
+        android:layout_height="38dp"
+        android:background="@drawable/btn_bk_down_radius"
+        android:paddingLeft="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:id="@+id/contact_friend_mother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
             android:text="母亲"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -120,23 +131,34 @@
             android:id="@+id/contact_friend_mother_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
             android:text="13569798946"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
          <TextView
-            android:id="@+id/contact_friend_mother_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="heihei"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+             android:id="@+id/contact_friend_mother_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_vertical"
+             android:text="heihei"
+             android:textAppearance="?android:attr/textAppearanceMedium" />
         
     </LinearLayout>
 
     <Button
         android:id="@+id/contact_friend_index"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12"
-        android:text="查看主页" />
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/red_btn_bk"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="查看主页"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

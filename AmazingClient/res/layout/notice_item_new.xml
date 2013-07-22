@@ -22,7 +22,7 @@
 	    android:layout_marginLeft="0dp"
 	    android:layout_marginRight="0dp"
 	    android:layout_marginTop="0dp"
-	    android:background="#DDDDDD"
+	    android:background="#222222"
 	    android:gravity="center"
 	    />
 
@@ -39,9 +39,9 @@
 	    android:background="@color/transparent"
 	    android:gravity="center_vertical"
 	    android:width="200dp"
-	    android:textSize="15sp"
-	    android:textStyle="bold" 
-	    android:textColor="#111111"
+	    android:textSize="13sp"
+	    android:textStyle="normal" 
+	    android:textColor="#222222"
 	    android:fontFamily="sans-serif"
 	    android:text="将军令"/>
 
@@ -67,7 +67,7 @@
 	<TextView
 	    android:id="@+id/notice_item_content "
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	    android:layout_height="wrap_content"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@id/notice_item_updown_image"
@@ -77,7 +77,8 @@
 	    android:layout_marginTop="0dp"
 	    android:background="@color/transparent"
 	    android:gravity="left"
-	    android:height="50dp"
-	    android:text="ghiabgiab" />
+	    android:height="45dp"
+	    android:textColor="#333333"
+	    android:textSize="12sp" />
 
 </RelativeLayout>

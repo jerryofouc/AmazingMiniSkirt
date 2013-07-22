@@ -1,5 +1,9 @@
 package com.netease.amazing.activity;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,7 +27,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-import com.netease.amazing.component.MyApplication;
+import com.netease.amazing.sdk.client.AccountRestClient;
+import com.netease.amazing.util.UserInfoStore;
 
 public class LoginActivity extends Activity {
 
@@ -34,7 +40,6 @@ public class LoginActivity extends Activity {
 	private EditText view_password;
 	private CheckBox view_rememberMe;
 	private Button view_loginSubmit;
-	private Button view_loginRegister;
 	private static final int MENU_EXIT = Menu.FIRST - 1;
 	private static final int MENU_ABOUT = Menu.FIRST;
 	/** 用来操作SharePreferences的标识 */
@@ -43,15 +48,12 @@ public class LoginActivity extends Activity {
 	/** 如果登录成功后,用于保存用户名到c,以便下次不再输入 */
 	private String SHARE_LOGIN_USERNAME = "MAP_LOGIN_USERNAME";
 
-	/** 如果登录成功后,用于保存PASSWORD到SharedPreferences,以便下次不再输入 */
 	private String SHARE_LOGIN_PASSWORD = "MAP_LOGIN_PASSWORD";
 
-	/** 如果登陆失败,这个可以给用户确切的消息显示,true是网络连接失败,false是用户名和密码错误 */
 	private boolean isNetError;
 
-	/** 登录loading提示框 */
 	private ProgressDialog proDialog;
-
+	private boolean isFirstLogin = false;
 	/** 登录后台通知更新UI线程,主要用于登录失败,通知UI线程更新界面 */
 	Handler loginHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -75,6 +77,7 @@ public class LoginActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		findViewsById();
@@ -102,9 +105,6 @@ public class LoginActivity extends Activity {
 		SharedPreferences share = getSharedPreferences(SHARE_LOGIN_TAG, 0);
 		String userName = share.getString(SHARE_LOGIN_USERNAME, "");
 		String password = share.getString(SHARE_LOGIN_PASSWORD, "");
-		Log
-				.d(this.toString(), "userName=" + userName + " password="
-						+ password);
 		if (!"".equals(userName)) {
 			view_userName.setText(userName);
 		}
@@ -123,12 +123,23 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
-		if(true) {
-			loginState = true;
+		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,userName,password); {
+			try {
+				isFirstLogin = !arc.hasLogin();
+			} catch (ClientProtocolException e) {
+				isNetError = true;
+			} catch (IOException e) {
+				isNetError = true;
+			}
 		}
-		else {
-			isNetError = false;
+		try {
+			loginState = AccountRestClient.testLogin(UserInfoStore.url, userName, password);
+		} catch (ClientProtocolException e) {
+			isNetError = true;
+		} catch (IOException e) {
+			isNetError = true;
 		}
+		
 		// 登陆成功
 		if (loginState) {
 			if (isRememberMe()) {
@@ -185,9 +196,7 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			proDialog = ProgressDialog.show(LoginActivity.this, "连接中..",
 					"连接中..请稍后....", true, true);
-			// 开一个线程进行登录验证,主要是用于失败,成功可以直接通过startAcitivity(Intent)转向
-			String baseURL = "http://10.240.34.42:8080/server";
-			Thread loginThread = new Thread(new LoginFailureHandler(baseURL));
+			Thread loginThread = new Thread(new LoginFailureHandler());
 			loginThread.start();
 		}
 	};
@@ -209,21 +218,10 @@ public class LoginActivity extends Activity {
 		}
 	};
 
-	/** 注册Listener */
-	private OnClickListener registerLstener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-//			Intent intent = new Intent();
-//			intent.setClass(LoginActivity.this, RegisterActivity.class);
-//			// 转向注册页面
-//			startActivity(intent);
-		}
-	};
 
 	/** 设置监听器 */
 	private void setListener() {
 		view_loginSubmit.setOnClickListener(submitListener);
-		view_loginRegister.setOnClickListener(registerLstener);
 		view_rememberMe.setOnCheckedChangeListener(rememberMeListener);
 	}
 
@@ -269,34 +267,25 @@ public class LoginActivity extends Activity {
 	}
 
 	class LoginFailureHandler implements Runnable {
-		String baseURL;
-		
-		public LoginFailureHandler(String baseURL) {
-			this.baseURL = baseURL;
-		}
 		
 		@Override
 		public void run() {
 			userName = view_userName.getText().toString();
 			password = view_password.getText().toString();
-			String validateURL= baseURL;
 			boolean loginState = validateLocalLogin(userName, password,
-					validateURL);
-			Log.d(this.toString(), "validateLogin");
+					UserInfoStore.url);
 
 			// 登陆成功
 			if (loginState) {
 				// 需要传输数据到登陆后的界面,
-				MyApplication myApp = (MyApplication)getApplication();
-				myApp.setUsername(userName);
-				myApp.setPassword(password);
+				UserInfoStore.username = userName;
+				UserInfoStore.password = password;
 				
+				if(isFirstLogin) {
+					//转向欢迎界面
+				}
 				Intent intent = new Intent();
 				intent.setClass(LoginActivity.this, HomeActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("MAP_USERNAME", userName);
-				intent.putExtras(bundle);
-				// 转向登陆后的页面
 				startActivity(intent);
 				proDialog.dismiss();
 			} else {
