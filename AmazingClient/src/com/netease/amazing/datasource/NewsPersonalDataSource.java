@@ -25,7 +25,7 @@ public class NewsPersonalDataSource extends DataSource {
 	public final static String NEWS_PERSONAL_ITEM_ID = "newsId";
 	public final static String NEWS_GROWTH_TYPE = "newsType";
 	
-	private long userId = NewsDataHandler.USER_ID;
+	private long userId = 1;///
 
 	protected List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 	private int fetchSize = FETCH_SIZE;
