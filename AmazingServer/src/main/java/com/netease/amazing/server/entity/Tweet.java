@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.netease.amazing.sdk.dto.NewsDTO.TweetType;
 
 @Entity
@@ -69,7 +71,21 @@ public class Tweet extends IdEntity{
 	public void setRecievers(List<UserTweet> recievers) {
 		this.recievers = recievers;
 	}
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this ){
+			return true;
+		}
+		if(obj instanceof Tweet ){
+			return ((Tweet)obj).getId().equals(this.getId());
+		}
+		return false;
+	}
+	@Override
+ 	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+		builder.append(this.getId());
+		return builder.build();
+	}
 	
 }

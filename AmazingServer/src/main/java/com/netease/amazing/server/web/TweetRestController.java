@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsDTO;
+import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 import com.netease.amazing.server.service.TweetService;
 
@@ -67,6 +69,16 @@ public class TweetRestController extends BaseController{
 	public ResponseEntity<?> includeComment(@PathVariable("id") Long id){
 		long userId = this.getCurrentUserId();
 		tweetService.includeTweet(userId, id);
+		HttpHeaders headers = new HttpHeaders();
+	    return new ResponseEntity(headers, HttpStatus.CREATED);
+	}
+	
+	
+	@RequestMapping(method={RequestMethod.POST}, consumes={"application/json"})
+	@ResponseBody
+	public ResponseEntity<?> createNewTweet(@RequestBody NewsDTO newsDTO){
+		long userId = this.getCurrentUserId();
+		tweetService.createNewTweet(userId,newsDTO);
 		HttpHeaders headers = new HttpHeaders();
 	    return new ResponseEntity(headers, HttpStatus.CREATED);
 	}

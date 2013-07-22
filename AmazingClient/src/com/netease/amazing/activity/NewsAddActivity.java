@@ -2,6 +2,7 @@ package com.netease.amazing.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,7 +58,7 @@ public class NewsAddActivity extends Activity{
 					Toast.makeText(NewsAddActivity.this, "请输入"+NEW_INPUT_MAX_LENGTH+"字以内的动态！",
 						     Toast.LENGTH_SHORT).show();
 				}else if(text.trim().length() > 0){
-					new GetCommentsListExecute().execute(text.trim());
+					new PublishNewsExecute().execute(text.trim());
 				}else{
 					Toast.makeText(NewsAddActivity.this, "请输入文字",
 						     Toast.LENGTH_SHORT).show();
@@ -75,7 +76,8 @@ public class NewsAddActivity extends Activity{
 	 * Class Description:
 	 *    发布动态的异步操作
 	 */		
-	class GetCommentsListExecute extends AsyncTask<String,Integer,Boolean> {
+	class PublishNewsExecute extends AsyncTask<String,Integer,Boolean> {
+		Bitmap bit;
 
 		@Override
 		protected Boolean doInBackground(String... params) {
@@ -90,9 +92,14 @@ public class NewsAddActivity extends Activity{
 			/**
 			 * 清空动态消息
 			 */
-			Toast.makeText(NewsAddActivity.this, result.toString(),
-				     Toast.LENGTH_SHORT).show();
-			((EditText)findViewById(R.id.newsAdd_input_editText)).setText("");
+			if(result){
+				Toast.makeText(NewsAddActivity.this, "添加成功",
+					     Toast.LENGTH_SHORT).show();
+				((EditText)findViewById(R.id.newsAdd_input_editText)).setText("");
+			}else{
+				Toast.makeText(NewsAddActivity.this, "添加失败",
+					     Toast.LENGTH_SHORT).show();
+			}
 			
 		}
 	}

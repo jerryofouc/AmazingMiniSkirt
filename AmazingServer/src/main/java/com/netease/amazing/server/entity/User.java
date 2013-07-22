@@ -33,6 +33,7 @@ public class User extends IdEntity {
 	private Date registerDate;
 	private Child child;
 	private List<Tweet> tweets;
+	private boolean hasLogin;
 	public enum Role{
 		PARENT,
 		TEACHER
@@ -120,6 +121,11 @@ public class User extends IdEntity {
 		return roleList;
 		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
 	}
-
+	public boolean isHasLogin() {
+		return hasLogin;
+	}
+	public void setHasLogin(boolean hasLogin) {
+		this.hasLogin = hasLogin;
+	}
 	
 }
