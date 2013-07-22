@@ -2,19 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin" >
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="49dp"
+	    android:background="@drawable/titlebar_bk32x74"
+	    android:orientation="horizontal" >
+	
+	    <ImageButton
+	        android:id="@+id/set_parent_titlebar_back_btn"
+	        android:layout_width="49dp"
+	        android:layout_height="49dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:background="#00000000"
+	        android:src="@drawable/titlebar_back_bg" />
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:shadowColor="#000000"
+	        android:shadowDx="2"
+	        android:shadowDy="2"
+	        android:shadowRadius="1"
+	        android:text="修改家长称呼"
+	        android:textColor="@color/white"
+	        android:textSize="20sp"
+	        android:textStyle="bold" />
+	    
+	    <ImageButton
+	        android:id="@+id/set_parent_titlebar_save_btn"
+	        android:layout_width="49dp"
+	        android:layout_height="49dp"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerInParent="true"
+	        android:background="#00000000"
+	        android:src="@drawable/titlebar_save_bg" />
+	</RelativeLayout>
 
     <RadioButton
         android:id="@+id/setParent_fathder_radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="爸爸" />
 
     <RadioButton
         android:id="@+id/setParent_mother_radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="妈妈" />
 
 </LinearLayout>
