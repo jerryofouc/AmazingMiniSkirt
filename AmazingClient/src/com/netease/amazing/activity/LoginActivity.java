@@ -17,8 +17,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -28,15 +28,16 @@ import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.sdk.client.AccountRestClient;
+import com.netease.amazing.sdk.dto.UserDTO;
 import com.netease.amazing.util.UserInfoStore;
 
 public class LoginActivity extends Activity {
 
 
-	private String userName;
+	private String loginName;
 	private String password;
 
-	private EditText view_userName;
+	private EditText view_loginName;
 	private EditText view_password;
 	private CheckBox view_rememberMe;
 	private Button view_loginSubmit;
@@ -46,7 +47,7 @@ public class LoginActivity extends Activity {
 	private final String SHARE_LOGIN_TAG = "MAP_SHARE_LOGIN_TAG";
 
 	/** 如果登录成功后,用于保存用户名到c,以便下次不再输入 */
-	private String SHARE_LOGIN_USERNAME = "MAP_LOGIN_USERNAME";
+	private String SHARE_LOGIN_loginName = "MAP_LOGIN_loginName";
 
 	private String SHARE_LOGIN_PASSWORD = "MAP_LOGIN_PASSWORD";
 
@@ -88,7 +89,7 @@ public class LoginActivity extends Activity {
 
 	/** 初始化注册View组件 */
 	private void findViewsById() {
-		view_userName = (EditText) findViewById(R.id.loginUserNameEdit);
+		view_loginName = (EditText) findViewById(R.id.loginUserNameEdit);
 		view_password = (EditText) findViewById(R.id.loginPasswordEdit);
 		view_rememberMe = (CheckBox) findViewById(R.id.loginRememberMeCheckBox);
 		view_loginSubmit = (Button) findViewById(R.id.loginSubmit);
@@ -103,10 +104,10 @@ public class LoginActivity extends Activity {
 	 * */
 	private void initView(boolean isRememberMe) {
 		SharedPreferences share = getSharedPreferences(SHARE_LOGIN_TAG, 0);
-		String userName = share.getString(SHARE_LOGIN_USERNAME, "");
+		String loginName = share.getString(SHARE_LOGIN_loginName, "");
 		String password = share.getString(SHARE_LOGIN_PASSWORD, "");
-		if (!"".equals(userName)) {
-			view_userName.setText(userName);
+		if (!"".equals(loginName)) {
+			view_loginName.setText(loginName);
 		}
 		if (!"".equals(password)) {
 			view_password.setText(password);
@@ -119,11 +120,11 @@ public class LoginActivity extends Activity {
 		share = null;
 	}
 
-	private boolean validateLocalLogin(String userName, String password,
+	private boolean validateLocalLogin(String loginName, String password,
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
-		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,userName,password); {
+		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,loginName,password); {
 			try {
 				isFirstLogin = !arc.hasLogin();
 			} catch (ClientProtocolException e) {
@@ -133,7 +134,7 @@ public class LoginActivity extends Activity {
 			}
 		}
 		try {
-			loginState = AccountRestClient.testLogin(UserInfoStore.url, userName, password);
+			loginState = AccountRestClient.testLogin(UserInfoStore.url, loginName, password);
 		} catch (ClientProtocolException e) {
 			isNetError = true;
 		} catch (IOException e) {
@@ -162,18 +163,18 @@ public class LoginActivity extends Activity {
 	/**
 	 * 如果登录成功过,则将登陆用户名和密码记录在SharePreferences
 	 * 
-	 * @param saveUserName
+	 * @param saveloginName
 	 *            是否将用户名保存到SharePreferences
 	 * @param savePassword
 	 *            是否将密码保存到SharePreferences
 	 * */
-	private void saveSharePreferences(boolean saveUserName, boolean savePassword) {
+	private void saveSharePreferences(boolean saveloginName, boolean savePassword) {
 		SharedPreferences share = getSharedPreferences(SHARE_LOGIN_TAG, 0);
-		if (saveUserName) {
-			Log.d(this.toString(), "saveUserName="
-					+ view_userName.getText().toString());
-			share.edit().putString(SHARE_LOGIN_USERNAME,
-					view_userName.getText().toString()).commit();
+		if (saveloginName) {
+			Log.d(this.toString(), "saveloginName="
+					+ view_loginName.getText().toString());
+			share.edit().putString(SHARE_LOGIN_loginName,
+					view_loginName.getText().toString()).commit();
 		}
 		if (savePassword) {
 			share.edit().putString(SHARE_LOGIN_PASSWORD,
@@ -270,18 +271,23 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		public void run() {
-			userName = view_userName.getText().toString();
+			loginName = view_loginName.getText().toString();
 			password = view_password.getText().toString();
-			boolean loginState = validateLocalLogin(userName, password,
+			boolean loginState = validateLocalLogin(loginName, password,
 					UserInfoStore.url);
 
 			// 登陆成功
 			if (loginState) {
 				// 需要传输数据到登陆后的界面,
-				UserInfoStore.username = userName;
+				UserInfoStore.loginName = loginName;
 				UserInfoStore.password = password;
 				try {
-					UserInfoStore.userId = new AccountRestClient(UserInfoStore.url,userName,password).getUserInfo().getId();
+					UserDTO user = new AccountRestClient(UserInfoStore.url,loginName,password).getUserInfo();
+					UserInfoStore.userId = user.getId();
+					UserInfoStore.username = user.getName();
+					UserInfoStore.imageDir = user.getHeadPic();
+					UserInfoStore.backgroundImageDir = user.getFrontCover();
+					UserInfoStore.signature = user.getSignature();
 				} catch (ClientProtocolException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

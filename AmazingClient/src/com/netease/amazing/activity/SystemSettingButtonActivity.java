@@ -2,6 +2,8 @@ package com.netease.amazing.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ToggleButton;
@@ -30,6 +32,23 @@ public class SystemSettingButtonActivity extends Activity {
 		taskBarButton = (ToggleButton)findViewById(R.id.setSystem_notice_toggle);
 	}
 	public void setListener() {
+		backButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				SystemSettingButtonActivity.this.finish();
+			}
+		});
 		
+		themeButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+			}
+		});
+		
+		taskBarButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+			}
+		});
 	}
 }

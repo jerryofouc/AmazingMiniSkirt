@@ -34,6 +34,7 @@ import com.netease.amazing.sdk.dto.ChildDTO;
 import com.netease.amazing.sdk.dto.ContactDTO;
 import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.dto.TeacherDTO;
+import com.netease.amazing.util.UserInfoStore;
 
 public class NoticeEditActivity extends Activity {
 	private String url = "http://10.240.34.42:8080/server";
@@ -64,10 +65,7 @@ public class NoticeEditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		String url = "http://10.240.34.42:8080/server";
-		String username = "xukai";
-		String password = "123456";
-		contactRestClient = new ContactRestClient(url,username,password);
+		contactRestClient = new ContactRestClient(UserInfoStore.url,UserInfoStore.loginName,UserInfoStore.password);
 		
 		setContentView(R.layout.notice_edit);
 		getView();
