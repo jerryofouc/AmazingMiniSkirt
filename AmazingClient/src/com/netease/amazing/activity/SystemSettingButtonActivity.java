@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ToggleButton;
 
 import com.example.amazing.R;
 
@@ -11,7 +12,7 @@ public class SystemSettingButtonActivity extends Activity {
 	
 	private Button backButton;
 	private Button themeButton;
-	private Button taskBarButton;
+	private ToggleButton taskBarButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class SystemSettingButtonActivity extends Activity {
 	}
 	
 	public void getView() {
+		backButton = (Button)findViewById(R.id.setting_system_back_btn);
+		themeButton = (Button)findViewById(R.id.setSystem_theme_btn);
+		taskBarButton = (ToggleButton)findViewById(R.id.setSystem_notice_toggle);
 	}
 	public void setListener() {
 		
