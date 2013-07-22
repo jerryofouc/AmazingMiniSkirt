@@ -8,11 +8,10 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
-import com.netease.amazing.component.MyApplication;
+import com.netease.amazing.component.UserInfoStore;
 import com.netease.amazing.pojo.Notice;
 import com.netease.amazing.sdk.client.NoticeRestClient;
 import com.netease.amazing.sdk.dto.NoticeDTO;
-import com.netease.amazing.util.NoticeDBSimulateHandler;
 
 public class NoticeDataHandler {
 	
@@ -25,13 +24,7 @@ public class NoticeDataHandler {
 	 * @throws ClientProtocolException 
 	 */
 	public List<Notice> getInitNotice(int noticeCount) throws ClientProtocolException, IOException, URISyntaxException {
-//		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
-//		String username = myApp.getUsername();
-//		String password = myApp.getPassword();
-		String url = "http://10.240.34.42:8080/server";
-		String username = "xukai";
-		String password = "123456";
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getLatestNotices(noticeCount);
 		return convertToNotices(results);
@@ -65,13 +58,7 @@ public class NoticeDataHandler {
 	 */
 	public List<Notice> getNotice(long bottomNoticeId,int noticeCount) throws ClientProtocolException, URISyntaxException, IOException {
 		
-//		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
-//		String username = myApp.getUsername();
-//		String password = myApp.getPassword();
-		String url = "http://10.240.34.42:8080/server";
-		String username = "xukai";
-		String password = "123456";
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		
 		results = noticeRestClient.getDownRangeNotice(bottomNoticeId, noticeCount);
@@ -87,13 +74,8 @@ public class NoticeDataHandler {
 	 * @throws ClientProtocolException 
 	 */
 	public List<Notice> getNotice(long topNoticeId) throws ClientProtocolException, URISyntaxException, IOException {
-//		String url = "http://" + myApp.getServeIp() + ":" + myApp.getServerPort() + "/server";
-//		String username = myApp.getUsername();
-//		String password = myApp.getPassword();
-		String url = "http://10.240.34.42:8080/server";
-		String username = "xukai";
-		String password = "123456";
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
+		
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getUpRangeNotice(topNoticeId);
 		return convertToNotices(results);

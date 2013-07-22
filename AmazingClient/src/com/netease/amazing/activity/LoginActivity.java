@@ -1,5 +1,9 @@
 package com.netease.amazing.activity;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,7 +26,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-import com.netease.amazing.component.MyApplication;
+import com.netease.amazing.component.UserInfoStore;
+import com.netease.amazing.sdk.client.AccountRestClient;
 
 public class LoginActivity extends Activity {
 
@@ -34,7 +39,6 @@ public class LoginActivity extends Activity {
 	private EditText view_password;
 	private CheckBox view_rememberMe;
 	private Button view_loginSubmit;
-	private Button view_loginRegister;
 	private static final int MENU_EXIT = Menu.FIRST - 1;
 	private static final int MENU_ABOUT = Menu.FIRST;
 	/** 用来操作SharePreferences的标识 */
@@ -102,9 +106,6 @@ public class LoginActivity extends Activity {
 		SharedPreferences share = getSharedPreferences(SHARE_LOGIN_TAG, 0);
 		String userName = share.getString(SHARE_LOGIN_USERNAME, "");
 		String password = share.getString(SHARE_LOGIN_PASSWORD, "");
-		Log
-				.d(this.toString(), "userName=" + userName + " password="
-						+ password);
 		if (!"".equals(userName)) {
 			view_userName.setText(userName);
 		}
@@ -123,12 +124,14 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
-		if(true) {
-			loginState = true;
+		try {
+			loginState = AccountRestClient.testLogin(UserInfoStore.url, userName, password);
+		} catch (ClientProtocolException e) {
+			isNetError = true;
+		} catch (IOException e) {
+			isNetError = true;
 		}
-		else {
-			isNetError = false;
-		}
+		
 		// 登陆成功
 		if (loginState) {
 			if (isRememberMe()) {
@@ -209,21 +212,10 @@ public class LoginActivity extends Activity {
 		}
 	};
 
-	/** 注册Listener */
-	private OnClickListener registerLstener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-//			Intent intent = new Intent();
-//			intent.setClass(LoginActivity.this, RegisterActivity.class);
-//			// 转向注册页面
-//			startActivity(intent);
-		}
-	};
 
 	/** 设置监听器 */
 	private void setListener() {
 		view_loginSubmit.setOnClickListener(submitListener);
-		view_loginRegister.setOnClickListener(registerLstener);
 		view_rememberMe.setOnCheckedChangeListener(rememberMeListener);
 	}
 
@@ -282,14 +274,12 @@ public class LoginActivity extends Activity {
 			String validateURL= baseURL;
 			boolean loginState = validateLocalLogin(userName, password,
 					validateURL);
-			Log.d(this.toString(), "validateLogin");
 
 			// 登陆成功
 			if (loginState) {
 				// 需要传输数据到登陆后的界面,
-				MyApplication myApp = (MyApplication)getApplication();
-				myApp.setUsername(userName);
-				myApp.setPassword(password);
+				UserInfoStore.username = userName;
+				UserInfoStore.password = password;
 				
 				Intent intent = new Intent();
 				intent.setClass(LoginActivity.this, HomeActivity.class);

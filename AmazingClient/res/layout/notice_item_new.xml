@@ -78,6 +78,7 @@
 	    android:background="@color/transparent"
 	    android:gravity="left"
 	    android:height="50dp"
-	    android:text="ghiabgiab" />
+	    android:text="ghiabgiab"
+	    android:textSize="12sp" />
 
 </RelativeLayout>

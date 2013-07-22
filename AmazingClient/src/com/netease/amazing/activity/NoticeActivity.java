@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class NoticeActivity extends Activity{
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.notice);
 		noticeBack = (Button)findViewById(R.id.notice_view_back);
 		noticeTitle =(TextView)findViewById(R.id.notice_view_title);
@@ -31,7 +33,7 @@ public class NoticeActivity extends Activity{
 		noticeBack.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				noticeBack.setBackgroundColor(Color.BLUE);
+				noticeBack.setBackgroundColor(0xffEE0000);
 				NoticeActivity.this.finish();
 			}
 		});

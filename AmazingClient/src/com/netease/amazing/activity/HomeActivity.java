@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.component.ContactFragment;
-import com.netease.amazing.component.MyApplication;
 import com.netease.amazing.component.NewsFragment;
 import com.netease.amazing.component.NoticeFragment;
 //import android.support.v4.app.FragmentPagerAdapter;
