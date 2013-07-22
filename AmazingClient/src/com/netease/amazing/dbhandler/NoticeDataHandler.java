@@ -24,7 +24,7 @@ public class NoticeDataHandler extends UserInfoStore{
 	 * @throws ClientProtocolException 
 	 */
 	public List<Notice> getInitNotice(int noticeCount) throws ClientProtocolException, IOException, URISyntaxException {
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.loginName, UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getLatestNotices(noticeCount);
 		return convertToNotices(results);
@@ -58,7 +58,7 @@ public class NoticeDataHandler extends UserInfoStore{
 	 */
 	public List<Notice> getNotice(long bottomNoticeId,int noticeCount) throws ClientProtocolException, URISyntaxException, IOException {
 		
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.loginName, UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		
 		results = noticeRestClient.getDownRangeNotice(bottomNoticeId, noticeCount);
@@ -75,7 +75,7 @@ public class NoticeDataHandler extends UserInfoStore{
 	 */
 	public List<Notice> getNotice(long topNoticeId) throws ClientProtocolException, URISyntaxException, IOException {
 		
-		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.loginName, UserInfoStore.password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getUpRangeNotice(topNoticeId);
 		return convertToNotices(results);

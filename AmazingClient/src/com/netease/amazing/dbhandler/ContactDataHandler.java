@@ -31,9 +31,9 @@ public class ContactDataHandler extends UserInfoStore{
 	public static List<Contact> getContactList() throws Exception{
 
 		List<Contact> contactList = new ArrayList<Contact>();
-		AccountRestClient.testLogin(url,username, password);
+		AccountRestClient.testLogin(UserInfoStore.url,UserInfoStore.loginName, UserInfoStore.password);
 		
-		ContactRestClient contactRestClient = new ContactRestClient(url,username, password);
+		ContactRestClient contactRestClient = new ContactRestClient(UserInfoStore.url,UserInfoStore.loginName, UserInfoStore.password);
 		
 		ContactDTO allContacts = contactRestClient.getAllContacts();
 		

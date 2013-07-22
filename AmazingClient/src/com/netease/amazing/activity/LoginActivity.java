@@ -124,6 +124,8 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
+		Log.i("test logging",loginName);
+		Log.i("test loginPassword ", password);
 		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,loginName,password); {
 			try {
 				isFirstLogin = !arc.hasLogin();
