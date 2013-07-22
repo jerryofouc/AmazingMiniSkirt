@@ -43,10 +43,8 @@
         
         
         <!-- 添加News相关的activity -->
-        <activity android:name = "com.netease.amazing.activity.NewsAddActivity"
-            android:theme="@android:style/Theme.Holo.Light"/>
-                <activity android:name = "com.netease.amazing.activity.NewsAddActivity1"
-            />
+       
+         <activity android:name = "com.netease.amazing.activity.NewsAddActivity"/>
         <activity android:name = "com.netease.amazing.activity.NewsPersonalIndexActivity"
             android:theme="@android:style/Theme.Holo.Light"/>
         

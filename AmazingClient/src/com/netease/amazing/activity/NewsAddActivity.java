@@ -1,16 +1,17 @@
 package com.netease.amazing.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.amazing.R;
@@ -25,35 +26,27 @@ public class NewsAddActivity extends Activity{
 	public final static String PUBLISH_NEWS_TITLE = "发布动态";
 	public final static String PUBLISH_NEWS = "发布";  
 	public final static int NEW_INPUT_MAX_LENGTH = 10;
+	public ImageButton buttonBack;
+	public ImageButton buttonSend;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.news_add);
-		setUpActionBar();
+		getView();
+		setListener();
 	}
-    private void setUpActionBar() {
-    	ActionBar actionBar = getActionBar();
-    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);//设置no tabs
-    	actionBar.setDisplayHomeAsUpEnabled(true);//显示up back button
-    	//设置actionBar的title bar ， 自定义样式
-    	actionBar.setDisplayShowCustomEnabled(true);
-    	actionBar.setCustomView(R.layout.apk_actionbar_title);
-    	TextView actionBarTitle = (TextView)findViewById(R.id.main_title);
-    	actionBarTitle.setText(PUBLISH_NEWS_TITLE);
-    }
-    @Override
-    /**
-     * 点击menu按钮时
-     */
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu, menu);
-        menu.getItem(0).setTitle(PUBLISH_NEWS);
-        menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener(){
 
+	public void getView() {
+		buttonBack = (ImageButton)findViewById(R.id.news_add_titlebar_back_btn);
+		buttonSend = (ImageButton)findViewById(R.id.news_add_titlebar_save_btn);
+	}
+	
+	public void setListener() {
+		buttonSend.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public boolean onMenuItemClick(MenuItem arg0) {
-				// TODO Auto-generated method stub
+			public void onClick(View v) {
 				String text = ((EditText)findViewById(R.id.newsAdd_input_editText)).getText().toString();
 				if(text.trim().length() > NEW_INPUT_MAX_LENGTH*2){
 					Toast.makeText(NewsAddActivity.this, "请输入"+NEW_INPUT_MAX_LENGTH+"字以内的动态！",
@@ -65,12 +58,18 @@ public class NewsAddActivity extends Activity{
 						     Toast.LENGTH_SHORT).show();
 				}
 
-				return true;
 			}
-        	
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
+		});
+		
+		buttonBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				NewsAddActivity.this.finish();
+			}
+		});
+	}
+
     /**
 	 * 
 	 * @author Huang Xiao Jun
