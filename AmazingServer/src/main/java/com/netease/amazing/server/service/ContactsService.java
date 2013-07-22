@@ -68,6 +68,7 @@ public class ContactsService {
 			teacherDto.setFixLine(t.getFixLine());
 			teacherDto.setMobilePhone(t.getTelephone());
 			teacherDto.setId(t.getUser().getId());
+			teacherDto.setHeadPicPath(t.getHeadPicPath());
 			teacherDTOs.add(teacherDto);
 		}
 		
@@ -90,6 +91,7 @@ public class ContactsService {
 			childDTO.setFromClass(child.getKlass().getName());
 			childDTO.setFromSchool(child.getKlass().getKindergarden().getName());
 			childDTO.setNickName(child.getNickname());
+			childDTO.setHeadPicPath(child.getHeadPicPath());
 			List<Parent> parents = child.getParents();
 			for(Parent p : parents){
 				if(p.getGender() == Gender.MALE){
@@ -121,6 +123,7 @@ public class ContactsService {
 			}
 			childDTO.setNickName(childFriend.getNickname());
 			childDTO.setName(childFriend.getName());
+			childDTO.setHeadPicPath(childFriend.getHeadPicPath());
 			List<Parent> parents = childFriend.getParents();
 			for(Parent p : parents){
 				if(p.getGender() == Gender.MALE){

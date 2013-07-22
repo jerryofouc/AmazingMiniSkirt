@@ -35,6 +35,16 @@ public class AccountRestClient extends AbstractBaseClient {
 		 UserDTO userDTO = gson.fromJson(EntityUtils.toString(response.getEntity()), UserDTO.class);
 		 return userDTO;
 	}
+	
+	public UserDTO getUserInfo(long id) throws ClientProtocolException, IOException{
+		 String requestUrl = baseUrl + RequestURLConstants.TEST_LOGIN_URL + "/" + id + "";
+		 HttpGet httpget = new HttpGet(requestUrl); 
+		 httpget.setHeader("Authorization", Utils.HttpBasicEncodeBase64(loginName, password));
+		 HttpResponse response = httpclient.execute(httpget);
+		 Gson gson = new Gson();
+		 UserDTO userDTO = gson.fromJson(EntityUtils.toString(response.getEntity()), UserDTO.class);
+		 return userDTO;
+	}
 	/**
 	 * 检测是否登录成功
 	 * @param baseURL 服务器域名

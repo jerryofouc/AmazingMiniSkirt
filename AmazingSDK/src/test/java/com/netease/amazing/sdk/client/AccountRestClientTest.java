@@ -24,6 +24,12 @@ public class AccountRestClientTest extends BaseTest{
 	}
 	
 	@Test
+	public void getUserInfoByIdTest() throws ClientProtocolException, IOException{
+		AccountRestClient accountRestClient = new AccountRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
+		UserDTO user = accountRestClient.getUserInfo(2);
+		System.out.println(user.getId());
+	}
+	@Test
 	public void hasLoginTest() throws ClientProtocolException, IOException{
 		AccountRestClient accountRestClient = new AccountRestClient(this.BASE_URL,this.USER_NAME,this.PASSWORD);
 		boolean haslogin = accountRestClient.hasLogin();

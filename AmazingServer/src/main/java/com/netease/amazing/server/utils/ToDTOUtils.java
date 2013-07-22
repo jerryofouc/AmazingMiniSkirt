@@ -11,6 +11,11 @@ public class ToDTOUtils {
 		userDTO.setId(user.getId());
 		userDTO.setLoginName(user.getLoginName());
 		userDTO.setName(user.getName());
+		userDTO.setSignature(user.getSignature());
+		if(user.getChild() != null){
+			userDTO.setHeadPic(user.getChild().getHeadPicPath());
+		}
+		userDTO.setFrontCover(user.getCoverPicPath());
 		return userDTO;
 	}
 	public static NoticeDTO toNoticeDTO(Notification n){

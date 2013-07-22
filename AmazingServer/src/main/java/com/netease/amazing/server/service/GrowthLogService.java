@@ -52,10 +52,13 @@ public class GrowthLogService {
 			if(t.getUser().getRole() == Role.PARENT){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getChild().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getChild().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getChild().getHeadPicPath());
 			}else if(t.getUser().getRole() == Role.TEACHER){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getTeacher().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getTeacher().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getTeacher().getHeadPicPath());
 			}
+			
 			
 			newsGrowthLogDTO.setNewsContent(t.getContents());
 			newsGrowthLogDTO.setNewsGrowthLogOwnerUserName(curUser.getChild().getName());
@@ -103,9 +106,11 @@ public class GrowthLogService {
 			if(t.getUser().getRole() == Role.PARENT){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getChild().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getChild().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getChild().getHeadPicPath());
 			}else if(t.getUser().getRole() == Role.TEACHER){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getTeacher().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getTeacher().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getTeacher().getHeadPicPath());
 			}
 			
 			newsGrowthLogDTO.setNewsContent(t.getContents());
@@ -151,9 +156,11 @@ public class GrowthLogService {
 			if(t.getUser().getRole() == Role.PARENT){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getChild().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getChild().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getChild().getHeadPicPath());
 			}else if(t.getUser().getRole() == Role.TEACHER){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getTeacher().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getTeacher().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getTeacher().getHeadPicPath());
 			}
 			
 			newsGrowthLogDTO.setNewsContent(t.getContents());
@@ -201,9 +208,11 @@ public class GrowthLogService {
 			if(t.getUser().getRole() == Role.PARENT){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getChild().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getChild().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getChild().getHeadPicPath());
 			}else if(t.getUser().getRole() == Role.TEACHER){
 				newsGrowthLogDTO.setNewPublisherFrom(t.getUser().getTeacher().getKlass().getKindergarden().getName());
 				newsGrowthLogDTO.setUserClass(t.getUser().getTeacher().getKlass().getName());
+				newsGrowthLogDTO.setHeadPicPath(t.getUser().getTeacher().getHeadPicPath());
 			}
 			
 			newsGrowthLogDTO.setNewsContent(t.getContents());
