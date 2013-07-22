@@ -9,25 +9,48 @@ import java.util.Map;
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.News;
+import com.netease.amazing.pojo.NewsGrowthLog;
 
 public class NewsPersonalDataSource extends DataSource {
+	//根据刷新的动作，选择相应的取数据方式
+	public final static int NEWS_GROWTH_INIT_DATA = 0;
+	public final static int NEWS_GROWTH_UP_REFRESH_DATA = 2;
+	public final static int NEWS_GROWTH_DOWN_REFRESH_DATA = 1;
+	
+	public final static String NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS = "newsPersonalJoinClassItemDays";
+	public final static String NEWS_PERSONAL_ITEM_SAVER = "newsPersonalItemSaver";
+	public final static String NEWS_PERSONAL_ITEM_IMAGE = "newsPersonalItemImage";
+	public final static String NEWS_PERSONAL_ITEM_CONTENT = "newsPersonalItemContent";
+	public final static String NEWS_PERSONAL_ITEM_PUBLISH_DATE = "newsPersonalItemPublishDate";
+	public final static String NEWS_PERSONAL_ITEM_FROM = "newsPersonalItemFrom";
+	public final static String NEWS_PERSONAL_ITEM_ID = "newsId";
+	public final static String NEWS_GROWTH_TYPE = "newsType";
+//	public final static String NEWS_GROWTH_PUBLISHER_NAME = "newsPublisherName";
+//	public final static String NEWS_GROWTH_CONTENT = "newsContent";
+//	public final static String NEWS_GROWTH_PUBLISH_DATE = "newsPublishDate";
+//	public final static String NEWS_GROWTH_TYPE = "newsType";
+//	public final static String NEWS_GROWTH_PUBLISHER_FROM = "newPublisherFrom";
+//	public final static String NEWS_GROWTH_WITH_IMAGE = "newsWithImage";
+//	//public final static String NEWS_GROWTH_CURRENT_USER_LIKE = "isCurrentUserLike";
+//	public final static String NEWS_TAKE_DOWN_USER_NAME = "newsTakeDownUserName";
+//	public final static String USER_JOIN_CLASS = "userJoinClass";
+	
+	private long userId = NewsDataHandler.USER_ID;
 
-	protected List<News> newsList = new ArrayList<News>();
+	protected List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 	private int fetchSize = FETCH_SIZE;
-	
-	private NewsDataHandler ndh = new NewsDataHandler();
-	
+		
 	@Override
 	public boolean updateValue(int type) {
 		switch(type) {
-		case 0:
-			initFetchNews();
+		case NEWS_GROWTH_INIT_DATA:
+			initFetchNewsGrowth();
 			break;
-		case 1:
-			fetchNewsDown();
+		case NEWS_GROWTH_DOWN_REFRESH_DATA:
+			fetchNewsGrowthDown();
 			break;
-		case 2:
-			fetchNewsUp();
+		case NEWS_GROWTH_UP_REFRESH_DATA:
+			fetchNewsGrowthUp();
 			break;
 		default:
 			break;
@@ -37,37 +60,48 @@ public class NewsPersonalDataSource extends DataSource {
 
 	public List<Map<String, Object>> toMapList() {
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		Iterator<News> it = newsList.iterator();
+		Iterator<NewsGrowthLog> it = newsList.iterator();
 		while(it.hasNext()) {
-			News tempNews = it.next();
+			NewsGrowthLog tempNews = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, "38天");
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_CONTENT, "今天表现不错");
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_FROM, "杭州新华幼儿园");
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_SAVER, "由妈妈收录自抱抱熊");
-			map.put(NewsPersonalListAdapter.NEWS_PERSONAL_ITEM_PUBLISH_DATE, "2013.7.15");
+			map.put(NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, 
+					tempNews.getUserClass()+"\n"+tempNews.getUserJoinInClassDays()+"天");
+			map.put(NEWS_PERSONAL_ITEM_CONTENT, tempNews.getNewsContent());
+			map.put(NEWS_PERSONAL_ITEM_FROM, tempNews.getNewPublisherFrom());
+			map.put(NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
+			if(tempNews.getNewsGrowthLogType() == NewsGrowthLog.NEWS_GROWTH_TYPE_TAKE_DOWN){
+				map.put(NEWS_PERSONAL_ITEM_SAVER, " 由 "+tempNews.getNewsTakeDownUserName()+
+						" 收录自 "+tempNews.getNewsPublisherName());
+			}else{
+				map.put(NEWS_PERSONAL_ITEM_SAVER, " 由 "+tempNews.getNewsPublisherName()+
+						"发布");
+			}
+
+			map.put(NEWS_PERSONAL_ITEM_PUBLISH_DATE, tempNews.getNewsPublishDate());
+			map.put(NEWS_PERSONAL_ITEM_ID, tempNews.getNewsId());
+			map.put(NEWS_GROWTH_TYPE, tempNews.getNewsGrowthLogType());
 			list.add(map);
 		}
 		return list;
 	}
 
-	public void initFetchNews() {
-		newsList = ndh.getInitNews(fetchSize);
+	public void initFetchNewsGrowth() {
+		newsList = NewsDataHandler.getInitNewsGrowthLog(userId, fetchSize);
 		
 	}
 	
-	public void fetchNewsDown() {
-		News topNews = newsList.get(0);
-		List<News> result = ndh.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
-		newsList.addAll(result);
-	}
-	
-	public void fetchNewsUp() {
-		News bottomNews= newsList.get(newsList.size()-1);
-		List<News> result = ndh.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
+	public void fetchNewsGrowthDown() {
+		NewsGrowthLog topNews = newsList.get(0);
+		List<NewsGrowthLog> result = NewsDataHandler.getNewsGrowthLogByDownRefresh(userId, topNews.getNewsId(), fetchSize);
 		result.addAll(newsList);
 		newsList = result;
+		
+	}
+	
+	public void fetchNewsGrowthUp() {
+		NewsGrowthLog bottomNews= newsList.get(newsList.size()-1);
+		List<NewsGrowthLog> result = NewsDataHandler.getNewsGrowthLogByUpRefresh(userId, bottomNews.getNewsId(),fetchSize);
+		newsList.addAll(result);
 	}
 
 }

@@ -10,18 +10,24 @@
 	    >
 
 	    <LinearLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
-		    >
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="#F3F3F3"
+	        android:orientation="vertical"
+	        android:paddingBottom="4dp"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:paddingRight="@dimen/activity_horizontal_margin"
+	        android:paddingTop="4dp" >
+
 		   <EditText
 		       android:id="@+id/contact_search_friend"
 		       android:layout_width="match_parent"
-		       android:layout_height="wrap_content"
-		       android:background="@drawable/shape"
+		       android:layout_height="32dp"
+		       android:background="@drawable/input_search_radius"
+		       android:drawableLeft="@drawable/search_input_icon26x26"
+		       android:ems="10"
 		       android:hint="搜索"
-		       android:drawableLeft="@drawable/ic_launcher"
-		       android:ems="10" >
+		       android:paddingLeft="6dp" >
 	
 		       <requestFocus />
 		   </EditText>
@@ -32,23 +38,35 @@
 	        android:layout_height="1px"></View>
 	    
 	    <LinearLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    >
-			<ImageView android:layout_width="wrap_content"
-			    android:layout_height="wrap_content" 
-			    android:src="@drawable/ic_launcher"/>
-			<TextView android:layout_width="wrap_content"
-			    android:layout_height="wrap_content" 
-			    android:text="好友申请"/>
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:padding="8dp" >
+
+			<ImageView
+			    android:layout_width="50dp"
+			    android:layout_height="50dp"
+			    android:src="@drawable/default_avatar163x163" />
+
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_vertical"
+			    android:layout_marginLeft="20dp"
+			    android:text="好友申请"
+			    android:textSize="20sp" />
 
 	    </LinearLayout>
 	    
-	    
 	    <TextView
+	        style="@style/textviews"
+	        android:background="@drawable/gray_border_gray_bg"
+	        android:paddingBottom="3dp"
+	        android:paddingLeft="8dp"
+	        android:paddingTop="3dp"
 	        android:text="班主任"
-	        style="@style/textviews"/>
+	        android:textColor="#000000" />
+
 	    <LinearLayout android:id="@+id/contact_teacher"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
@@ -58,8 +76,14 @@
 	    </LinearLayout>
 	    
 	    <TextView
+	        style="@style/textviews"
+	        android:background="@drawable/gray_border_gray_bg"
+	        android:paddingBottom="3dp"
+	        android:paddingLeft="8dp"
+	        android:paddingTop="3dp"
 	        android:text="同学"
-	        style="@style/textviews"/>
+	        android:textColor="#000000" />
+
 	    <LinearLayout android:id="@+id/contact_classmate"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
@@ -69,8 +93,14 @@
 	    </LinearLayout>
 	    
 	     <TextView
-	        android:text="好友"
-	        style="@style/textviews"/>
+	         style="@style/textviews"
+	         android:background="@drawable/gray_border_gray_bg"
+	         android:paddingBottom="3dp"
+	         android:paddingLeft="8dp"
+	         android:paddingTop="3dp"
+	         android:text="好友"
+	         android:textColor="#000000" />
+
 	     <LinearLayout android:id="@+id/contact_friend"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"

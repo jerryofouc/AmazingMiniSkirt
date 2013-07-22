@@ -37,4 +37,14 @@ public class AccountService {
 		System.out.println("salt:" + Encodes.encodeHex(salt));
 		System.out.println("hashPassword:" + Encodes.encodeHex(hashPassword));
 	}
+
+	@Transactional(readOnly = false)
+	public User login(long id) {
+		User user = userDao.findOne(id);
+		if(!user.isHasLogin()){
+			user.setHasLogin(true);
+			userDao.save(user);
+		}
+		return user;
+	}
 }

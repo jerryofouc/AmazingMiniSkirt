@@ -9,34 +9,25 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.12" >
 	
-	        <Button
-	            android:id="@+id/contact_add_friend_back_button"
-	            style="?android:attr/buttonStyleSmall"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Button" />
-	
-	
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="40dp"
-	            android:text="添加好友"
-	            android:textAppearance="?android:attr/textAppearanceLarge" />
-	
 	    </LinearLayout>
 	    <LinearLayout
 		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
-		    >
+	        android:layout_height="wrap_content"
+	        android:background="#F3F3F3"
+	        android:orientation="vertical"
+	        android:paddingBottom="4dp"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+	        android:paddingRight="@dimen/activity_horizontal_margin"
+	        android:paddingTop="4dp" >
 		   <EditText
 		       android:id="@+id/contact_info_add_friend"
 		       android:layout_width="match_parent"
-		       android:layout_height="wrap_content"
-		       android:background="@drawable/shape"
-		       android:hint="孩子的名字"
-		       android:drawableLeft="@drawable/ic_launcher"
-		       android:ems="10" >
+		       android:layout_height="32dp"
+		       android:background="@drawable/input_search_radius"
+		       android:drawableLeft="@drawable/search_input_icon26x26"
+		       android:ems="10"
+		       android:hint="孩子的姓名…"
+		       android:paddingLeft="6dp" >
 	
 		       <requestFocus />
 		   </EditText>
@@ -50,17 +41,88 @@
 	    <LinearLayout
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
-		    >
-			<TextView android:layout_width="wrap_content"
-			    android:layout_height="wrap_content" 
-			    android:text="扫描二维码"/>
-			<TextView android:layout_width="wrap_content"
-			    android:layout_height="wrap_content" 
-			    android:text="添加手机通讯录联系人"/>
-			<TextView android:layout_width="wrap_content"
-			    android:layout_height="wrap_content" 
-			    android:text="声纹识别"/>
+		    android:orientation="vertical">
+
+	        <RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+		        android:layout_marginRight="@dimen/activity_horizontal_margin"
+		        android:layout_marginTop="@dimen/activity_vertical_margin" >
+		       
+				<Button
+				    android:id="@+id/contact_info_scan_code_btn"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/btn_bk_up_radius"
+				    android:gravity="left|center_vertical"
+				    android:paddingLeft="@dimen/activity_horizontal_margin"
+				    android:text="扫描二维码" />
+				
+				<ImageView
+		            android:id="@+id/contact_info_img1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignRight="@+id/contact_info_scan_code_btn"
+		            android:layout_centerVertical="true"
+		            android:layout_marginRight="17dp"
+		            android:src="@drawable/btn_right_arrow30x30" />
+		
+		    </RelativeLayout>
+
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	            android:layout_marginRight="@dimen/activity_horizontal_margin" >
+				
+				<Button
+				    android:id="@+id/contact_info_addfrom_phone_btn"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/btn_bk_down_radius"
+				    android:gravity="left|center_vertical"
+				    android:paddingLeft="@dimen/activity_horizontal_margin"
+				    android:text="添加手机通讯录联系人" />
+				
+				<ImageView
+		            android:id="@+id/contact_info_img2"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignRight="@+id/contact_info_addfrom_phone_btn"
+		            android:layout_centerVertical="true"
+		            android:layout_marginRight="17dp"
+		            android:src="@drawable/btn_right_arrow30x30" />
+		
+		    </RelativeLayout>
+
+	        <RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+		        android:layout_marginRight="@dimen/activity_horizontal_margin"
+		        android:layout_marginTop="@dimen/activity_vertical_margin" >
+				
+				<Button
+				    android:id="@+id/contact_info_voice_collect_btn"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/btn_bk_all_radius"
+				    android:gravity="left|center_vertical"
+				    android:paddingLeft="@dimen/activity_horizontal_margin"
+				    android:text="声纹识别" />
+				
+				<ImageView
+		            android:id="@+id/contact_info_img3"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignRight="@+id/contact_info_voice_collect_btn"
+		            android:layout_centerVertical="true"
+		            android:layout_marginRight="17dp"
+		            android:src="@drawable/btn_right_arrow30x30" />
+		
+		    </RelativeLayout>
+
 		</LinearLayout>
 
 	</LinearLayout>

@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 
 @Entity
 @Table(name = "child")
@@ -24,6 +26,7 @@ public class Child extends IdEntity{
 	private String nickname;
 	private Date birthday;
 	private Date joinClassDate;
+	private String headPicPath;
 	private Class klass;
 	private List<Parent> parents;
 	private List<ChildRelationship> friends;
@@ -100,5 +103,27 @@ public class Child extends IdEntity{
 	}
 	public void setJoinClassDate(Date joinClassDate) {
 		this.joinClassDate = joinClassDate;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this ){
+			return true;
+		}
+		if(obj instanceof Child ){
+			return ((Child)obj).getId().equals(this.getId());
+		}
+		return false;
+	}
+	@Override
+ 	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+		builder.append(this.getId());
+		return builder.build();
+	}
+	public String getHeadPicPath() {
+		return headPicPath;
+	}
+	public void setHeadPicPath(String headPicPath) {
+		this.headPicPath = headPicPath;
 	}
 }

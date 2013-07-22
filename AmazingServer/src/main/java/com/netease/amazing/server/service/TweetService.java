@@ -6,7 +6,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 import com.netease.amazing.sdk.dto.NewsDTO;
+import com.netease.amazing.server.entity.Child;
+import com.netease.amazing.server.entity.ChildRelationship;
 import com.netease.amazing.server.entity.Comment;
 import com.netease.amazing.server.entity.Tweet;
 import com.netease.amazing.server.entity.User;
 import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.entity.UserTweet;
+import com.netease.amazing.server.entity.UserTweet.PublicRelation;
 import com.netease.amazing.server.repository.CommentDao;
 import com.netease.amazing.server.repository.TweetDao;
 import com.netease.amazing.server.repository.UserDao;
@@ -185,6 +190,55 @@ public class TweetService {
 		userTweet.setTweet(tweet);
 		userTweet.setUser(user);
 		userTweetDao.save(userTweet);
+	}
+
+
+	@Transactional(readOnly = false)
+	public void createNewTweet(long userId, NewsDTO newsDTO) {
+		User curUser = userDao.findOne(userId);
+		Tweet tweet =  new Tweet();
+		tweet.setContents(newsDTO.getNewsContent());
+		tweet.setCreateTime(Calendar.getInstance().getTime());
+		tweet.setType(newsDTO.getNewsType());
+		tweet.setUser(curUser);
+		tweet = tweetDao.save(tweet);
+		if(curUser.getRole() == Role.TEACHER){
+			List<Child> children = curUser.getTeacher().getKlass().getChildren();
+			for(Child c : children){
+				User u = c.getUser();
+				if(u == null){
+					continue;
+				}
+				UserTweet ut = new UserTweet();
+				ut.setInclude(false);
+				ut.setPubRelation(PublicRelation.FROM_TEACHER);
+				ut.setTweet(tweet);
+				ut.setUser(u);
+				userTweetDao.save(ut);
+			}
+		}else{
+			List<Child> children = new ArrayList<Child>();
+			List<ChildRelationship> frends = curUser.getChild().getFriends();
+			for(ChildRelationship cr : frends){
+				children.add(cr.getChildTo());
+			}
+			List<Child> classmates = curUser.getChild().getKlass().getChildren();
+			children.addAll(classmates);
+			Set<Child> childSet = new HashSet<Child>();
+			childSet.addAll(children);
+			for(Child c : childSet){
+				User u = c.getUser();
+				if(u == null){
+					continue;
+				}
+				UserTweet ut = new UserTweet();
+				ut.setInclude(false);
+				ut.setPubRelation(PublicRelation.FROM_PARENT);
+				ut.setTweet(tweet);
+				ut.setUser(u);
+				userTweetDao.save(ut);
+			}
+		}
 	}
 
 }

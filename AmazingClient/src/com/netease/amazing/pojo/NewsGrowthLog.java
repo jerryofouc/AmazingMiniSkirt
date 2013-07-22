@@ -1,11 +1,14 @@
 package com.netease.amazing.pojo;
+
+import java.io.Serializable;
+
 /**
  * 
  * @author Huang Xiao Jun
  * Class Description:
  *   NewsGrowthLog用于存储成长记录(原创或者收录的动态)
  */
-public class NewsGrowthLog extends News{
+public class NewsGrowthLog implements Serializable{
 	public static final int NEWS_WITH_IMAGE = 1;//带图像的动态
 	public static final int NEWS_WITH_VOICE = 2;//带声音的动态
 	public static final int NEWS_WITH_NOTHING = 0;//单纯文字的动态

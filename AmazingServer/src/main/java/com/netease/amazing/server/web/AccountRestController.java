@@ -26,7 +26,19 @@ public class AccountRestController extends BaseController{
 	@ResponseBody
 	public UserDTO login(){
 		long id = getCurrentUserId();
-		User user = accountService.findUserById(id);
+		User user = accountService.login(id);
 		return ToDTOUtils.toUserDTO(user);
+	}
+	
+	@RequestMapping(value={"/hasLogin"},method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Boolean getHasLogin(){
+		long id = getCurrentUserId();
+		User user = accountService.findUserById(id);
+		if(user.isHasLogin() == true){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
