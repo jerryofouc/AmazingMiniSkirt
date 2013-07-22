@@ -23,7 +23,7 @@ public class AccountSettingButtonActivity extends Activity {
 	}
 	
 	public void getView() {
-		backButton = (ImageButton)findViewById(R.id.set_user_info_titlebar_back_btn);
+		backButton = (ImageButton)findViewById(R.id.setting_account_back_btn);
 	}
 	
 	public void setListener() {
