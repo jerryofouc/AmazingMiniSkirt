@@ -2,7 +2,9 @@ package com.netease.amazing.util;
 
 import com.netease.amazing.sdk.dto.UserDTO;
 
+
 public class UserInfoStore {
+	public static UserDTO.Role userRole;
 	public static String username;
 	public static String password;
 	public static String loginName;

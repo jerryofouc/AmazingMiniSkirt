@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.amazing.R;
 
@@ -19,6 +20,7 @@ public class SettingActivity extends Activity {
 	private Button aboutUsButton;
 	private Button contactUsButton;
 	private Button logoutButton;
+	private ImageButton backButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class SettingActivity extends Activity {
 	}
 	
 	public void getView() {
+		backButton = (ImageButton)findViewById(R.id.setting_titlebar_back_btn);
 		userInfoButton  = (Button)findViewById(R.id.setting_userInfo_btn);
 		dimCodeButton  = (Button)findViewById(R.id.setting_dimCode_btn);
 		accountSettingButton  = (Button)findViewById(R.id.setting_accountSetting_btn);
@@ -47,6 +50,12 @@ public class SettingActivity extends Activity {
 		aboutUsButton.setOnClickListener(new MyOnclickLisenter(AboutUsButtonActivity.class));
 		contactUsButton.setOnClickListener(new MyOnclickLisenter(ContactUsButtonActivity.class));
 		logoutButton.setOnClickListener(new LogoutOnClickListener());
+		backButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				SettingActivity.this.finish();
+			}
+		});
 	}
 	
 	class MyOnclickLisenter implements OnClickListener {

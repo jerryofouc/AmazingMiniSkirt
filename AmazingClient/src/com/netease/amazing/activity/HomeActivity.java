@@ -56,7 +56,7 @@ public class HomeActivity extends FragmentActivity
     
     private void setUpActionBar() {
     	final ActionBar actionBar = getActionBar();
-    	actionBar.setIcon(R.drawable.download);
+    	actionBar.setIcon(R.drawable.titlebar_setting_bg);
 //    	actionBar.setHomeButtonEnabled(false);
     	actionBar.setDisplayUseLogoEnabled(true);
     	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -87,15 +87,15 @@ public class HomeActivity extends FragmentActivity
     			switch(position) {
     			case 0:
     				currentFragment = 0;
-    				menu.getItem(0).setTitle("±‡º≠");
+    				menu.getItem(0).setTitle("");
     				break;
     			case 1:
     				currentFragment = 1;
-    				menu.getItem(0).setTitle("ÃÌº”");
+    				menu.getItem(0).setTitle("").setIcon(R.drawable.titlebar_addnews_bg);
     				break;
     			case 2:
     				currentFragment = 2;
-    				menu.getItem(0).setTitle("∫√”—");
+    				menu.getItem(0).setTitle("").setIcon(R.drawable.titlebar_addfriend_bg);
     				break;
     			}
     		}
@@ -144,7 +144,7 @@ public class HomeActivity extends FragmentActivity
     			startActivity(intent);
     		}
     		if(currentFragment == 1) {
-    			intent = new Intent(this,NewsAddActivity.class);
+    			intent = new Intent(this,NewsAddActivity1.class);
     			startActivity(intent);
     		}
     		if(currentFragment ==2) {
