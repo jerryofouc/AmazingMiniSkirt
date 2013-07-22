@@ -1,131 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-	<LinearLayout
-	    android:id="@+id/contact_add_friend_show_search_resut_liner_layout"
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    >
-		<LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:background="#F3F3F3"
-	        android:orientation="vertical"
-	        android:paddingBottom="4dp"
-	        android:paddingLeft="@dimen/activity_horizontal_margin"
-	        android:paddingRight="@dimen/activity_horizontal_margin"
-	        android:paddingTop="4dp" >
-
-		   <EditText
-		       android:id="@+id/contact_add_friend_search_friend"
-		       android:layout_width="match_parent"
-		       android:layout_height="32dp"
-		       android:background="@drawable/input_search_radius"
-		       android:drawableLeft="@drawable/search_input_icon26x26"
-		       android:ems="10"
-		       android:hint="搜索"
-		       android:paddingLeft="6dp" >
-	
-		       <requestFocus />
-		   </EditText>
-		</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="49dp"
+		    android:background="@drawable/titlebar_bk32x74"
+		    android:orientation="horizontal" >
 		
-	    <View android:background="@color/dark_green"
-	        android:layout_width="fill_parent"
-	        android:layout_height="1px"></View>
-	    
-	    <LinearLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    android:padding="8dp"
-		    >
-
-			<ImageView
-			    android:layout_width="50dp"
-			    android:layout_height="50dp"
-			    android:src="@drawable/default_avatar163x163" />
-
-		    <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="vertical"
-			    android:layout_gravity="center_vertical"
-			    android:layout_marginLeft="20dp">			
-				<TextView android:layout_width="wrap_content"
-				    android:layout_height="wrap_content" 
-				    android:text="赵英"/>
-
-			
-				<TextView android:layout_width="wrap_content"
-				    android:layout_height="wrap_content" 
-				    android:text="杭州新苗幼儿园 小一班"/>
-			</LinearLayout>
-
-			<Button
-			    android:id="@+id/button1"
-			    style="?android:attr/buttonStyleSmall"
-			    android:layout_width="30dp"
-			    android:layout_height="30dp"
-			    android:layout_gravity="center_vertical"
-			    android:layout_marginLeft="30dp"
-			    android:background="@drawable/add_icon36x36"
-			    android:text=" " />
-
-	    </LinearLayout>
-	    
-	    <View android:background="@color/dark_green"
-	        android:layout_width="fill_parent"
-	        android:layout_height="1px"></View>
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:padding="8dp" >
-
-			<ImageView
-			    android:layout_width="50dp"
-			    android:layout_height="50dp"
-			    android:src="@drawable/default_avatar163x163" />
-
-		    <LinearLayout
+		    <ImageButton
+		        android:id="@+id/contact_addfriend_search_titlebar_back_btn"
+		        android:layout_width="49dp"
+		        android:layout_height="49dp"
+		        android:layout_alignParentLeft="true"
+		        android:layout_centerVertical="true"
+		        android:background="#00000000"
+		        android:src="@drawable/titlebar_back_bg" />
+		
+		    <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="center_vertical"
-		        android:layout_marginLeft="20dp"
-		        android:orientation="vertical" >
-			
-				<TextView android:layout_width="wrap_content"
-				    android:layout_height="wrap_content" 
-				    android:text="赵二"/>
-
-				
-
-				<TextView android:layout_width="wrap_content"
-				    android:layout_height="wrap_content" 
-				    android:text="杭州新苗幼儿园 小二班"/>
-			</LinearLayout>
-
-			<TextView
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_vertical"
-			    android:layout_marginLeft="30dp"
-			    android:text="已添加" />
-
-	    </LinearLayout>
-	    <View android:background="@color/dark_green"
-	        android:layout_width="fill_parent"
-	        android:layout_height="1px"></View>
-	    
-	    
-
-	    
+		        android:layout_centerInParent="true"
+		        android:text="搜索结果 "
+		        android:textColor="@color/white"
+		        android:textSize="16sp" />
 	
-
-	     
-	</LinearLayout>
-</ScrollView>
+		</RelativeLayout>
+    
+    <ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+		<LinearLayout
+		    android:id="@+id/contact_add_friend_show_search_resut_liner_layout"
+		    android:orientation="vertical"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    >
+			<LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#F3F3F3"
+		        android:orientation="vertical"
+		        android:paddingBottom="4dp"
+		        android:paddingLeft="@dimen/activity_horizontal_margin"
+		        android:paddingRight="@dimen/activity_horizontal_margin"
+		        android:paddingTop="4dp" >
+	
+			   <EditText
+			       android:id="@+id/contact_add_friend_search_friend"
+			       android:layout_width="match_parent"
+			       android:layout_height="32dp"
+			       android:background="@drawable/input_search_radius"
+			       android:drawableLeft="@drawable/search_input_icon26x26"
+			       android:ems="10"
+			       android:hint="搜索"
+			       android:paddingLeft="6dp" >
+		
+			       <requestFocus />
+			   </EditText>
+	
+			</LinearLayout>
+			
+		    <View android:background="@color/dark_green"
+		        android:layout_width="fill_parent"
+		        android:layout_height="1px"></View>
+		    
+		    <LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:padding="8dp"
+			    >
+	
+				<ImageView
+				    android:layout_width="50dp"
+				    android:layout_height="50dp"
+				    android:src="@drawable/default_avatar163x163" />
+	
+			    <LinearLayout
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:orientation="vertical"
+				    android:layout_gravity="center_vertical"
+				    android:layout_marginLeft="20dp">			
+					<TextView android:layout_width="wrap_content"
+					    android:layout_height="wrap_content" 
+					    android:text="赵英"/>
+	
+				
+					<TextView android:layout_width="wrap_content"
+					    android:layout_height="wrap_content" 
+					    android:text="杭州新苗幼儿园 小一班"/>
+				</LinearLayout>
+	
+				<Button
+				    android:id="@+id/button1"
+				    style="?android:attr/buttonStyleSmall"
+				    android:layout_width="30dp"
+				    android:layout_height="30dp"
+				    android:layout_gravity="center_vertical"
+				    android:layout_marginLeft="30dp"
+				    android:background="@drawable/add_icon36x36"
+				    android:text=" " />
+	
+		    </LinearLayout>
+		    
+		    <View android:background="@color/dark_green"
+		        android:layout_width="fill_parent"
+		        android:layout_height="1px"></View>
+		    
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal"
+		        android:padding="8dp" >
+	
+				<ImageView
+				    android:layout_width="50dp"
+				    android:layout_height="50dp"
+				    android:src="@drawable/default_avatar163x163" />
+	
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:layout_marginLeft="20dp"
+			        android:orientation="vertical" >
+				
+					<TextView android:layout_width="wrap_content"
+					    android:layout_height="wrap_content" 
+					    android:text="赵二"/>
+	
+					
+	
+					<TextView android:layout_width="wrap_content"
+					    android:layout_height="wrap_content" 
+					    android:text="杭州新苗幼儿园 小二班"/>
+				</LinearLayout>
+	
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_vertical"
+				    android:layout_marginLeft="30dp"
+				    android:text="已添加" />
+	
+		    </LinearLayout>
+		    <View android:background="@color/dark_green"
+		        android:layout_width="fill_parent"
+		        android:layout_height="1px"></View>
+		    
+		    
+	
+		    
+		
+	
+		     
+		</LinearLayout>
+	</ScrollView>
+    
+</LinearLayout>
