@@ -1,18 +1,8 @@
 package com.netease.amazing.component;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
@@ -35,8 +26,11 @@ import com.netease.amazing.adapter.ListViewBasedAdapter;
 import com.netease.amazing.adapter.NewsListAdapter;
 import com.netease.amazing.datasource.DataSource;
 import com.netease.amazing.datasource.NewsDataSource;
+import com.netease.amazing.pojo.News;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
+import com.netease.amazing.util.ReturnBitmapFromInternet;
+import com.netease.amazing.util.UserInfoStore;
 
 /**
  * Updated by Huang Xiao Jun 2013.7.20
@@ -45,8 +39,7 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
  *         ListViewFragment用於列表顯示，并且包括上拉和下拉刷新功能，響應item點擊事件
  */
 public class NewsFragment extends Fragment implements OnRefreshListener {
-	public String newsIndexImage = "http://pica.nipic.com/2008-05-27/20085271094614_2.jpg";
-
+	
 	private RefreshableListView mRefreshListView;
 	private DataSource newsDataSource = new NewsDataSource();
 	private ListViewBasedAdapter listAdapter;
@@ -77,14 +70,16 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	}
 
 	class GetInitNewsDataTask extends AsyncTask {
-		private Bitmap bitmap;
+		private Bitmap backgroundBitmap;
+		private Bitmap headBitmap;
 		@Override
 		protected Object doInBackground(Object... arg0) {
 			newsDataSource.updateValue(NewsDataSource.NEWS_INIT_DATA);
 			listAdapter = new NewsListAdapter(getActivity(), newsDataSource);
 			set(listAdapter, itemClickListener);
 			fragmentHandler.sendEmptyMessage(1);
-			bitmap = returnBitMap(newsIndexImage);
+			backgroundBitmap = ReturnBitmapFromInternet.returnBitMap(UserInfoStore.url+UserInfoStore.backgroundImageDir);
+			headBitmap = ReturnBitmapFromInternet.returnBitMap(UserInfoStore.url+UserInfoStore.imageDir);
 			return listAdapter;
 		}
 
@@ -93,9 +88,10 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			super.onPostExecute(result);
 			result = (NewsListAdapter) listAdapter;
 			mRefreshListView.setAdapter(listAdapter);
-			ImageView imageView = (ImageView)view.findViewById(R.id.news_index_image); 
-
-			imageView.setImageBitmap(bitmap); 
+			((ImageView)view.findViewById(R.id.news_index_image)).setImageBitmap(backgroundBitmap); 
+			((ImageView)view.findViewById(R.id.news_user_img)).setImageBitmap(headBitmap); 
+			((TextView)view.findViewById(R.id.news_user_name)).setText(UserInfoStore.username);
+			((TextView)view.findViewById(R.id.news_user_signature)).setText(UserInfoStore.signature);
 		}
 
 	}
@@ -143,6 +139,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(getActivity(),
 								NewsPersonalIndexActivity.class);
+						intent.putExtra(News.NEWS_USER_ID, UserInfoStore.userId);
 						startActivity(intent);
 					}
 
@@ -187,27 +184,5 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 	private View inflateAndSetupView(LayoutInflater inflater,
 			ViewGroup container, Bundle savedInstanceState, int layoutResourceId) {
 		return inflater.inflate(layoutResourceId, container, false);
-	}
-
-	public Bitmap returnBitMap(String url) {
-		URL myFileUrl = null;
-		Bitmap bitmap = null;
-		try {
-			myFileUrl = new URL(url);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		try {
-			URLConnection conn = myFileUrl
-					.openConnection();
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			BufferedInputStream bis = new BufferedInputStream(is);
-			bitmap = BitmapFactory.decodeStream(bis);
-			is.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return bitmap;
 	}
 }

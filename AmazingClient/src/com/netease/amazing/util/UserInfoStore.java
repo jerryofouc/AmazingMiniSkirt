@@ -10,7 +10,7 @@ public class UserInfoStore {
 	public static String imageDir;
 	public static String signature;
 	public static String backgroundImageDir;
-	public static String serverIpAddress ="10.240.34.42";
+	public static String serverIpAddress ="10.242.23.222";
 	public static String serverPort ="8080";
 	public static String url = "http://" + serverIpAddress + ":"+serverPort + "/server";
 }

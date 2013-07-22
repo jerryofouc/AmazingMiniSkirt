@@ -3,6 +3,8 @@ package com.netease.amazing.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,8 +12,8 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +23,16 @@ import com.netease.amazing.adapter.NewsPersonalListAdapter;
 import com.netease.amazing.datasource.DataSource;
 import com.netease.amazing.datasource.NewsDataSource;
 import com.netease.amazing.datasource.NewsPersonalDataSource;
+import com.netease.amazing.pojo.News;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
+import com.netease.amazing.util.ReturnBitmapFromInternet;
+import com.netease.amazing.util.UserInfoStore;
 /**
  * 
  * @author Huang Xiao Jun
- *
+ * Class Description:
+ *   个人主页，即成长日志
  */
 public class NewsPersonalIndexActivity extends Activity implements OnRefreshListener{
 	public final static String PERSONAL_NEWS_INDEX_TITLE = "成长日志";
@@ -43,17 +49,31 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 	private OnItemClickListener itemClickListener; //itemClick响应事件
 	private PersonalNewsListViewHandler inithandler = new PersonalNewsListViewHandler();
 	private ProgressDialog proDialog;
+	
+	private long newsIndexUserId;//当前传递过来的用户ID
+	private TextView newsIndexUserName;
+	private TextView newsIndexUserSignature;
+	private ImageView newsIndexUserHeadImage;
+	private ImageView newsIndexUserBackgroudImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(newsPersonalLayout);
+		Intent intent = getIntent();
+		newsIndexUserId = intent.getLongExtra(News.NEWS_USER_ID, 0);
+		
+		((NewsPersonalDataSource)mDataSource).setUserId(newsIndexUserId);
+		
+		newsIndexUserName = (TextView) findViewById(R.id.news_user_name);
+		newsIndexUserSignature = (TextView) findViewById(R.id.news_user_signature);
+		newsIndexUserHeadImage = (ImageView) findViewById(R.id.news_user_img);
+		newsIndexUserBackgroudImage = (ImageView) findViewById(R.id.news_index_image);
 		personalNewsList = (RefreshableListView)findViewById(newsPersonalViewListLayout);
 		setUpActionBar();
 		proDialog = ProgressDialog.show(NewsPersonalIndexActivity.this, "连接中..",
 				"连接中..请稍后....", true, true);
-		new GetPersonalNewsInitListDataTask().execute("OK");
+		new GetPersonalNewsInitListDataTask().execute(newsIndexUserId);
 		personalNewsList.setOnItemClickListener(itemClickListener);
 		personalNewsList.setonRefreshListener(this);
 	}
@@ -67,13 +87,27 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 	 * @author Huang Xiao Jun
 	 *
 	 */
-	class GetPersonalNewsInitListDataTask extends AsyncTask {
+	class GetPersonalNewsInitListDataTask extends AsyncTask<Long,String,Object> {
+		private long userId;
+		private Bitmap headImage;
+		private Bitmap backgroundImage;
 
 		@Override
-		protected Object doInBackground(Object... arg0) {
+		protected Object doInBackground(Long... arg0) {
+			this.userId = arg0[0];
 			mDataSource.updateValue(NewsDataSource.NEWS_INIT_DATA);
 			personalNewsListAdapter = new NewsPersonalListAdapter(NewsPersonalIndexActivity.this, mDataSource);
 			set(personalNewsListAdapter,itemClickListener);
+			if(userId == UserInfoStore.userId){
+				headImage = ReturnBitmapFromInternet.
+						returnBitMap(UserInfoStore.url+UserInfoStore.imageDir);
+				backgroundImage = ReturnBitmapFromInternet.
+						returnBitMap(UserInfoStore.url+UserInfoStore.backgroundImageDir);
+			}else{
+				/**
+				 * 查看他人主页获取的信息
+				 */
+			}
 			inithandler.sendEmptyMessage(1);
 			return personalNewsListAdapter;
 		}
@@ -83,6 +117,16 @@ public class NewsPersonalIndexActivity extends Activity implements OnRefreshList
 			super.onPostExecute(result);
 			result = (NewsPersonalListAdapter)personalNewsListAdapter;
 			personalNewsList.setAdapter(personalNewsListAdapter);
+			if(userId == UserInfoStore.userId){
+				newsIndexUserName.setText(UserInfoStore.username);
+				newsIndexUserSignature.setText(UserInfoStore.signature);
+				newsIndexUserHeadImage.setImageBitmap(headImage);
+				newsIndexUserBackgroudImage.setImageBitmap(backgroundImage);
+			}else{
+				/**
+				 * 查看他人主页设置相关的View
+				 */
+			}
 			
 		}
 		

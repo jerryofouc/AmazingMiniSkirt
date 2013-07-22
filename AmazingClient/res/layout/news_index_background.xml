@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
-        android:src="@drawable/cover_bg480x310" />
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:id="@+id/news_user_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/default_avatar163x163" />
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,7 +41,6 @@
                 android:shadowDx="2"
                 android:shadowDy="2"
                 android:shadowRadius="2"
-                android:text="李晓明"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -55,7 +54,6 @@
                 android:shadowDx="2"
                 android:shadowDy="2"
                 android:shadowRadius="1"
-                android:text="感冒好了！"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/white" />
 

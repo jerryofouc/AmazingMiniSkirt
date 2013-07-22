@@ -25,7 +25,8 @@ public class NewsPersonalDataSource extends DataSource {
 	public final static String NEWS_PERSONAL_ITEM_ID = "newsId";
 	public final static String NEWS_GROWTH_TYPE = "newsType";
 	
-	private long userId = 1;///
+	private long userId;///
+	
 
 	protected List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 	private int fetchSize = FETCH_SIZE;
@@ -92,6 +93,14 @@ public class NewsPersonalDataSource extends DataSource {
 		NewsGrowthLog bottomNews= newsList.get(newsList.size()-1);
 		List<NewsGrowthLog> result = NewsDataHandler.getNewsGrowthLogByUpRefresh(userId, bottomNews.getNewsId(),fetchSize);
 		newsList.addAll(result);
+	}
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }

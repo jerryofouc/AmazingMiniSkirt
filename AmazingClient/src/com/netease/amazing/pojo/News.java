@@ -13,6 +13,7 @@ public class News implements Serializable{
 	/**
 	 * 
 	 */
+	public final static String NEWS_USER_ID = "userId";
 	private static final long serialVersionUID = 1L;
 	public static final int NEWS_WITH_IMAGE = 1;//带图像的动态
 	public static final int NEWS_WITH_VOICE = 2;//带声音的动态
