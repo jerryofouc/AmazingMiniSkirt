@@ -4,6 +4,8 @@ public class UserDTO {
 	private long id;
 	private String loginName;
 	private String name;
+	private String frontCover;
+	private String headPic;
 	public String getLoginName() {
 		return loginName;
 	}
@@ -21,5 +23,17 @@ public class UserDTO {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getFrontCover() {
+		return frontCover;
+	}
+	public void setFrontCover(String frontCover) {
+		this.frontCover = frontCover;
+	}
+	public String getHeadPic() {
+		return headPic;
+	}
+	public void setHeadPic(String headPic) {
+		this.headPic = headPic;
 	}
 }
