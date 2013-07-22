@@ -60,6 +60,7 @@
         <activity android:name = "com.netease.amazing.activity.SetUserInfoActivity"/>
         <activity android:name = "com.netease.amazing.activity.SystemSettingButtonActivity"/>
         <activity android:name = "com.netease.amazing.activity.ContactUsButtonActivity"/>
+        <activity android:name="com.netease.amazing.activity.StartupActivity"></activity>
     </application>
 	
     <uses-permission android:name="android.permission.INTERNET" />

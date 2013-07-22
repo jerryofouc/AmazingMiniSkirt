@@ -15,7 +15,6 @@ import com.netease.amazing.pojo.Notice;
 public class NoticeActivity extends Activity{
 
 	TextView noticeContent;
-	TextView noticeTitle;
 	ImageButton noticeBack;
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class NoticeActivity extends Activity{
 		noticeContent = (TextView)findViewById(R.id.notice_view_content);
 		Intent intent = getIntent();
 		Notice notice = (Notice)(intent.getExtras().getSerializable("itemNotice"));
-		noticeTitle.setText(notice.getTitle());
 		noticeContent.setText(notice.getContent());
 		noticeBack.setOnClickListener(new OnClickListener() {
 			@Override
