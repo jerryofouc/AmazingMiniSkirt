@@ -331,6 +331,24 @@ public class NewsDataHandler {
 	 * @return 是否操作成功
 	 */
 	public static boolean addNews(String newsContent, byte[] attachment, int newsType){
+		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		try {
+			NewsDTO newsDTO = new NewsDTO();
+			newsDTO.setNewsContent(newsContent);
+			if(newsType == News.NEWS_WITH_NOTHING)
+				newsDTO.setNewsType(TweetType.TEXT);
+			else if(newsType == News.NEWS_WITH_IMAGE)
+				newsDTO.setNewsType(TweetType.WITH_PICTURE);
+			else 
+				newsDTO.setNewsType(TweetType.WITH_VOICE);
+			return newsClient.addNews(newsDTO);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	

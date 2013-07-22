@@ -2,6 +2,7 @@ package com.netease.amazing.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -76,6 +77,7 @@ public class NewsAddActivity extends Activity{
 	 *    发布动态的异步操作
 	 */		
 	class PublishNewsExecute extends AsyncTask<String,Integer,Boolean> {
+		Bitmap bit;
 
 		@Override
 		protected Boolean doInBackground(String... params) {

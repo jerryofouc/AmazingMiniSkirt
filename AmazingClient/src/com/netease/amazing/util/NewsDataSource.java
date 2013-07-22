@@ -83,13 +83,13 @@ public class NewsDataSource extends DataSource {
 	public void fetchNewsDown() {
 		News topNews = newsList.get(0);
 		List<News> result = NewsDataHandler.getNewsByDownRefresh(topNews.getNewsId(), fetchSize);
-		newsList.addAll(result);
+		result.addAll(newsList);
+		newsList = result;
 	}
 
 	public void fetchNewsUp() {
 		News bottomNews= newsList.get(newsList.size()-1);
 		List<News> result = NewsDataHandler.getNewsByUpRefresh(bottomNews.getNewsId(),fetchSize);
-		result.addAll(newsList);
-		newsList = result;
+		newsList.addAll(result);
 	}
 }

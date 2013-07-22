@@ -93,14 +93,15 @@ public class NewsPersonalDataSource extends DataSource {
 	public void fetchNewsGrowthDown() {
 		NewsGrowthLog topNews = newsList.get(0);
 		List<NewsGrowthLog> result = NewsDataHandler.getNewsGrowthLogByDownRefresh(userId, topNews.getNewsId(), fetchSize);
-		newsList.addAll(result);
+		result.addAll(newsList);
+		newsList = result;
+		
 	}
 	
 	public void fetchNewsGrowthUp() {
 		NewsGrowthLog bottomNews= newsList.get(newsList.size()-1);
 		List<NewsGrowthLog> result = NewsDataHandler.getNewsGrowthLogByUpRefresh(userId, bottomNews.getNewsId(),fetchSize);
-		result.addAll(newsList);
-		newsList = result;
+		newsList.addAll(result);
 	}
 
 }
