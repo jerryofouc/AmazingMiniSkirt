@@ -21,7 +21,6 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -29,12 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
+import com.netease.amazing.sdk.client.AccountRestClient;
 import com.netease.amazing.sdk.client.ContactRestClient;
 import com.netease.amazing.sdk.client.NoticeRestClient;
 import com.netease.amazing.sdk.dto.ChildDTO;
 import com.netease.amazing.sdk.dto.ContactDTO;
 import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.sdk.dto.TeacherDTO;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
 import com.netease.amazing.util.UserInfoStore;
 
 public class NoticeEditActivity extends Activity {
@@ -48,13 +49,11 @@ public class NoticeEditActivity extends Activity {
 	
 	private List<TeacherDTO> teachers;
 	private List<ChildDTO> friends;
-	private int userType =0;
 	
-	private ContactRestClient contactRestClient = null;
 	private ContactDTO contactDTO = null;
 	private NoticeDTO noticeDTO = new NoticeDTO();
-	private NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
-	
+	private NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.loginName,UserInfoStore.password);
+	private ContactRestClient contactRestClient = new ContactRestClient(UserInfoStore.url,UserInfoStore.loginName,UserInfoStore.password);	
 	private boolean isNetError =false;
 	private Handler contactProgressHandler = new ContactProgressHandler();
 	private boolean firstPageIn = true;
@@ -89,7 +88,7 @@ public class NoticeEditActivity extends Activity {
 		int i=0;
 		
 		//家长
-		if(userType == 0) {
+		if(UserInfoStore.userRole == Role.PARENT) {
 			String defaultItemString = "";
 			if(teachers !=null) {
 				while(i++ <teachers.size()) {
@@ -108,7 +107,7 @@ public class NoticeEditActivity extends Activity {
 			adapter.addAll(contactNames);
 			
 		}
-		//老师
+		
 		else {
 			if(teachers !=null) {
 				while(i++ <teachers.size()) {
@@ -147,7 +146,7 @@ public class NoticeEditActivity extends Activity {
 					firstPageIn = !firstPageIn;
 				}
 				String defaultReceiver = (String) adapterView.getItemAtPosition(0);
-				if(userType == 1) {
+				if(UserInfoStore.userRole == Role.TEACHER) {
 					if(editNoticeReceiverText.getText().equals(defaultReceiver +";")) {
 						editNoticeReceiverText.setText(itemContent +";");
 					}
@@ -196,15 +195,24 @@ public class NoticeEditActivity extends Activity {
 			noticeDTO.setNeedFeedBack(false);
 			noticeDTO.setId(-1);
 			noticeDTO.setNoticeDate(new Date());
+			noticeDTO.setSendToAllClassMates(false);
+			
+			//如果userRole为老师并且在编辑框中为所有家长，那么就发送消息给所有人
+			if(UserInfoStore.userRole == Role.TEACHER && editNoticeReceiverText.getText().toString().equals("所有家长;")) {
+				noticeDTO.setSendToAllClassMates(true);
+				
+			}
 			List<Long> receiverIds = new ArrayList<Long>();
 			int i =0;
 			for(i=0;i<receiverNames.length;i++) {
+				//获得名单上所有好友的id，添加到list中
 				if(friends != null) {
 				for(int j =0;j<friends.size();j++) {
 					if(friends.get(j).getName().equals(receiverNames[i]))
 						receiverIds.add(friends.get(j).getUserID());
 				}
 				}
+				//获得名单上所有老师的id，添加到list中
 				if(teachers != null) {
 				for(int k=0;k<teachers.size();k++) {
 					Log.i("teachersize",teachers.size()+"");
@@ -259,7 +267,6 @@ public class NoticeEditActivity extends Activity {
 		protected Object doInBackground(Object... arg0) {
 			try {
 				contactDTO = contactRestClient.getAllContacts();
-				Log.i("aaa", "aaa");
 			} catch (ClientProtocolException e) {
 				isNetError = true;
 				return isNetError;
@@ -274,7 +281,6 @@ public class NoticeEditActivity extends Activity {
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 				contactProgressHandler.sendEmptyMessage(0);
-				Log.i("bbb", "bbb");
 				setView();
 			}
 		}

@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
 	private boolean isNetError;
 
 	private ProgressDialog proDialog;
-	private boolean isFirstLogin = false;
+//	private boolean isFirstLogin = false;
 	/** 登录后台通知更新UI线程,主要用于登录失败,通知UI线程更新界面 */
 	Handler loginHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -124,17 +124,6 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
-		Log.i("test logging",loginName);
-		Log.i("test loginPassword ", password);
-		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,loginName,password); {
-			try {
-				isFirstLogin = !arc.hasLogin();
-			} catch (ClientProtocolException e) {
-				isNetError = true;
-			} catch (IOException e) {
-				isNetError = true;
-			}
-		}
 		try {
 			loginState = AccountRestClient.testLogin(UserInfoStore.url, loginName, password);
 		} catch (ClientProtocolException e) {
@@ -162,14 +151,6 @@ public class LoginActivity extends Activity {
 		return loginState;
 	}
 
-	/**
-	 * 如果登录成功过,则将登陆用户名和密码记录在SharePreferences
-	 * 
-	 * @param saveloginName
-	 *            是否将用户名保存到SharePreferences
-	 * @param savePassword
-	 *            是否将密码保存到SharePreferences
-	 * */
 	private void saveSharePreferences(boolean saveloginName, boolean savePassword) {
 		SharedPreferences share = getSharedPreferences(SHARE_LOGIN_TAG, 0);
 		if (saveloginName) {
@@ -290,14 +271,15 @@ public class LoginActivity extends Activity {
 					UserInfoStore.imageDir = user.getHeadPic();
 					UserInfoStore.backgroundImageDir = user.getFrontCover();
 					UserInfoStore.signature = user.getSignature();
+					UserInfoStore.userRole = user.getRole();
 				} catch (ClientProtocolException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if(isFirstLogin) {
-					//转向欢迎界面
-				}
+//				if(isFirstLogin) {
+//					//转向欢迎界面
+//				}
 				Intent intent = new Intent();
 				intent.setClass(LoginActivity.this, HomeActivity.class);
 				startActivity(intent);
