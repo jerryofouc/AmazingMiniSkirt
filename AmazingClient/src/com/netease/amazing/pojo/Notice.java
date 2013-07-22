@@ -74,7 +74,7 @@ public class Notice implements Serializable{
 	public String cutContent(int length,String encoder) {
 		if(content.length()<length) return content;
 		else {
-			return StringCuter.cutStr(content,72);
+			return StringCuter.cutStr(content,74);
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class Notice implements Serializable{
 			return title;
 		}
 		else {
-			return StringCuter.cutStr(title, 14);
+			return StringCuter.cutStr(title, 17);
 		}
 	}
 

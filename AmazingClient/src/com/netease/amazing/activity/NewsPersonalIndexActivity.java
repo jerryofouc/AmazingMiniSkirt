@@ -16,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-import com.netease.amazing.util.DataSource;
-import com.netease.amazing.util.ListViewBasedAdapter;
-import com.netease.amazing.util.NewsDataSource;
-import com.netease.amazing.util.NewsPersonalDataSource;
-import com.netease.amazing.util.NewsPersonalListAdapter;
+import com.netease.amazing.adapter.ListViewBasedAdapter;
+import com.netease.amazing.adapter.NewsPersonalListAdapter;
+import com.netease.amazing.datasource.DataSource;
+import com.netease.amazing.datasource.NewsDataSource;
+import com.netease.amazing.datasource.NewsPersonalDataSource;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 /**

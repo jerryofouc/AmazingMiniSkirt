@@ -1,4 +1,4 @@
-package com.netease.amazing.component;
+package com.netease.amazing.util;
 
 public class UserInfoStore {
 	public static String username ="xukai";

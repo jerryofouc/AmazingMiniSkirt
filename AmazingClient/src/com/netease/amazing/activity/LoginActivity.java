@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,8 +27,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amazing.R;
-import com.netease.amazing.component.UserInfoStore;
 import com.netease.amazing.sdk.client.AccountRestClient;
+import com.netease.amazing.util.UserInfoStore;
 
 public class LoginActivity extends Activity {
 
@@ -76,6 +77,7 @@ public class LoginActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		findViewsById();

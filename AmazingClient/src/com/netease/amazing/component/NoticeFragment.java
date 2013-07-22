@@ -18,10 +18,10 @@ import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NoticeActivity;
+import com.netease.amazing.adapter.ListViewBasedAdapter;
+import com.netease.amazing.adapter.NoticeListAdapter;
+import com.netease.amazing.datasource.NoticeDataSource;
 import com.netease.amazing.pojo.Notice;
-import com.netease.amazing.util.ListViewBasedAdapter;
-import com.netease.amazing.util.NoticeDataSource;
-import com.netease.amazing.util.NoticeListAdapter;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 

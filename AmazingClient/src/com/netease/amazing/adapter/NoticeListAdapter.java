@@ -1,4 +1,4 @@
-package com.netease.amazing.util;
+package com.netease.amazing.adapter;
 
 import java.util.Map;
 
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amazing.R;
+import com.netease.amazing.datasource.DataSource;
 
 public class NoticeListAdapter extends ListViewBasedAdapter {
 

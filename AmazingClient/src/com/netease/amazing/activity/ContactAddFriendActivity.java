@@ -9,7 +9,6 @@ public class ContactAddFriendActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.contact_addfriend);
+		setContentView(R.layout.contact_info_add_friend);
 	}
 }

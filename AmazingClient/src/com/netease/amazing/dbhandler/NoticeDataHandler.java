@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 
-import com.netease.amazing.component.UserInfoStore;
 import com.netease.amazing.pojo.Notice;
 import com.netease.amazing.sdk.client.NoticeRestClient;
 import com.netease.amazing.sdk.dto.NoticeDTO;
+import com.netease.amazing.util.UserInfoStore;
 
 public class NoticeDataHandler {
 	

@@ -1,4 +1,4 @@
-package com.netease.amazing.util;
+package com.netease.amazing.datasource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,6 @@ import java.util.Map;
 
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
-import com.netease.amazing.pojo.News;
 import com.netease.amazing.pojo.NewsGrowthLog;
 
 public class NewsPersonalDataSource extends DataSource {

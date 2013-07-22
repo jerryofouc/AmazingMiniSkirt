@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Window;
 
 public class SystemSettingButtonActivity extends Activity {
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -1,10 +1,9 @@
-package com.netease.amazing.util;
+package com.netease.amazing.datasource;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.netease.amazing.pojo.Notice;
 
 /**
  * 

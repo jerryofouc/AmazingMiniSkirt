@@ -1,4 +1,4 @@
-package com.netease.amazing.util;
+package com.netease.amazing.datasource;
 
 import java.util.ArrayList;
 import java.util.HashMap;

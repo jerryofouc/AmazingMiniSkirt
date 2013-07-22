@@ -31,10 +31,10 @@ import android.widget.Toast;
 
 import com.example.amazing.R;
 import com.netease.amazing.activity.NewsPersonalIndexActivity;
-import com.netease.amazing.util.DataSource;
-import com.netease.amazing.util.ListViewBasedAdapter;
-import com.netease.amazing.util.NewsDataSource;
-import com.netease.amazing.util.NewsListAdapter;
+import com.netease.amazing.adapter.ListViewBasedAdapter;
+import com.netease.amazing.adapter.NewsListAdapter;
+import com.netease.amazing.datasource.DataSource;
+import com.netease.amazing.datasource.NewsDataSource;
 import com.netease.amazing.util.RefreshableListView;
 import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
 
