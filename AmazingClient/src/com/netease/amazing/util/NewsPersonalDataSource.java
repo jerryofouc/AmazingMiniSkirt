@@ -25,15 +25,6 @@ public class NewsPersonalDataSource extends DataSource {
 	public final static String NEWS_PERSONAL_ITEM_FROM = "newsPersonalItemFrom";
 	public final static String NEWS_PERSONAL_ITEM_ID = "newsId";
 	public final static String NEWS_GROWTH_TYPE = "newsType";
-//	public final static String NEWS_GROWTH_PUBLISHER_NAME = "newsPublisherName";
-//	public final static String NEWS_GROWTH_CONTENT = "newsContent";
-//	public final static String NEWS_GROWTH_PUBLISH_DATE = "newsPublishDate";
-//	public final static String NEWS_GROWTH_TYPE = "newsType";
-//	public final static String NEWS_GROWTH_PUBLISHER_FROM = "newPublisherFrom";
-//	public final static String NEWS_GROWTH_WITH_IMAGE = "newsWithImage";
-//	//public final static String NEWS_GROWTH_CURRENT_USER_LIKE = "isCurrentUserLike";
-//	public final static String NEWS_TAKE_DOWN_USER_NAME = "newsTakeDownUserName";
-//	public final static String USER_JOIN_CLASS = "userJoinClass";
 	
 	private long userId = NewsDataHandler.USER_ID;
 
@@ -65,7 +56,7 @@ public class NewsPersonalDataSource extends DataSource {
 			NewsGrowthLog tempNews = it.next();
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put(NEWS_PERSONAL_ITEM_JOIN_CLASS_DAYS, 
-					tempNews.getUserClass()+"\n"+tempNews.getUserJoinInClassDays()+"天");
+					" "+tempNews.getUserClass()+"\n 第"+tempNews.getUserJoinInClassDays()+"天");
 			map.put(NEWS_PERSONAL_ITEM_CONTENT, tempNews.getNewsContent());
 			map.put(NEWS_PERSONAL_ITEM_FROM, tempNews.getNewPublisherFrom());
 			map.put(NEWS_PERSONAL_ITEM_IMAGE, R.drawable.ic_pulltorefresh_arrow);
@@ -74,10 +65,10 @@ public class NewsPersonalDataSource extends DataSource {
 						" 收录自 "+tempNews.getNewsPublisherName());
 			}else{
 				map.put(NEWS_PERSONAL_ITEM_SAVER, " 由 "+tempNews.getNewsPublisherName()+
-						"发布");
+						" 记录");
 			}
 
-			map.put(NEWS_PERSONAL_ITEM_PUBLISH_DATE, tempNews.getNewsPublishDate());
+			map.put(NEWS_PERSONAL_ITEM_PUBLISH_DATE, tempNews.getNewsPublishDate()+"   ");
 			map.put(NEWS_PERSONAL_ITEM_ID, tempNews.getNewsId());
 			map.put(NEWS_GROWTH_TYPE, tempNews.getNewsGrowthLogType());
 			list.add(map);
