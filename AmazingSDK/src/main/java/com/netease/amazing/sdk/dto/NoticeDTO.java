@@ -9,6 +9,7 @@ public class NoticeDTO {
 	private String tittle;
 	private Date noticeDate;
 	private String content;
+	private boolean sendToAllClassMates=true;//默认为true
 	private boolean needFeedBack;
 	private List<Long> recieveObjsIDs;//所有应受到这个消息的id
 	private String feedBack;
@@ -54,6 +55,12 @@ public class NoticeDTO {
 	}
 	public void setNeedFeedBack(boolean needFeedBack) {
 		this.needFeedBack = needFeedBack;
+	}
+	public boolean isSendToAllClassMates() {
+		return sendToAllClassMates;
+	}
+	public void setSendToAllClassMates(boolean sendToAllClassMates) {
+		this.sendToAllClassMates = sendToAllClassMates;
 	}
 	
 }

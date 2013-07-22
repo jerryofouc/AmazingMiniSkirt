@@ -12,6 +12,7 @@ public class ToDTOUtils {
 		userDTO.setLoginName(user.getLoginName());
 		userDTO.setName(user.getName());
 		userDTO.setSignature(user.getSignature());
+		userDTO.setRole(user.getRole());
 		if(user.getChild() != null){
 			userDTO.setHeadPic(user.getChild().getHeadPicPath());
 		}

@@ -5,6 +5,11 @@ public class UserDTO {
 	private String loginName;
 	private String signature;//Ç©Ãûµµ
 	private String name;
+	public enum Role{
+		PARENT,
+		TEACHER
+	}
+	private Role role;
 	private String frontCover;
 	private String headPic;
 	public String getLoginName() {
@@ -42,5 +47,11 @@ public class UserDTO {
 	}
 	public void setSignature(String signature) {
 		this.signature = signature;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

@@ -17,6 +17,7 @@ public class NewsDTO {
 	private String newsContent;//发布的动态内容;
 	private TweetType newsType;//该条动态信息的类型，参考上面常量
 	private String headPicPath;
+	private String newsPhotoPath;
 	/**
 	 * 动态发布时间，精确到分钟，在服务器端进行时间判断，以服务器当前时间为准，客户端容易修改时间，存储格式如下:
 	 * case 1:如果动态是当天发布的，取发布时间格式为：今天(这里注意空两格)14:28
@@ -92,5 +93,11 @@ public class NewsDTO {
 	}
 	public void setHeadPicPath(String headPicPath) {
 		this.headPicPath = headPicPath;
+	}
+	public String getNewsPhotoPath() {
+		return newsPhotoPath;
+	}
+	public void setNewsPhotoPath(String newsPhotoPath) {
+		this.newsPhotoPath = newsPhotoPath;
 	}
 }

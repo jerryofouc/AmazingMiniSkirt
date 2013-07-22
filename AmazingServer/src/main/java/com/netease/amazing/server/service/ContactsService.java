@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netease.amazing.sdk.dto.ChildDTO;
 import com.netease.amazing.sdk.dto.ContactDTO;
 import com.netease.amazing.sdk.dto.TeacherDTO;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
 import com.netease.amazing.server.entity.Child;
 import com.netease.amazing.server.entity.ChildRelationship;
 import com.netease.amazing.server.entity.Gender;
@@ -23,7 +24,6 @@ import com.netease.amazing.server.entity.Kindergarden;
 import com.netease.amazing.server.entity.Parent;
 import com.netease.amazing.server.entity.Teacher;
 import com.netease.amazing.server.entity.User;
-import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.repository.UserDao;
 
 @Component

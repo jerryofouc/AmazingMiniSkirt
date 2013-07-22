@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
 
 
 
@@ -36,10 +37,6 @@ public class User extends IdEntity {
 	private List<Tweet> tweets;
 	private boolean hasLogin;
 	private String coverPicPath;
-	public enum Role{
-		PARENT,
-		TEACHER
-	}
 	private Role role;//角色：分为老师和家长两个角色
 	private Teacher teacher;
 	private List<ParentNotification> notificatoins; 

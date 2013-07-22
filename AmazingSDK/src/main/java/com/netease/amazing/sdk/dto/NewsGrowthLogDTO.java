@@ -19,6 +19,7 @@ public class NewsGrowthLogDTO {
 	private String userClass;//当前登录用户的小孩所在班级级别(只返回下列之一：小班、中班、大班)
 	private int userJoinInClassDays;// 当前成长记录发布(动态)发布时，小朋友加入这个班级的天数
 	private String headPicPath;
+	private String newsGrowthLogPhotoPath;
 	/**
 	 * 动态发布时间，精确到分钟，在服务器端进行时间判断，以服务器当前时间为准，客户端容易修改时间，存储格式如下:
 	 * case 1:如果动态是当天发布的，取发布时间格式为：今天(这里注意空两格)14:28
@@ -98,5 +99,11 @@ public class NewsGrowthLogDTO {
 	}
 	public void setHeadPicPath(String headPicPath) {
 		this.headPicPath = headPicPath;
+	}
+	public String getNewsGrowthLogPhotoPath() {
+		return newsGrowthLogPhotoPath;
+	}
+	public void setNewsGrowthLogPhotoPath(String newsGrowthLogPhotoPath) {
+		this.newsGrowthLogPhotoPath = newsGrowthLogPhotoPath;
 	}
 }

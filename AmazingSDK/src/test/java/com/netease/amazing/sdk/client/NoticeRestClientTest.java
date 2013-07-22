@@ -70,10 +70,11 @@ public class NoticeRestClientTest extends BaseTest{
 	@Test 
 	public void createTeacherToParentNoticeTest() throws ClientProtocolException, IOException{
 		NoticeDTO noticeDTO = new NoticeDTO();
-		noticeDTO.setTittle("南华幼儿园通知");
+		noticeDTO.setTittle("幼儿园暑假");
 		noticeDTO.setContent("放暑假啦");
 		noticeDTO.setFeedBack("是");
 		Long r1 = new Long(1);
+		noticeDTO.setSendToAllClassMates(true);
 		List<Long> recievers = new ArrayList<Long>();
 		recievers.add(r1);
 		noticeDTO.setRecieveObjsIDs(recievers);

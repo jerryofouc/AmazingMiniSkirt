@@ -15,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netease.amazing.sdk.dto.NewsGrowthLogDTO;
 import com.netease.amazing.sdk.dto.NewsDTO.TweetType;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
 import com.netease.amazing.server.entity.Tweet;
 import com.netease.amazing.server.entity.User;
-import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.repository.TweetDao;
 import com.netease.amazing.server.repository.UserDao;
 import com.netease.amazing.server.utils.DateUtils;
