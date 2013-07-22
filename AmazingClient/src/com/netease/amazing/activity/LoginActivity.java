@@ -280,7 +280,13 @@ public class LoginActivity extends Activity {
 				// 需要传输数据到登陆后的界面,
 				UserInfoStore.username = userName;
 				UserInfoStore.password = password;
-				
+				try {
+					UserInfoStore.userId = new AccountRestClient(UserInfoStore.url,userName,password).getUserInfo().getId();
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				if(isFirstLogin) {
 					//转向欢迎界面
 				}
