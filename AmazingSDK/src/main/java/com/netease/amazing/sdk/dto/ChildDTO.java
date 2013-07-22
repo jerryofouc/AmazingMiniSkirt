@@ -11,6 +11,7 @@ public class ChildDTO {
 	private String motherTelephone;
 	private String fromSchool;//来自学校
 	private String fromClass;//来自班级
+	private String headPicPath;
 	public String getName() {
 		return name;
 	}
@@ -71,5 +72,10 @@ public class ChildDTO {
 	public void setUserID(long userID) {
 		this.userID = userID;
 	}
-	
+	public String getHeadPicPath() {
+		return headPicPath;
+	}
+	public void setHeadPicPath(String headPicPath) {
+		this.headPicPath = headPicPath;
+	}
 }

@@ -13,6 +13,7 @@ import com.netease.amazing.sdk.client.ContactRestClient;
 import com.netease.amazing.sdk.dto.ChildDTO;
 import com.netease.amazing.sdk.dto.ContactDTO;
 import com.netease.amazing.sdk.dto.TeacherDTO;
+import com.netease.amazing.util.UserInfoStore;
 
 /**
  * 
@@ -21,10 +22,7 @@ import com.netease.amazing.sdk.dto.TeacherDTO;
  *   ContactHandler，接口，用于描述与后台交互的相关方法
  *
  */
-public class ContactDataHandler {
-	private static final String BASE_URL = "http://10.240.34.42:8080/server";
-	private static final String USER_NAME = "xukai";
-	private static final String PASSWORD = "123456";
+public class ContactDataHandler extends UserInfoStore{
 	/**
 	 * @return 在当前用户通讯录列表中的,按照姓名首字的拼音顺序排列
 	 * @throws IOException 
@@ -33,9 +31,9 @@ public class ContactDataHandler {
 	public static List<Contact> getContactList() throws Exception{
 
 		List<Contact> contactList = new ArrayList<Contact>();
-		AccountRestClient.testLogin(BASE_URL,USER_NAME, PASSWORD);
+		AccountRestClient.testLogin(url,username, password);
 		
-		ContactRestClient contactRestClient = new ContactRestClient(BASE_URL,USER_NAME, PASSWORD);
+		ContactRestClient contactRestClient = new ContactRestClient(url,username, password);
 		
 		ContactDTO allContacts = contactRestClient.getAllContacts();
 		

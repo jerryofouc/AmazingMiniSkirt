@@ -13,7 +13,7 @@ import com.netease.amazing.sdk.client.NoticeRestClient;
 import com.netease.amazing.sdk.dto.NoticeDTO;
 import com.netease.amazing.util.UserInfoStore;
 
-public class NoticeDataHandler {
+public class NoticeDataHandler extends UserInfoStore{
 	
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class NoticeDataHandler {
 	 * @throws ClientProtocolException 
 	 */
 	public List<Notice> getInitNotice(int noticeCount) throws ClientProtocolException, IOException, URISyntaxException {
-		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getLatestNotices(noticeCount);
 		return convertToNotices(results);
@@ -58,7 +58,7 @@ public class NoticeDataHandler {
 	 */
 	public List<Notice> getNotice(long bottomNoticeId,int noticeCount) throws ClientProtocolException, URISyntaxException, IOException {
 		
-		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
 		List<NoticeDTO> results =null;
 		
 		results = noticeRestClient.getDownRangeNotice(bottomNoticeId, noticeCount);
@@ -75,7 +75,7 @@ public class NoticeDataHandler {
 	 */
 	public List<Notice> getNotice(long topNoticeId) throws ClientProtocolException, URISyntaxException, IOException {
 		
-		NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
+		NoticeRestClient noticeRestClient = new NoticeRestClient(url,username, password);
 		List<NoticeDTO> results =null;
 		results = noticeRestClient.getUpRangeNotice(topNoticeId);
 		return convertToNotices(results);

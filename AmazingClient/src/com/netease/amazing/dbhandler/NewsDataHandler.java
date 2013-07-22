@@ -18,16 +18,13 @@ import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 import com.netease.amazing.sdk.dto.NewsDTO.TweetType;
 import com.netease.amazing.sdk.dto.NewsDTO;
 import com.netease.amazing.sdk.dto.NewsGrowthLogDTO;
+import com.netease.amazing.util.UserInfoStore;
 /**
  * Updated by Huang Xiao Jun 2013.7.20
  * @author 
  *
  */
-public class NewsDataHandler {
-	private static final String BASE_URL = "http://10.240.34.42:8080/server";
-	public static final long USER_ID = 1;
-	private static final String USER_NAME = "xukai";
-	private static final String PASSWORD = "123456";
+public class NewsDataHandler extends UserInfoStore{
 	
 	/**
 	 * 初始化动态页面的时候，获取最新的newsCount条动态，按照时间逆序保存在List中
@@ -36,7 +33,7 @@ public class NewsDataHandler {
 	 */
 	public static List<News> getInitNews(int newsCount) {
 		List<News> newsList = new ArrayList<News>();
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		List<NewsDTO> newsListTemp = null;
 		try {
 			newsListTemp = newsClient.getLatestNews(newsCount);
@@ -66,7 +63,7 @@ public class NewsDataHandler {
 	 */
 	public static List<News> getNewsByUpRefresh(long bottomNewsId,int newsCount) {		
 		List<News> newsList = new ArrayList<News>();
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		List<NewsDTO> newsListTemp = null;
 		try {
 			newsListTemp = newsClient.getNewsByUpRefresh(bottomNewsId, newsCount);
@@ -91,7 +88,7 @@ public class NewsDataHandler {
 	 */
 	public static List<News> getNews(long topNewsId) {
 		List<News> newsList = new ArrayList<News>();
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		List<NewsDTO> newsListTemp = null;
 		try {
 			newsListTemp = newsClient.getNews(topNewsId);
@@ -144,7 +141,7 @@ public class NewsDataHandler {
 	public static List<NewsComment> getNewsCommentToNewsIndexByNewsId(long newsId, int newsCommentCount){
 		List<NewsComment> newsList = new ArrayList<NewsComment>();
 		List<NewsCommentsDTO>  commentList = null;
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		try {
 			commentList = newsClient.getNewsCommentToNewsIndexByNewsId(newsId, newsCommentCount);
 		} catch (ClientProtocolException e) {
@@ -180,7 +177,7 @@ public class NewsDataHandler {
 	 * @return 如果操作成功返回true
 	 */
 	public static boolean setLikeNews(long newsId){
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		try {
 			return newsClient.setLikeNews(newsId);
 		} catch (ClientProtocolException e) {
@@ -199,7 +196,7 @@ public class NewsDataHandler {
 	 * @return 如果操作成功返回true
 	 */
 	public static boolean setTakeDownNews(long newsId){
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		try {
 			return newsClient.includeNews(newsId);
 		} catch (ClientProtocolException e) {
@@ -243,7 +240,7 @@ public class NewsDataHandler {
 	public static List<NewsGrowthLog> getInitNewsGrowthLog(long userId,int count){
 		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 		List<NewsGrowthLogDTO>  commentList = null;
-		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		GrowthLogClient newsClient = new GrowthLogClient(url,username, password);
 		try {
 			commentList = newsClient.getInitNewsGrowthLog(userId, count);
 		} catch (ClientProtocolException e) {
@@ -269,7 +266,7 @@ public class NewsDataHandler {
 	public static List<NewsGrowthLog> getNewsGrowthLogByUpRefresh(long userId, long bottomNewsId,int count) {
 		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 		List<NewsGrowthLogDTO>  commentList = null;
-		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		GrowthLogClient newsClient = new GrowthLogClient(url,username, password);
 		try {
 			commentList = newsClient.getNewsGrowthLogByUpRefresh(userId, bottomNewsId ,count);
 		} catch (ClientProtocolException e) {
@@ -293,7 +290,7 @@ public class NewsDataHandler {
 	public static List<NewsGrowthLog> getNewsGrowthLog(long userId,long topNewsId) {
 		List<NewsGrowthLog> newsList = new ArrayList<NewsGrowthLog>();
 		List<NewsGrowthLogDTO>  commentList = null;
-		GrowthLogClient newsClient = new GrowthLogClient(BASE_URL,USER_NAME,PASSWORD);
+		GrowthLogClient newsClient = new GrowthLogClient(url,username, password);
 		try {
 			commentList = newsClient.getNewsGrowthLog(userId, topNewsId);
 		} catch (ClientProtocolException e) {
@@ -331,7 +328,7 @@ public class NewsDataHandler {
 	 * @return 是否操作成功
 	 */
 	public static boolean addNews(String newsContent, byte[] attachment, int newsType){
-		NewsRestClient newsClient = new NewsRestClient(BASE_URL,USER_NAME,PASSWORD);
+		NewsRestClient newsClient = new NewsRestClient(url,username, password);
 		try {
 			NewsDTO newsDTO = new NewsDTO();
 			newsDTO.setNewsContent(newsContent);
