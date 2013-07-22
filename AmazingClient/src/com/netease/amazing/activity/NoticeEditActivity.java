@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,15 +38,11 @@ import com.netease.amazing.sdk.dto.TeacherDTO;
 import com.netease.amazing.util.UserInfoStore;
 
 public class NoticeEditActivity extends Activity {
-	private String url = "http://10.240.34.42:8080/server";
-	private String username = "xukai";
-	private String password = "123456";
 	
-	private TextView editNoticeBack;
-	private TextView editNoticeStatus;
+	private ImageButton editNoticeBack;
 	private EditText editNoticeContent;
 	private Spinner editNoticeReceiver;
-	private Button editNoticeSendButton;
+	private ImageButton editNoticeSendButton;
 	private TextView editNoticeReceiverText;
 	private  ProgressDialog pDialog;
 	
@@ -56,7 +53,7 @@ public class NoticeEditActivity extends Activity {
 	private ContactRestClient contactRestClient = null;
 	private ContactDTO contactDTO = null;
 	private NoticeDTO noticeDTO = new NoticeDTO();
-	private NoticeRestClient noticeRestClient = new NoticeRestClient(url,username,password);
+	private NoticeRestClient noticeRestClient = new NoticeRestClient(UserInfoStore.url,UserInfoStore.username,UserInfoStore.password);
 	
 	private boolean isNetError =false;
 	private Handler contactProgressHandler = new ContactProgressHandler();
@@ -65,7 +62,6 @@ public class NoticeEditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		contactRestClient = new ContactRestClient(UserInfoStore.url,UserInfoStore.loginName,UserInfoStore.password);
 		
 		setContentView(R.layout.notice_edit);
 		getView();
@@ -77,11 +73,10 @@ public class NoticeEditActivity extends Activity {
 	
 
 	private void getView() {
-		editNoticeBack = (TextView)findViewById(R.id.notice_edit_back);
-		editNoticeStatus = (TextView)findViewById(R.id.notice_edit_status);
+		editNoticeBack = (ImageButton)findViewById(R.id.notice_edit_titlebar_back_btn);
 		editNoticeContent = (EditText)findViewById(R.id.notice_edit_content);
 		editNoticeReceiver = (Spinner)findViewById(R.id.notice_edit_receiver);
-		editNoticeSendButton = (Button)findViewById(R.id.notice_edit_send_button);
+		editNoticeSendButton = (ImageButton)findViewById(R.id.notice_edit_titlebar_save_btn);
 		editNoticeReceiverText = (TextView)findViewById(R.id.notice_edit_receiver_text);
 	}
 	
