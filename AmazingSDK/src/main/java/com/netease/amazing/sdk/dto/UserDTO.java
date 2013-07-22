@@ -3,6 +3,7 @@ package com.netease.amazing.sdk.dto;
 public class UserDTO {
 	private long id;
 	private String loginName;
+	private String signature;//Ç©Ãûµµ
 	private String name;
 	private String frontCover;
 	private String headPic;
@@ -35,5 +36,11 @@ public class UserDTO {
 	}
 	public void setHeadPic(String headPic) {
 		this.headPic = headPic;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 }
