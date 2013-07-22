@@ -30,6 +30,13 @@ public class AccountRestController extends BaseController{
 		return ToDTOUtils.toUserDTO(user);
 	}
 	
+	@RequestMapping(value={"/{id}"},method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public UserDTO getUserInfo(@PathVariable("id") Long id){
+		User user = accountService.findUserById(id);
+		return ToDTOUtils.toUserDTO(user);
+	}
+	
 	@RequestMapping(value={"/hasLogin"},method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Boolean getHasLogin(){

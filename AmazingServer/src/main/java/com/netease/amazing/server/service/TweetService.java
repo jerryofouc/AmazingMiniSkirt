@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO;
 import com.netease.amazing.sdk.dto.NewsCommentsDTO.CommentType;
 import com.netease.amazing.sdk.dto.NewsDTO;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
 import com.netease.amazing.server.entity.Child;
 import com.netease.amazing.server.entity.ChildRelationship;
 import com.netease.amazing.server.entity.Comment;
 import com.netease.amazing.server.entity.Tweet;
 import com.netease.amazing.server.entity.User;
-import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.entity.UserTweet;
 import com.netease.amazing.server.entity.UserTweet.PublicRelation;
 import com.netease.amazing.server.repository.CommentDao;
@@ -128,8 +128,6 @@ public class TweetService {
 			allNews.add(newsDTO);
 		}
 	}
-
-
 
 	
 	public static void main(String args[]){

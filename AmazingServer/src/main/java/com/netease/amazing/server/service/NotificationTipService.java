@@ -1,22 +1,25 @@
 package com.netease.amazing.server.service;
 
 import com.netease.amazing.sdk.dto.NoticeDTO;
+import com.netease.amazing.sdk.dto.UserDTO.Role;
+import com.netease.amazing.server.entity.Child;
 import com.netease.amazing.server.entity.Notification;
 import com.netease.amazing.server.entity.ParentNotification;
 import com.netease.amazing.server.entity.Teacher;
 import com.netease.amazing.server.entity.TeacherTip;
 import com.netease.amazing.server.entity.Tip;
 import com.netease.amazing.server.entity.User;
-import com.netease.amazing.server.entity.User.Role;
 import com.netease.amazing.server.repository.NotificationDao;
 import com.netease.amazing.server.repository.ParentNotificationDao;
 import com.netease.amazing.server.repository.TeacherTipDao;
 import com.netease.amazing.server.repository.TipDao;
 import com.netease.amazing.server.repository.UserDao;
 import com.netease.amazing.server.utils.ToDTOUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -92,10 +95,11 @@ public class NotificationTipService
   @Transactional(readOnly=false)
   public void createNewNotification(long userId, NoticeDTO notice) {
     User user = (User)this.userDao.findOne(Long.valueOf(userId));
-    if (user.getRole() == User.Role.PARENT)
+    if (user.getRole() == Role.PARENT)
       createNewTip(user, notice);
-    else if (user.getRole() == User.Role.TEACHER)
-      createNewNotification(user, notice);
+    else if (user.getRole() == Role.TEACHER){
+    	createNewNotification(user, notice);
+    }
   }
 
   private void createNewNotification(User user, NoticeDTO notice)
@@ -110,7 +114,25 @@ public class NotificationTipService
     notification.setTeacher(curTeacher);
     notification = (Notification)this.notificationDao.save(notification);
 
-    for (Long id : notice.getRecieveObjsIDs()) {
+    List<Long> recievedObbjsIDs = notice.getRecieveObjsIDs(); 
+    if(notice.isSendToAllClassMates()){
+    	List<Child> children =  user.getTeacher().getKlass().getChildren();
+    	for(Child c : children){
+    		User u = c.getUser();
+    		if (u != null) {
+    		   ParentNotification pn = new ParentNotification();
+    		   pn.setNotification(notification);
+    		   pn.setParent(u);
+    		   this.parentNotificationDao.save(pn);
+    		   if(recievedObbjsIDs != null){
+    			   if(recievedObbjsIDs.contains(u.getId()));
+    			   recievedObbjsIDs.remove(u.getId());
+    		   }
+    		}
+    	}
+     }
+    
+    for (Long id : recievedObbjsIDs) {
       User parent = (User)this.userDao.findOne(id);
       if (parent != null) {
         ParentNotification pn = new ParentNotification();
@@ -146,9 +168,15 @@ public class NotificationTipService
   @Transactional(readOnly=false)
   public void deleteNotice(long userId, long noticeId) {
     User user = (User)this.userDao.findOne(Long.valueOf(userId));
-    if (user.getRole() == User.Role.PARENT)
+    if (user.getRole() == Role.PARENT)
       this.notificationDao.deletePNByUserIdAndNotificationId(user.getId(), Long.valueOf(noticeId));
     else
       this.notificationDao.deleteByTPUserIdAndTipId(user.getId(), Long.valueOf(noticeId));
+  }
+  
+  public static void main(String args[]){
+	  List<Long> ll = new ArrayList<Long>();
+	  ll.add(new Long(1));
+	  System.out.println(ll.contains(new Long(1)));
   }
 }
