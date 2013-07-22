@@ -2,12 +2,11 @@ package com.netease.amazing.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.amazing.R;
@@ -17,14 +16,13 @@ public class NoticeActivity extends Activity{
 
 	TextView noticeContent;
 	TextView noticeTitle;
-	Button noticeBack;
+	ImageButton noticeBack;
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.notice);
-		noticeBack = (Button)findViewById(R.id.notice_view_back);
-		noticeTitle =(TextView)findViewById(R.id.notice_view_title);
+		noticeBack = (ImageButton)findViewById(R.id.notice_titlebar_back_btn);
 		noticeContent = (TextView)findViewById(R.id.notice_view_content);
 		Intent intent = getIntent();
 		Notice notice = (Notice)(intent.getExtras().getSerializable("itemNotice"));
