@@ -22,7 +22,7 @@
         </activity>
         <activity android:name="com.netease.amazing.activity.LoginActivity" 
             android:theme="@android:style/Theme.Holo.Light"
-            android:logo="@drawable/download">
+            android:logo="@drawable/titlebar_setting_bg">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,6 +45,8 @@
         <!-- 添加News相关的activity -->
         <activity android:name = "com.netease.amazing.activity.NewsAddActivity"
             android:theme="@android:style/Theme.Holo.Light"/>
+                <activity android:name = "com.netease.amazing.activity.NewsAddActivity1"
+            />
         <activity android:name = "com.netease.amazing.activity.NewsPersonalIndexActivity"
             android:theme="@android:style/Theme.Holo.Light"/>
         
