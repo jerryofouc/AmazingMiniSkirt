@@ -167,13 +167,6 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	public void onPullUpRefresh() {
 		new Thread() {
 			public void run() {
-				try {
-					//模拟网络请求时间
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				Log.i("aaaaaaa", "aaa");
 				changeListView(2);
 				handler.sendEmptyMessage(0);
 			}
@@ -184,12 +177,6 @@ public class NoticeFragment extends Fragment implements OnRefreshListener {
 	public void onPullDownRefresh() {
 		new Thread() {
 			public void run() {
-				try {
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				Log.i("you are pull downing", "test onPullDownRefresh");
 				changeListView(1);
 				handler.sendEmptyMessage(0);
 			}
