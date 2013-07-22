@@ -1,14 +1,15 @@
 package com.netease.amazing.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amazing.R;
 import com.netease.amazing.pojo.Contact;
+import com.netease.amazing.util.InitImageView;
 /**
  * 
  * @author Huang Xiao Jun
@@ -32,6 +33,8 @@ public class ContactInfoActivity extends Activity {
 			TextView teacherPhone = (TextView)findViewById(R.id.contact_no_teacher_content);
 			teacherPhone.setText(contact.getPhoneOfTeacher());
 			
+			new InitImageView((ImageView)findViewById(R.id.contact_teacher_img)).execute(contact.getImgDir());
+			
 			TextView teacherMobile = (TextView)findViewById(R.id.contact_mobile_teacher_content);
 			teacherMobile.setText(contact.getMobileOfTeacher());
 			
@@ -46,6 +49,8 @@ public class ContactInfoActivity extends Activity {
 			
 			TextView childBirth = (TextView)findViewById(R.id.contact_classmate_birthday);
 			childBirth.setText(contact.getBirthday());
+			
+			new InitImageView((ImageView)findViewById(R.id.contact_classmate_img)).execute(contact.getImgDir());
 			
 			TextView childFatherMobile = (TextView)findViewById(R.id.contact_classmate_father_content);
 			childFatherMobile.setText(contact.getPhoneOfDad());
@@ -70,6 +75,8 @@ public class ContactInfoActivity extends Activity {
 			
 			TextView childSchool = (TextView)findViewById(R.id.contact_friend_from);
 			childSchool.setText(contact.getFromSchool()+contact.getFromClass());
+			
+			new InitImageView((ImageView)findViewById(R.id.contact_friend_img)).execute(contact.getImgDir());
 			
 			TextView childBirth = (TextView)findViewById(R.id.contact_friend_birthday);
 			childBirth.setText(contact.getBirthday());

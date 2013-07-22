@@ -116,7 +116,15 @@ public class NewsDataHandler extends UserInfoStore{
 		newsItem.setNewsPublisherName(news.getNewPublisherName());
 		newsItem.setNewsPublisherRelationship(news.getNewsPublisherRelationship());
 		newsItem.setNewspublisherUserId(news.getNewsPublisherId());
-		newsItem.setNewsType(News.NEWS_WITH_NOTHING);
+		newsItem.setNewsPublisherImg(news.getHeadPicPath());
+		if(news.getNewsType() == TweetType.TEXT){
+			newsItem.setNewsType(News.NEWS_WITH_NOTHING);
+		}else if(news.getNewsType() == TweetType.WITH_PICTURE){
+			newsItem.setNewsType(News.NEWS_WITH_IMAGE);
+			//newsItem.setNewsWithImage(news.get)
+		}else if(news.getNewsType() == TweetType.WITH_VOICE){
+			newsItem.setNewsType(News.NEWS_WITH_VOICE);
+		}
 		return newsItem;
 	}
 	/**

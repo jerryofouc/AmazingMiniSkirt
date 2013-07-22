@@ -15,10 +15,13 @@ public class Contact implements Serializable{
 	public final static int RELATIONSHIP_CLASSMATE = 2;
 	public final static int RELATIONSHIP_FRIEND = 3;
 	
+	public final static int GENDER_MAN = 0;
+	public final static int GENDER_WOMAN = 1;
+	
 	private String name;  //联系人姓名
 	private String nickName;  //昵称
 	private String birthday;  //生日
-	private String gender;  //性别
+	private int gender;  //性别,参考以上常量
 	
 	private String nameOfDad; //爸爸的姓名
 	private String phoneOfDad;  //爸爸的电话
@@ -29,7 +32,7 @@ public class Contact implements Serializable{
 	private String fromSchool;  //来自的学校
 	private String fromClass;  //来自的班级
 	
-	private Bitmap img;  //联系人头像
+	private String imgDir;  //联系人头像
 	
 	//  与当前用户的关系， 参考final static中的定义 
 	private int relationship;  
@@ -41,9 +44,9 @@ public class Contact implements Serializable{
 		super();
 	}
 	public Contact(String name, String nickName, String birthday,
-			String gender, String nameOfDad, String phoneOfDad,
+			int gender, String nameOfDad, String phoneOfDad,
 			String nameOfMum, String phoneOfMum, String fromSchool,
-			String fromClass, Bitmap img, int relationship,
+			String fromClass, String imgDir, int relationship,
 			String phoneOfTeacher, String mobileOfTeacher) {
 		super();
 		this.name = name;
@@ -56,7 +59,7 @@ public class Contact implements Serializable{
 		this.phoneOfMum = phoneOfMum;
 		this.fromSchool = fromSchool;
 		this.fromClass = fromClass;
-		this.img = img;
+		this.imgDir = imgDir;
 		this.relationship = relationship;
 		this.phoneOfTeacher = phoneOfTeacher;
 		this.mobileOfTeacher = mobileOfTeacher;
@@ -86,11 +89,11 @@ public class Contact implements Serializable{
 		this.birthday = birthday;
 	}
 
-	public String getGender() {
+	public int getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 
@@ -142,14 +145,14 @@ public class Contact implements Serializable{
 		this.fromClass = fromClass;
 	}
 
-	public Bitmap getImg() {
-		return img;
+	
+	public String getImgDir() {
+		return imgDir;
 	}
-
-	public void setImg(Bitmap img) {
-		this.img = img;
+	public void setImgDir(String imgDir) {
+		this.imgDir = imgDir;
 	}
-
+	
 	public int getRelationship() {
 		return relationship;
 	}

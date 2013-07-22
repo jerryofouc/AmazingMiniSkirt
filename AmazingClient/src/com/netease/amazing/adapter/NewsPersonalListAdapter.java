@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.amazing.R;
 import com.netease.amazing.datasource.DataSource;
 import com.netease.amazing.datasource.NewsPersonalDataSource;
-import com.netease.amazing.pojo.NewsGrowthLog;
 /**
  * 
  * @author Huang Xiao Jun
@@ -42,7 +41,7 @@ public class NewsPersonalListAdapter extends ListViewBasedAdapter {
 		TextView newsPersonalItemSaverAndFromView = (TextView)view.findViewById(R.id.news_personal_item_saver_and_from);
 		newsPersonalItemSaverAndFromView.setText(m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_SAVER).toString());
 		
-		TextView newsPersonalItemImageView = (TextView)view.findViewById(R.id.news_item_audio_text);
+		ImageView newsPersonalItemImageView = (ImageView)view.findViewById(R.id.news_item_image);
 		
 //		if(Integer.parseInt(m.get(NewsPersonalDataSource.NEWS_GROWTH_TYPE).toString()) == NewsGrowthLog.NEWS_WITH_IMAGE){
 //			//newsPersonalItemImageView.setImageResource((Integer)m.get(NewsPersonalDataSource.NEWS_PERSONAL_ITEM_IMAGE));

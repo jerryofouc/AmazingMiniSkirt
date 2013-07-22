@@ -9,6 +9,7 @@ import java.util.Map;
 import com.example.amazing.R;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.News;
+import com.netease.amazing.util.UserInfoStore;
 
 
 public class NewsDataSource extends DataSource {
@@ -61,7 +62,7 @@ public class NewsDataSource extends DataSource {
 		while(it.hasNext()) {
 			News news = it.next();
 			map = new HashMap<String,Object>();
-			map.put(NEWS_PUBLISHER_IMAGE, R.drawable.ic_launcher);
+			map.put(NEWS_PUBLISHER_IMAGE, UserInfoStore.url+news.getNewsPublisherImg());
 			map.put(NEWS_PUBLISHER_NAME, news.getNewsPublisherName());
 			map.put(NEWS_CONTENT, news.getNewsContent());
 			if(news.getNewsType() == News.NEWS_WITH_IMAGE)

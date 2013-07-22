@@ -20,6 +20,7 @@ import com.netease.amazing.datasource.DataSource;
 import com.netease.amazing.datasource.NewsDataSource;
 import com.netease.amazing.dbhandler.NewsDataHandler;
 import com.netease.amazing.pojo.NewsComment;
+import com.netease.amazing.util.InitImageView;
 
 public class NewsListAdapter extends ListViewBasedAdapter {
 	public NewsListAdapter(Context context,DataSource dataSource) {
@@ -33,8 +34,6 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		
 		final long newsId = Long.parseLong(m.get(NewsDataSource.NEWS_ID).toString());
 		final int itemPosition = position;
-		ImageView newsSenderImageView = (ImageView)view.findViewById(R.id.news_item_sender_image);
-		newsSenderImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_PUBLISHER_IMAGE));
 		
 		TextView newsSenderNameView = (TextView)view.findViewById(R.id.news_item_sender);
 		newsSenderNameView.setText(m.get(NewsDataSource.NEWS_PUBLISHER_NAME).toString());
@@ -42,12 +41,14 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		TextView newsContentView =(TextView)view.findViewById(R.id.news_item_content);
 		newsContentView.setText(m.get(NewsDataSource.NEWS_CONTENT).toString());
 		
-		ImageView newsContentImageView = (ImageView)view.findViewById(R.id.news_item_image);
-		if(m.get(NewsDataSource.NEWS_WITH_IMAGE)!=null){
-			newsContentImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_WITH_IMAGE));
-		}else{
-			newsContentImageView.setVisibility(View.GONE);
-		}
+//		ImageView newsContentImageView = (ImageView)view.findViewById(R.id.news_item_image);
+//		if(m.get(NewsDataSource.NEWS_WITH_IMAGE)!=null){
+//			newsContentImageView.setImageResource((Integer)m.get(NewsDataSource.NEWS_WITH_IMAGE));
+//		}else{
+//			newsContentImageView.setVisibility(View.GONE);
+//		}
+		ImageView newsPublisherImgView = (ImageView) view.findViewById(R.id.news_item_sender_image);
+		new InitImageView(newsPublisherImgView).execute(m.get(NewsDataSource.NEWS_PUBLISHER_IMAGE).toString());
 		
 		TextView newsSendDateView = (TextView)view.findViewById(R.id.news_item_publish_date);
 		newsSendDateView.setText(m.get(NewsDataSource.NEWS_PUBLISH_DATE).toString());
@@ -112,6 +113,7 @@ public class NewsListAdapter extends ListViewBasedAdapter {
 		buttonShow.setOnClickListener(listener);
 		return view;
 	}
+	
 	/**
 	 * 
 	 * @author Huang Xiao Jun

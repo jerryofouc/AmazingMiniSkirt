@@ -27,6 +27,7 @@ import com.example.amazing.R;
 import com.netease.amazing.activity.ContactInfoActivity;
 import com.netease.amazing.dbhandler.ContactDataHandler;
 import com.netease.amazing.pojo.Contact;
+import com.netease.amazing.util.InitImageView;
 /**
  * 
  * @author Huang Xiao Jun
@@ -92,9 +93,9 @@ public class ContactFragment extends Fragment {
 		l.setPadding((int)value, (int)value, (int)value, (int)value);
 		
 		ImageView img =new ImageView(getActivity());
-		img.setImageResource(R.drawable.ic_launcher);
 		value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, res.getDisplayMetrics());
 		img.setLayoutParams(new LayoutParams((int)value,(int)value));
+		new InitImageView(img).execute(contact.getImgDir());
 		l.addView(img);
 		
 		TextView nameView = new TextView(getActivity());
