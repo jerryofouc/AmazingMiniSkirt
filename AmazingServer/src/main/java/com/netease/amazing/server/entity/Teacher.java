@@ -19,6 +19,7 @@ public class Teacher extends IdEntity{
 	private String name;
 	private String telephone;
 	private String description;
+	private String headPicPath;
 	private Class klass;
 	private User user;
 	private List<Notification> notifications; 
@@ -69,5 +70,10 @@ public class Teacher extends IdEntity{
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
-	
+	public String getHeadPicPath() {
+		return headPicPath;
+	}
+	public void setHeadPicPath(String headPicPath) {
+		this.headPicPath = headPicPath;
+	}
 }

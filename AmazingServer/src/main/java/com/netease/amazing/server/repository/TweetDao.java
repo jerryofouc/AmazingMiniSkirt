@@ -19,10 +19,10 @@ public interface TweetDao extends PagingAndSortingRepository<Tweet, Long>{
 	@Query("select c from com.netease.amazing.server.entity.Comment as c inner join c.user as u where u.id=?1 and c.type =?2 and c.tweet.id=?3")
 	public List<Comment> findComment(long userId, CommentType type, long tweetId);
 	
-	@Query("select t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1 and t.id<?2")
+	@Query("select distinct t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1 and t.id<?2")
 	public List<Tweet> findRangeDownTweets(long userId, long bottomId, Pageable page);
 
-	@Query("select t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1 and t.id>?2")
+	@Query("select distinct t from com.netease.amazing.server.entity.Tweet as t inner join t.recievers as r where r.user.id=?1 and t.id>?2")
 	public List<Tweet> findRangeAllTweets(long userId, long bottomId, Pageable page);
 
 	@Query("select distinct c from com.netease.amazing.server.entity.Comment as c inner join c.tweet as t where t.id=?1")

@@ -83,6 +83,7 @@ public class TweetService {
 			NewsDTO newsDTO = new NewsDTO();
 			
 			User fromUser = t.getUser();
+			newsDTO.setHeadPicPath(fromUser.getChild().getHeadPicPath());
 			newsDTO.setNewPublisherFrom(fromUser.getChild().getKlass().getKindergarden().getName());
 			/*if(fromUser.getRole() == Role.PARENT){
 				newsDTO.setNewPublisherFrom(fromUser.getChild().getName());

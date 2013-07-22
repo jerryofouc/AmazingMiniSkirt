@@ -30,10 +30,12 @@ public class User extends IdEntity {
 	private String name;
 	private String password;
 	private String salt;
+	private String signature;
 	private Date registerDate;
 	private Child child;
 	private List<Tweet> tweets;
 	private boolean hasLogin;
+	private String coverPicPath;
 	public enum Role{
 		PARENT,
 		TEACHER
@@ -127,5 +129,16 @@ public class User extends IdEntity {
 	public void setHasLogin(boolean hasLogin) {
 		this.hasLogin = hasLogin;
 	}
-	
+	public String getCoverPicPath() {
+		return coverPicPath;
+	}
+	public void setCoverPicPath(String coverPicPath) {
+		this.coverPicPath = coverPicPath;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
 }
