@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_textview"
-    android:orientation="vertical" >
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin" >
 
     <LinearLayout
         android:id="@+id/layout_notice_top"
@@ -12,6 +14,7 @@
 	    android:background="@drawable/background_layout_noticeview" 
 	    android:orientation="horizontal">
 	</LinearLayout>
+
 	<ImageView
 	    android:id="@+id/notice_item_updown_image"
 	    android:layout_width="30dp"
@@ -22,9 +25,8 @@
 	    android:layout_marginLeft="0dp"
 	    android:layout_marginRight="0dp"
 	    android:layout_marginTop="0dp"
-	    android:background="#222222"
 	    android:gravity="center"
-	    />
+	    android:src="@drawable/notice_toparent_30x30" />
 
 	<TextView
 	    android:id="@+id/notice_item_title"
@@ -37,32 +39,32 @@
 	    android:layout_marginTop="0dp"
 	    android:layout_toRightOf="@id/notice_item_updown_image"
 	    android:background="@color/transparent"
-	    android:gravity="center_vertical"
-	    android:width="200dp"
-	    android:textSize="13sp"
-	    android:textStyle="normal" 
-	    android:textColor="#222222"
 	    android:fontFamily="sans-serif"
-	    android:text="将军令"/>
+	    android:gravity="center_vertical"
+	    android:text="将军令"
+	    android:textColor="#222222"
+	    android:textSize="16sp"
+	    android:textStyle="normal"
+	    android:width="200dp" />
 
 	<TextView
 	    android:id="@+id/notice_item_date"
 	    android:layout_width="wrap_content"
 	    android:layout_height="21dp"
-	    android:layout_toRightOf="@id/notice_item_title"
 	    android:layout_alignBottom="@id/notice_item_updown_image"
 	    android:layout_alignParentRight="true"
 	    android:layout_alignTop="@id/notice_item_updown_image"
 	    android:layout_marginBottom="0dp"
 	    android:layout_marginRight="0dp"
 	    android:layout_marginTop="0dp"
+	    android:layout_toRightOf="@id/notice_item_title"
 	    android:background="@color/transparent"
 	    android:gravity="center"
 	    android:text="gaagobnagoibgoi"
+	    android:textColor="#9D9D9D"
 	    android:width="70dp" >
 
 	</TextView>
-
 
 	<TextView
 	    android:id="@+id/notice_item_content "
@@ -72,13 +74,11 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@id/notice_item_updown_image"
 	    android:layout_marginBottom="5dp"
-	    android:layout_marginLeft="5dp"
-	    android:layout_marginRight="5dp"
-	    android:layout_marginTop="0dp"
+	    android:layout_marginTop="5dp"
 	    android:background="@color/transparent"
 	    android:gravity="left"
 	    android:height="45dp"
-	    android:textColor="#333333"
+	    android:textColor="#9D9D9D"
 	    android:textSize="12sp" />
 
 </RelativeLayout>
