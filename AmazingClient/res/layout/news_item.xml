@@ -21,7 +21,6 @@
         android:id="@+id/news_item_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -52,7 +51,7 @@
 
                 <ImageView
                     android:id="@+id/news_item_image"
-                    android:layout_width="256dp"
+                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/default_news_img313x207" />
             </RelativeLayout>

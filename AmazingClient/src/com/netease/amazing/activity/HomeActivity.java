@@ -1,7 +1,5 @@
 package com.netease.amazing.activity;
 
-
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -87,7 +85,7 @@ public class HomeActivity extends FragmentActivity
     			switch(position) {
     			case 0:
     				currentFragment = 0;
-    				menu.getItem(0).setTitle("");
+    				menu.getItem(0).setTitle("").setIcon(R.drawable.titlebar_addnotice_bg);
     				break;
     			case 1:
     				currentFragment = 1;
@@ -144,7 +142,7 @@ public class HomeActivity extends FragmentActivity
     			startActivity(intent);
     		}
     		if(currentFragment == 1) {
-    			intent = new Intent(this,NewsAddActivity1.class);
+    			intent = new Intent(this,NewsAddActivity.class);
     			startActivity(intent);
     		}
     		if(currentFragment ==2) {

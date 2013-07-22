@@ -4,28 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<RelativeLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	    <Button android:id="@+id/notice_view_back" android:layout_width="40dp" android:layout_height="30dp"
-	        android:text="返回" android:background="@drawable/actionbar_tab_bg" android:gravity="center_vertical">
-	        
-	    </Button>
-
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="49dp"
+	    android:background="@drawable/titlebar_bk32x74"
+	    android:orientation="horizontal" >
+	
+	    <ImageButton
+	        android:id="@+id/notice_titlebar_back_btn"
+	        android:layout_width="49dp"
+	        android:layout_height="49dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:background="#00000000"
+	        android:src="@drawable/titlebar_back_bg" />
+	
 	    <TextView
-	        android:id="@+id/notice_view_title"
-	        android:layout_alignTop="@id/notice_view_back"
-	        android:layout_toRightOf="@id/notice_view_back"
-	        android:layout_width="fill_parent"
-	        android:layout_height="30dp"
-	        android:layout_weight="1"
-	        android:background="@drawable/actionbar_tab_bg"
-	        android:gravity="center_horizontal|center_vertical"
-	        android:text="gaognaon"
-	        android:width="0dp" />
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:text="通知"
+	        android:textColor="@color/white"
+	        android:textSize="16sp" />
 
 	</RelativeLayout>
 	
 	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<TextView android:id="@+id/notice_view_content" android:layout_width="fill_parent" android:layout_height="fill_parent"
-	     android:background="@drawable/background_textview" android:scrollbars="vertical" android:scrollbarStyle="insideOverlay"/>
+
+	<TextView
+	    android:id="@+id/notice_view_content"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/background_textview"
+	    android:padding="@dimen/activity_horizontal_margin"
+	    android:scrollbarStyle="insideOverlay"
+	    android:scrollbars="vertical" />
+
 	</ScrollView>
 </LinearLayout>
