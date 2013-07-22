@@ -47,15 +47,12 @@ public class LoginActivity extends Activity {
 	/** 如果登录成功后,用于保存用户名到c,以便下次不再输入 */
 	private String SHARE_LOGIN_USERNAME = "MAP_LOGIN_USERNAME";
 
-	/** 如果登录成功后,用于保存PASSWORD到SharedPreferences,以便下次不再输入 */
 	private String SHARE_LOGIN_PASSWORD = "MAP_LOGIN_PASSWORD";
 
-	/** 如果登陆失败,这个可以给用户确切的消息显示,true是网络连接失败,false是用户名和密码错误 */
 	private boolean isNetError;
 
-	/** 登录loading提示框 */
 	private ProgressDialog proDialog;
-
+	private boolean isFirstLogin = false;
 	/** 登录后台通知更新UI线程,主要用于登录失败,通知UI线程更新界面 */
 	Handler loginHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -124,6 +121,15 @@ public class LoginActivity extends Activity {
 			String validateUrl) {
 		// 用于标记登陆状态
 		boolean loginState = false;
+		AccountRestClient arc = new AccountRestClient(UserInfoStore.url,userName,password); {
+			try {
+				isFirstLogin = !arc.hasLogin();
+			} catch (ClientProtocolException e) {
+				isNetError = true;
+			} catch (IOException e) {
+				isNetError = true;
+			}
+		}
 		try {
 			loginState = AccountRestClient.testLogin(UserInfoStore.url, userName, password);
 		} catch (ClientProtocolException e) {
@@ -188,9 +194,7 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			proDialog = ProgressDialog.show(LoginActivity.this, "连接中..",
 					"连接中..请稍后....", true, true);
-			// 开一个线程进行登录验证,主要是用于失败,成功可以直接通过startAcitivity(Intent)转向
-			String baseURL = "http://10.240.34.42:8080/server";
-			Thread loginThread = new Thread(new LoginFailureHandler(baseURL));
+			Thread loginThread = new Thread(new LoginFailureHandler());
 			loginThread.start();
 		}
 	};
@@ -261,19 +265,13 @@ public class LoginActivity extends Activity {
 	}
 
 	class LoginFailureHandler implements Runnable {
-		String baseURL;
-		
-		public LoginFailureHandler(String baseURL) {
-			this.baseURL = baseURL;
-		}
 		
 		@Override
 		public void run() {
 			userName = view_userName.getText().toString();
 			password = view_password.getText().toString();
-			String validateURL= baseURL;
 			boolean loginState = validateLocalLogin(userName, password,
-					validateURL);
+					UserInfoStore.url);
 
 			// 登陆成功
 			if (loginState) {
@@ -281,12 +279,11 @@ public class LoginActivity extends Activity {
 				UserInfoStore.username = userName;
 				UserInfoStore.password = password;
 				
+				if(isFirstLogin) {
+					//转向欢迎界面
+				}
 				Intent intent = new Intent();
 				intent.setClass(LoginActivity.this, HomeActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("MAP_USERNAME", userName);
-				intent.putExtras(bundle);
-				// 转向登陆后的页面
 				startActivity(intent);
 				proDialog.dismiss();
 			} else {
