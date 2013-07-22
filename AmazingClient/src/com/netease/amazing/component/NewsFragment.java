@@ -45,6 +45,7 @@ import com.netease.amazing.util.RefreshableListView.OnRefreshListener;
  *         ListViewFragment用於列表顯示，并且包括上拉和下拉刷新功能，響應item點擊事件
  */
 public class NewsFragment extends Fragment implements OnRefreshListener {
+	public String newsIndexImage = "http://pica.nipic.com/2008-05-27/20085271094614_2.jpg";
 
 	private RefreshableListView mRefreshListView;
 	private DataSource newsDataSource = new NewsDataSource();
@@ -83,7 +84,7 @@ public class NewsFragment extends Fragment implements OnRefreshListener {
 			listAdapter = new NewsListAdapter(getActivity(), newsDataSource);
 			set(listAdapter, itemClickListener);
 			fragmentHandler.sendEmptyMessage(1);
-			bitmap = returnBitMap("http://content.52pk.com/files/100623/2230_102437_1_lit.jpg");
+			bitmap = returnBitMap(newsIndexImage);
 			return listAdapter;
 		}
 

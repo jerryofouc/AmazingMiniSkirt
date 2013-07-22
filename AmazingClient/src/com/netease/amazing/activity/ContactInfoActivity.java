@@ -1,5 +1,6 @@
 package com.netease.amazing.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -85,6 +86,7 @@ public class ContactInfoActivity extends Activity {
 			TextView childMotherMobile = (TextView)findViewById(R.id.contact_friend_mother_content);
 			childMotherMobile.setText(contact.getPhoneOfMum());
 		}
+		getActionBar().hide();
 	}
 
 	@Override

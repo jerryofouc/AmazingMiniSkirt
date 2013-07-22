@@ -6,10 +6,13 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,27 +77,39 @@ public class ContactFragment extends Fragment {
 	 * @param blackLineLayout
 	 * @param textViewLayout
 	 */
-	private void setContactLayout(int i, Contact contact, LinearLayout contactLayout,
-			LayoutParams blackLineLayout,LayoutParams textViewLayout){
-		
+	private void setContactLayout(int i, 
+			Contact contact, 
+			LinearLayout contactLayout,
+			LinearLayout.LayoutParams linearLayout,
+			LinearLayout.LayoutParams blackLineLayout,
+			LinearLayout.LayoutParams textViewLayout){
 		LinearLayout l = new LinearLayout(getActivity());
 		l.setOrientation(0);
-		l.setLayoutParams(textViewLayout);
-				
+		l.setLayoutParams(linearLayout);
+		
+		Resources res = getResources();
+		float value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, res.getDisplayMetrics());
+		l.setPadding((int)value, (int)value, (int)value, (int)value);
+		
 		ImageView img =new ImageView(getActivity());
 		img.setImageResource(R.drawable.ic_launcher);
-		img.setLayoutParams(textViewLayout);
+		value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, res.getDisplayMetrics());
+		img.setLayoutParams(new LayoutParams((int)value,(int)value));
 		l.addView(img);
 		
 		TextView nameView = new TextView(getActivity());
 		nameView.setText(contact.getName());
+		value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, res.getDisplayMetrics());
+		textViewLayout.setMargins((int) value, 0, 0, 0);
 		nameView.setLayoutParams(textViewLayout);
+		nameView.setGravity(Gravity.CENTER_VERTICAL);
+		nameView.setTextSize(20);
 		nameView.setOnClickListener(new ContactViewItemListener(i));
 		l.addView(nameView);
 		
 		View blackLine = new View(getActivity());
 		blackLine.setBackgroundColor(getResources().
-				getColor(R.color.dark_green));
+				getColor(R.color.black_line));
 		blackLine.setLayoutParams(blackLineLayout);
 		
 		contactLayout.addView(l);
@@ -111,19 +126,21 @@ public class ContactFragment extends Fragment {
 	private void setContactInfoByCategory(final List<Contact> contactList,final LinearLayout teacherLayout,
 			final LinearLayout classmateLayout, final LinearLayout friendLayout){
 		
-		LayoutParams blackLineLayout = new LayoutParams(LayoutParams.FILL_PARENT, 
+		LinearLayout.LayoutParams blackLineLayout = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 
                 1);
-		LayoutParams textViewLayout = new LayoutParams(LayoutParams.WRAP_CONTENT, 
+		LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 
+                LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams textViewLayout = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 
                 LayoutParams.WRAP_CONTENT);
 		Contact contactTemp;
 		for(int i=0; i<contactList.size(); ++i){
 			contactTemp = contactList.get(i);
 			if(contactTemp.getRelationship() == Contact.RELATIONSHIP_TEACHER){
-				setContactLayout(i,contactList.get(i),teacherLayout,blackLineLayout,textViewLayout);
+				setContactLayout(i,contactList.get(i),teacherLayout,linearLayout,blackLineLayout,textViewLayout);
 			}else if(contactTemp.getRelationship() == Contact.RELATIONSHIP_CLASSMATE){
-				setContactLayout(i,contactList.get(i),classmateLayout,blackLineLayout,textViewLayout);
+				setContactLayout(i,contactList.get(i),classmateLayout,linearLayout,blackLineLayout,textViewLayout);
 			}else if(contactTemp.getRelationship() == Contact.RELATIONSHIP_FRIEND){
-				setContactLayout(i,contactList.get(i),friendLayout,blackLineLayout,textViewLayout);
+				setContactLayout(i,contactList.get(i),friendLayout,linearLayout,blackLineLayout,textViewLayout);
 			}
 		}
 	}

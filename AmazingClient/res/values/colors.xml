@@ -29,5 +29,6 @@ limitations under the License.
     <color name="dark_yellow">#FF8A00</color>
     
     <color name="transparent">#00000000</color>
+    <color name="black_line">#DDDDDD</color>
     <color name="gold">#b89766</color>
 </resources>
