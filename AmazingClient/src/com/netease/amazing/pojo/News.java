@@ -23,7 +23,7 @@ public class News implements Serializable{
 	private long newspublisherUserId;//动态发布人在系统中的用户名
 
 	private String newsPublisherName; //动态发布人姓名， 当前登录用户的通讯录中所有联系人的动态都可以展示出来
-	private byte[] newsPublisherImg; //动态发布人头像,存储为数据流
+	private String newsPublisherImg; //动态发布人头像,存储为数据流
 	private int newsPublisherRelationship; //动态发布人与当前登录用户的关系
 	private String newsContent;//发布的动态内容;
 	private int newsType;//该条动态信息的类型，参考上面常量
@@ -35,8 +35,8 @@ public class News implements Serializable{
 	 */
 	private String newsPublishDate; 
 	private String newPublisherFrom; //动态发布人来自的幼儿园
-	private byte[] newsWithImage; //动态中的图片，不能与录音共存，注意动态的类型
-	private byte[] newsWithVoice; //动态中的录音，不能与图片共存，注意动态的类型
+	private String newsWithImage; //动态中的图片，不能与录音共存，注意动态的类型
+	private String newsWithVoice; //动态中的录音，不能与图片共存，注意动态的类型
 	
 	private boolean newsCurrentUserLike;//该动态是否被当前登录用户喜欢
 	private boolean newsCurrentUserTakeDown;//该动态是否被当前登录用户收录
@@ -54,10 +54,10 @@ public class News implements Serializable{
 	public void setNewsPublisherName(String newsPublisherName) {
 		this.newsPublisherName = newsPublisherName;
 	}
-	public byte[] getNewsPublisherImg() {
+	public String getNewsPublisherImg() {
 		return newsPublisherImg;
 	}
-	public void setNewsPublisherImg(byte[] newsPublisherImg) {
+	public void setNewsPublisherImg(String newsPublisherImg) {
 		this.newsPublisherImg = newsPublisherImg;
 	}
 	public int getNewsPublisherRelationship() {
@@ -90,16 +90,16 @@ public class News implements Serializable{
 	public void setNewPublisherFrom(String newPublisherFrom) {
 		this.newPublisherFrom = newPublisherFrom;
 	}
-	public byte[] getNewsWithImage() {
+	public String getNewsWithImage() {
 		return newsWithImage;
 	}
-	public void setNewsWithImage(byte[] newsWithImage) {
+	public void setNewsWithImage(String newsWithImage) {
 		this.newsWithImage = newsWithImage;
 	}
-	public byte[] getNewsWithVoice() {
+	public String getNewsWithVoice() {
 		return newsWithVoice;
 	}
-	public void setNewsWithVoice(byte[] newsWithVoice) {
+	public void setNewsWithVoice(String newsWithVoice) {
 		this.newsWithVoice = newsWithVoice;
 	}
 	public boolean isNewsCurrentUserLike() {

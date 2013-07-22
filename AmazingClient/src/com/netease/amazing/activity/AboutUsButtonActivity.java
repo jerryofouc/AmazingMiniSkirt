@@ -1,17 +1,18 @@
 package com.netease.amazing.activity;
 
-import com.example.amazing.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.ImageButton;
+
+import com.example.amazing.R;
+
 
 public class AboutUsButtonActivity extends Activity {
 	
-	private Button backButton;
+	private ImageButton backButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class AboutUsButtonActivity extends Activity {
 		setListener();
 	}
 	public void getView() {
-		backButton = (Button)findViewById(R.id.set_user_info_titlebar_back_btn);
+		backButton = (ImageButton)findViewById(R.id.set_user_info_titlebar_back_btn);
 	}
 	
 	public void setListener() {

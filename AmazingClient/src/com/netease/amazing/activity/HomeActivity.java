@@ -1,7 +1,5 @@
 package com.netease.amazing.activity;
 
-
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;

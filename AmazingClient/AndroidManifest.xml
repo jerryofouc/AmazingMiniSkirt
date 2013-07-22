@@ -14,9 +14,9 @@
         android:label="@string/app_name"
         android:theme="@style/CustomTheme" >
         <activity
-            android:name="com.netease.amazing.activity.HomeActivity"
+            android:name="com.netease.amazing.activity.StartupActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light" >
+             >
         </activity>
         <activity android:name="com.netease.amazing.activity.NoticeActivity" >
         </activity>
@@ -60,7 +60,7 @@
         <activity android:name = "com.netease.amazing.activity.SetUserInfoActivity"/>
         <activity android:name = "com.netease.amazing.activity.SystemSettingButtonActivity"/>
         <activity android:name = "com.netease.amazing.activity.ContactUsButtonActivity"/>
-        <activity android:name="com.netease.amazing.activity.StartupActivity"></activity>
+        <activity android:name="com.netease.amazing.activity.HomeActivity"></activity>
     </application>
 	
     <uses-permission android:name="android.permission.INTERNET" />

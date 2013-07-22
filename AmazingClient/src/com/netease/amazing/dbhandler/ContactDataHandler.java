@@ -43,6 +43,7 @@ public class ContactDataHandler extends UserInfoStore{
 			teacher = teacherIterator.next();
 			Contact c = new Contact();
 			c.setName(teacher.getName());
+			c.setImgDir(UserInfoStore.url + teacher.getHeadPicPath());
 			c.setPhoneOfTeacher(teacher.getFixLine());
 			c.setMobileOfTeacher(teacher.getMobilePhone());
 			c.setRelationship(Contact.RELATIONSHIP_TEACHER);
@@ -57,6 +58,7 @@ public class ContactDataHandler extends UserInfoStore{
 			classmate = classmateIterator.next();
 			Contact c = new Contact();
 			c.setName(classmate.getName());
+			c.setImgDir(UserInfoStore.url + classmate.getHeadPicPath());
 			c.setBirthday(classmate.getBirthday());
 			c.setNameOfMum(classmate.getMotherName());
 			c.setNameOfDad(classmate.getFatherName());
@@ -73,6 +75,7 @@ public class ContactDataHandler extends UserInfoStore{
 			friend = friendIterator.next();
 			Contact c = new Contact();
 			c.setName(friend.getName());
+			c.setImgDir(UserInfoStore.url + friend.getHeadPicPath());
 			c.setBirthday(friend.getBirthday());
 			c.setNameOfMum(friend.getMotherName());
 			c.setNameOfDad(friend.getFatherName());
