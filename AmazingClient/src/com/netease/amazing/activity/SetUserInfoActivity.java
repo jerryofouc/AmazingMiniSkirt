@@ -10,7 +10,8 @@ public class SetUserInfoActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.set_user_info);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.set_user_info);
+		
 	}
 }

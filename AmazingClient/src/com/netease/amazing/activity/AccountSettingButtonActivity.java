@@ -10,7 +10,8 @@ public class AccountSettingButtonActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.set_account);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.set_account);
+		
 	}
 }

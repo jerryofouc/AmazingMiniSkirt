@@ -43,7 +43,7 @@ public class StringCuter {
 			return sb.toString();
 		}
 		else {
-			return sb.append("...").toString();
+			return sb.append("....").toString();
 		}
 	}
 }

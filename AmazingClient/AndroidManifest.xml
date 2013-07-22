@@ -54,6 +54,12 @@
         <activity android:name = "com.netease.amazing.activity.SettingActivity">
             
         </activity>
+        <activity android:name = "com.netease.amazing.activity.AboutUsButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.AccountSettingButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.DimCodeButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.SetUserInfoActivity"/>
+        <activity android:name = "com.netease.amazing.activity.SystemSettingButtonActivity"/>
+        <activity android:name = "com.netease.amazing.activity.ContactUsButtonActivity"/>
     </application>
 	
     <uses-permission android:name="android.permission.INTERNET" />

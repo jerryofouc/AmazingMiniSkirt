@@ -22,7 +22,7 @@
 	    android:layout_marginLeft="0dp"
 	    android:layout_marginRight="0dp"
 	    android:layout_marginTop="0dp"
-	    android:background="#DDDDDD"
+	    android:background="#222222"
 	    android:gravity="center"
 	    />
 
@@ -39,8 +39,8 @@
 	    android:background="@color/transparent"
 	    android:gravity="center_vertical"
 	    android:width="200dp"
-	    android:textSize="14sp"
-	    android:textStyle="bold" 
+	    android:textSize="13sp"
+	    android:textStyle="normal" 
 	    android:textColor="#222222"
 	    android:fontFamily="sans-serif"
 	    android:text="将军令"/>
@@ -78,7 +78,7 @@
 	    android:background="@color/transparent"
 	    android:gravity="left"
 	    android:height="45dp"
-	    android:textColor="#EEEEEE"
+	    android:textColor="#333333"
 	    android:textSize="12sp" />
 
 </RelativeLayout>

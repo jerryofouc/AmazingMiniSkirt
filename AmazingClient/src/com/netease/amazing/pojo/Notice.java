@@ -83,7 +83,7 @@ public class Notice implements Serializable{
 			return title;
 		}
 		else {
-			return StringCuter.cutStr(title, 17);
+			return StringCuter.cutStr(title, 14);
 		}
 	}
 

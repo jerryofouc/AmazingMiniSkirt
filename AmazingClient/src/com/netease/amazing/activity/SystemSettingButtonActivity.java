@@ -10,7 +10,8 @@ public class SystemSettingButtonActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.set_system);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.set_system);
+		
 	}
 }
