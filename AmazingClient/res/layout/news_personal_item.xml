@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:id="@+id/news_personal_item_content_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_weight="2"
@@ -58,7 +58,7 @@
 
         <RelativeLayout
             android:id="@+id/news_personal_item_icon_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
